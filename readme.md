@@ -1,6 +1,6 @@
 # pixiv-app-api [![Build Status](https://travis-ci.org/akameco/pixiv-app-api.svg?branch=master)](https://travis-ci.org/akameco/pixiv-app-api)
 
-> Promise base API client for node
+> Promise base pixiv API client
 
 Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
 
