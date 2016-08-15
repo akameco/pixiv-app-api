@@ -147,6 +147,19 @@ if (pixiv.hasNext()) {
 
 Return next query parameter.
 
+## Tests
+
+Export your pixiv username and password before running Tests.
+
+```
+$ export USERNAME=your pixiv username...
+$ export PASSWORD=your pixiv password...
+```
+
+```
+$ npm test
+```
+
 ## Related
 
 - [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
