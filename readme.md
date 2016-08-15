@@ -81,9 +81,9 @@ Type: `number` or `string`
 #### illustRanking([query])
 
 ##### query
-restrict: `public` | `private`
-date: `2016-08-15`
-mode: `day` | `week` | `month` | `day_male` | `day_female` | `week_original` | `week_rookie` | `day_mang` | `day_r18` | `day_male_r18` | `day_female_r18` | `week_r18` | `week_r18g`
+restrict: `public` | `private`<br>
+date: `2016-08-15`<br>
+mode: `day` | `week` | `month` | `day_male` | `day_female` | `week_original` | `week_rookie` | `day_mang` | `day_r18` | `day_male_r18` | `day_female_r18` | `week_r18` | `week_r18g`<br>
 
 #### pixiv.trendingTagsIllust([query])
 
