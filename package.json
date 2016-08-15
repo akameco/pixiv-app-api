@@ -1,0 +1,45 @@
+{
+  "name": "pixiv-app-api",
+  "version": "0.0.0",
+  "description": "Promise base API client",
+  "license": "MIT",
+  "repository": "akameco/pixiv-app-api",
+  "author": {
+    "name": "akameco",
+    "email": "akameco.t@gmail.com",
+    "url": "akameco.github.io"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js",
+    "pixiv-auth-got.js"
+  ],
+  "keywords": [
+    "pixiv",
+    "api-client",
+    "pixiv-app",
+    "pixiv-app-api",
+    "pixiv-api"
+  ],
+  "dependencies": {
+    "got": "^6.3.0"
+  },
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "co": "^4.6.0",
+    "is-plain-obj": "^1.1.0",
+    "pixiv-img": "^0.3.1",
+    "xo": "^0.16.0"
+  },
+  "xo": {
+    "esnext": true,
+    "rules": {
+      "camelcase": 0
+    }
+  }
+}
