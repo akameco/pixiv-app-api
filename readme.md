@@ -4,8 +4,6 @@
 
 Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
 
-If you want using old api, you can use [pixiv](https://github.com/akameco/pixiv).
-
 ## Install
 
 ```
