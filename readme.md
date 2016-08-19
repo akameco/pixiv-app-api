@@ -4,8 +4,6 @@
 
 Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
 
-If you want to downloading image, you can use with [pixiv-img](https://github.com/akameco/pixiv-img).
-
 If you want using old api, you can use [pixiv](https://github.com/akameco/pixiv).
 
 ## Install
@@ -78,7 +76,7 @@ Type: `number` or `string`
 
 #### pixiv.illustRecommended([query])
 
-#### illustRanking([query])
+#### pixiv.illustRanking([query])
 
 ##### query
 restrict: `public` | `private`<br>
@@ -163,6 +161,9 @@ $ npm test
 ## Related
 
 - [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
+- [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
+- [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
+
 - [pixiv](https://github.com/akameco/pixiv) - pixiv client for public api
 
 ## License
