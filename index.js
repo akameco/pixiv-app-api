@@ -1,6 +1,6 @@
 'use strict';
 const url = require('url');
-const PixivAuthGot = require('./pixiv-auth-got');
+const PixivAuthGot = require('pixiv-auth-got');
 
 const ENDPOINT = 'https://app-api.pixiv.net/';
 const filter = 'for_ios';

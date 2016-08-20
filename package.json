@@ -16,8 +16,7 @@
     "test": "xo && ava"
   },
   "files": [
-    "index.js",
-    "pixiv-auth-got.js"
+    "index.js"
   ],
   "keywords": [
     "pixiv",
@@ -27,7 +26,8 @@
     "pixiv-api"
   ],
   "dependencies": {
-    "got": "^6.3.0"
+    "got": "^6.3.0",
+    "pixiv-auth-got": "^0.1.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",
