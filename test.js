@@ -2,7 +2,7 @@ import test from 'ava';
 import isPlainObj from 'is-plain-obj';
 import PixivAppApi from './';
 
-const userId = 7076552;
+const userId = 471355;
 const illustId = 57907953;
 
 test.beforeEach('new Pixiv()', t => {
