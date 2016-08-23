@@ -2,6 +2,8 @@
 
 > Promise base pixiv API client
 
+<img src="media/image.jpg" width=200>
+
 Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
 
 ## Install
