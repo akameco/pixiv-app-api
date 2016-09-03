@@ -14,6 +14,7 @@ pixiv.illustFollow().then(console.log);
 pixiv.illustComments(illustId).then(console.log);
 pixiv.trendingTagsIllust().then(console.log);
 pixiv.userDetail(userId).then(console.log);
+pixiv.illustDetail(illustId).then(console.log);
 
 pixiv.searchIllust(word)
 	.then(res => {

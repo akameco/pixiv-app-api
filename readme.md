@@ -61,6 +61,8 @@ Type: `number` or `string`
 ##### query
 restrict: `public` | `private`
 
+#### pixiv.illustDetail(illustId, [query])
+
 #### pixiv.illustFollow([query])
 
 ##### query
