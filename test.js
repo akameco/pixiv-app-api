@@ -30,6 +30,11 @@ test('userBookmarksIllust', async t => {
 	t.true(isPlainObj(json));
 });
 
+test('illustDetail', async t => {
+	const json = await t.context.m.illustDetail(illustId);
+	t.true(isPlainObj(json));
+});
+
 test('illustFollow', async t => {
 	const json = await t.context.m.illustFollow(userId);
 	t.true(isPlainObj(json));

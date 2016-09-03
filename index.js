@@ -70,6 +70,18 @@ class PixivAppApi {
 		return this.got('v1/user/bookmarks/illust', {query});
 	}
 
+	illustDetail(id, query) {
+		if (!id) {
+			return Promise.reject(new Error('illust_id required'));
+		}
+
+		query = Object.assign({
+			illust_id: id,
+			filter
+		}, query);
+		return this.got('v1/illust/detail', {query});
+	}
+
 	illustFollow(query) {
 		query = Object.assign({
 			restrict: 'public'
