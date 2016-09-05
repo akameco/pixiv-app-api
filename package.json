@@ -27,10 +27,10 @@
   ],
   "dependencies": {
     "got": "^6.3.0",
-    "pixiv-auth-got": "^0.1.0"
+    "pixiv-auth-got": "^0.2.0"
   },
   "devDependencies": {
-    "ava": "^0.15.2",
+    "ava": "^0.16.0",
     "co": "^4.6.0",
     "is-plain-obj": "^1.1.0",
     "pixiv-img": "^0.3.1",
