@@ -15,6 +15,11 @@ test('expose a constructor', t => {
 	t.true(typeof PixivAppApi === 'function');
 });
 
+test('auth', async t => {
+	const json = await t.context.m.authInfo();
+	t.true(isPlainObj(json));
+});
+
 test('userDetail', async t => {
 	const json = await t.context.m.userDetail(userId);
 	t.true(isPlainObj(json));

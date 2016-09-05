@@ -10,6 +10,10 @@ class PixivAppApi {
 		this.pixivAuthGot = new PixivAuthGot(username, password);
 	}
 
+	authInfo() {
+		return this.pixivAuthGot.auth().then(res => res.body);
+	}
+
 	got(path, opts) {
 		const apiUrl = /https/.test(path) ? path : url.resolve(ENDPOINT, path);
 
