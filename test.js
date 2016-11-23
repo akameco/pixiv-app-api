@@ -33,7 +33,14 @@ test('userIllusts', async t => {
 });
 
 test('userBookmarksIllust', async t => {
-	const json = await t.context.m.userBookmarksIllust(userId);
+	const auth = await t.context.m.login();
+	const json = await t.context.m.userBookmarksIllust(auth.user.id);
+	t.true(isPlainObj(json));
+});
+
+test('userBookmarksIllust private', async t => {
+	const auth = await t.context.m.login();
+	const json = await t.context.m.userBookmarksIllust(auth.user.id, {restrict: 'private'});
 	t.true(isPlainObj(json));
 });
 
