@@ -18,15 +18,10 @@ $ npm install --save pixiv-app-api
 ```js
 const PixivAppApi = require('pixiv-app-api');
 const pixivImg = require('pixiv-img');
-const pixiv = new PixivAppApi('your username', 'your password');
 
-const word = '艦これ10000users入り';
+const pixiv = new Pixiv();
 
-pixiv.searchIllust(word)
-	.then(json => {
-		console.log(json);
-		return pixiv.next();
-	})
+pixiv.searchIllust('艦これ10000users入り')
 	.then(json => {
 		console.log(`downloading ${json.illusts[0].title}`);
 		return pixivImg(json.illusts[0].image_urls.large);
@@ -47,45 +42,45 @@ See examples.
 
 <hr>
 
-#### pixiv.userDetail(userId, [query])
+#### pixiv.userDetail(userId, [params])
 
 #### userId
 
 Type: `number` or `string`
 
 
-#### pixiv.userIllusts(userId, [query])
+#### pixiv.userIllusts(userId, [params])
 
-#### pixiv.userBookmarksIllust(userId, [query])
+#### pixiv.userBookmarksIllust(userId, [params])
 
-##### query
+##### params
 restrict: `public` | `private`
 
-#### pixiv.illustDetail(illustId, [query])
+#### pixiv.illustDetail(illustId, [params])
 
-#### pixiv.illustFollow([query])
+#### pixiv.illustFollow([params])
 
-##### query
+##### params
 restrict: `public` | `private`
 
-#### pixiv.illustComments(illustId, [query])
+#### pixiv.illustComments(illustId, [params])
 
 #### illustId
 
 Type: `number` or `string`
 
-#### pixiv.illustRelated(illustId, [query])
+#### pixiv.illustRelated(illustId, [params])
 
-#### pixiv.illustRecommended([query])
+#### pixiv.illustRecommended([params])
 
-#### pixiv.illustRanking([query])
+#### pixiv.illustRanking([params])
 
-##### query
+##### params
 restrict: `public` | `private`<br>
 date: `2016-08-15`<br>
 mode: `day` | `week` | `month` | `day_male` | `day_female` | `week_original` | `week_rookie` | `day_mang` | `day_r18` | `day_male_r18` | `day_female_r18` | `week_r18` | `week_r18g`<br>
 
-#### pixiv.trendingTagsIllust([query])
+#### pixiv.trendingTagsIllust([params])
 
 #### pixiv.searchIllust(word, [searchOptions])
 
@@ -99,13 +94,13 @@ search_target: `partial_match_for_tags` | `exact_match_for_tags` | `title_and_ca
 sort: `date_desc` | `date_asc`<br>
 duration: `within_last_day` | `within_last_week` | `within_last_month`
 
-#### pixiv.illustBookmarkDetail(illustId, [query])
+#### pixiv.illustBookmarkDetail(illustId, [params])
 
 #### pixiv.illustBookmarkAdd(illustId, [body])
 
 #### pixiv.illustBookmarkDelete(illustId, [body])
 
-#### pixiv.userBookmarkTagsIllust([query])
+#### pixiv.userBookmarkTagsIllust([params])
 
 <hr>
 
@@ -145,7 +140,7 @@ if (pixiv.hasNext()) {
 
 #### pixiv.nextQuery()
 
-Return next query parameter.
+Return next params parameter.
 
 ## Tests
 
