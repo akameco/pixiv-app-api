@@ -16,11 +16,13 @@ test('expose a constructor', t => {
 });
 
 test('auth', async t => {
+	await t.context.m.login();
 	const json = await t.context.m.authInfo();
 	t.true(isPlainObj(json));
 });
 
 test('userDetail', async t => {
+	await t.context.m.login();
 	const json = await t.context.m.userDetail(userId);
 	t.true(isPlainObj(json));
 });
@@ -36,11 +38,13 @@ test('userBookmarksIllust', async t => {
 });
 
 test('illustDetail', async t => {
+	await t.context.m.login();
 	const json = await t.context.m.illustDetail(illustId);
 	t.true(isPlainObj(json));
 });
 
 test('illustFollow', async t => {
+	await t.context.m.login();
 	const json = await t.context.m.illustFollow(userId);
 	t.true(isPlainObj(json));
 });
@@ -56,6 +60,7 @@ test('illustRelated', async t => {
 });
 
 test('illustRecommended', async t => {
+	await t.context.m.login();
 	const json = await t.context.m.illustRecommended();
 	t.true(isPlainObj(json));
 });

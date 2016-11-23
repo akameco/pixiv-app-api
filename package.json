@@ -10,7 +10,7 @@
     "url": "akameco.github.io"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "test": "xo && ava"
@@ -26,8 +26,7 @@
     "pixiv-api"
   ],
   "dependencies": {
-    "got": "^6.3.0",
-    "pixiv-auth-got": "^0.2.0"
+    "axios": "^0.15.2"
   },
   "devDependencies": {
     "ava": "^0.16.0",

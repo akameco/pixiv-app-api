@@ -3,9 +3,7 @@ const co = require('co');
 const pixivImg = require('pixiv-img');
 const Pixiv = require('../');
 
-const username = process.env.USERNAME;
-const password = process.env.PASSWORD;
-const pixiv = new Pixiv(username, password);
+const pixiv = new Pixiv();
 
 const word = '艦これ10000users入り';
 
