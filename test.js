@@ -93,14 +93,19 @@ test('illustBookmarkDetail', async t => {
 });
 
 test('error if params missing', async t => {
-	await t.throws(t.context.m.userDetail(), 'user_id required');
-	await t.throws(t.context.m.userIllusts(), 'user_id required');
-	await t.throws(t.context.m.userBookmarksIllust(), 'user_id required');
+	async function macro(fn, message) {
+		try {
+			await fn();
+		} catch (err) {
+			t.is(err.message, message);
+		}
+	}
 
-	await t.throws(t.context.m.illustComments(), /illust_id required/);
-	await t.throws(t.context.m.illustRelated(), /illust_id required/);
-
-	await t.throws(t.context.m.searchIllust(), /word required/);
-
-	await t.throws(t.context.m.illustBookmarkDetail(), /illust_id required/);
+	macro(t.context.m.userDetail, 'user_id required');
+	macro(t.context.m.userIllusts, 'user_id required');
+	macro(t.context.m.userBookmarksIllust, 'user_id required');
+	macro(t.context.m.illustComments, 'illust_id required');
+	macro(t.context.m.illustRelated, 'illust_id required');
+	macro(t.context.m.searchIllust, 'word required');
+	macro(t.context.m.illustBookmarkDetail, 'illust_id required');
 });
