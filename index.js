@@ -61,7 +61,7 @@ class PixivApp {
 	}
 
 	next() {
-		return this._fetch(this.nextUrl);
+		return this.fetch(this.nextUrl);
 	}
 
 	nextQuery() {
@@ -76,7 +76,7 @@ class PixivApp {
 			user_id: id,
 			filter
 		}, params);
-		return this._fetch('/v1/user/detail', {params});
+		return this.fetch('/v1/user/detail', {params});
 	}
 
 	userIllusts(id, params) {
@@ -89,7 +89,7 @@ class PixivApp {
 			type: 'illust',
 			filter
 		});
-		return this._fetch('/v1/user/illusts', {params});
+		return this.fetch('/v1/user/illusts', {params});
 	}
 
 	userFollowAdd(id, data) {
@@ -101,7 +101,7 @@ class PixivApp {
 			restrict: 'public',
 			filter
 		}, data);
-		return this._fetch('/v1/user/follow/add', {data});
+		return this.fetch('/v1/user/follow/add', {data});
 	}
 
 	userFollowDelete(id, data) {
@@ -113,7 +113,7 @@ class PixivApp {
 			restrict: 'public',
 			filter
 		}, data);
-		return this._fetch('/v1/user/follow/delete', {data});
+		return this.fetch('/v1/user/follow/delete', {data});
 	}
 
 	userBookmarksIllust(id, params) {
@@ -125,7 +125,7 @@ class PixivApp {
 			restrict: 'public',
 			filter
 		}, params);
-		return this._fetch('/v1/user/bookmarks/illust', {params});
+		return this.fetch('/v1/user/bookmarks/illust', {params});
 	}
 
 	userFollowing(id, params) {
@@ -136,7 +136,7 @@ class PixivApp {
 			user_id: id,
 			restrict: 'public'
 		}, params);
-		return this._fetch('/v1/user/following', {params});
+		return this.fetch('/v1/user/following', {params});
 	}
 
 	userFollower(id, params) {
@@ -146,7 +146,7 @@ class PixivApp {
 		params = Object.assign({
 			user_id: id
 		}, params);
-		return this._fetch('/v1/user/follower', {params});
+		return this.fetch('/v1/user/follower', {params});
 	}
 
 	userMypixiv(id, params) {
@@ -156,7 +156,7 @@ class PixivApp {
 		params = Object.assign({
 			user_id: id
 		}, params);
-		return this._fetch('/v1/user/mypixiv', {params});
+		return this.fetch('/v1/user/mypixiv', {params});
 	}
 
 	userList(id, params) {
@@ -167,7 +167,7 @@ class PixivApp {
 			user_id: id,
 			filter
 		}, params);
-		return this._fetch('/v1/user/list', {params});
+		return this.fetch('/v1/user/list', {params});
 	}
 
 	illustDetail(id, params) {
@@ -178,7 +178,7 @@ class PixivApp {
 			illust_id: id,
 			filter
 		}, params);
-		return this._fetch('/v1/illust/detail', {params});
+		return this.fetch('/v1/illust/detail', {params});
 	}
 
 	illustNew(params) {
@@ -186,14 +186,14 @@ class PixivApp {
 			content_type: 'illust',
 			filter
 		}, params);
-		return this._fetch('/v1/illust/new', {params});
+		return this.fetch('/v1/illust/new', {params});
 	}
 
 	illustFollow(params) {
 		params = Object.assign({
 			restrict: 'public'
 		}, params);
-		return this._fetch('/v2/illust/follow', {params});
+		return this.fetch('/v2/illust/follow', {params});
 	}
 
 	illustComments(id, params) {
@@ -204,7 +204,7 @@ class PixivApp {
 			illust_id: id,
 			include_total_comments: 'true'
 		}, params);
-		return this._fetch('/v1/illust/comments', {params});
+		return this.fetch('/v1/illust/comments', {params});
 	}
 
 	illustRelated(id, params) {
@@ -215,7 +215,7 @@ class PixivApp {
 			illust_id: id,
 			filter
 		}, params);
-		return this._fetch('/v1/illust/related', {params});
+		return this.fetch('/v1/illust/related', {params});
 	}
 
 	illustRecommended(params) {
@@ -224,7 +224,7 @@ class PixivApp {
 			include_ranking_label: 'true',
 			filter
 		}, params);
-		return this._fetch('/v1/illust/recommended', {params});
+		return this.fetch('/v1/illust/recommended', {params});
 	}
 
 	illustRecommendedNologin(params) {
@@ -232,7 +232,7 @@ class PixivApp {
 			include_ranking_illusts: true,
 			filter
 		}, params);
-		return this._fetch('/v1/illust/recommended-nologin', {params});
+		return this.fetch('/v1/illust/recommended-nologin', {params});
 	}
 
 	illustRanking(params) {
@@ -240,14 +240,14 @@ class PixivApp {
 			mode: 'day',
 			filter
 		}, params);
-		return this._fetch('/v1/illust/ranking', {params});
+		return this.fetch('/v1/illust/ranking', {params});
 	}
 
 	trendingTagsIllust(params) {
 		params = Object.assign({
 			filter
 		}, params);
-		return this._fetch('/v1/trending-tags/illust', {params});
+		return this.fetch('/v1/trending-tags/illust', {params});
 	}
 
 	searchIllust(word, params) {
@@ -260,7 +260,7 @@ class PixivApp {
 			sort: 'date_desc',
 			filter
 		}, params);
-		return this._fetch('/v1/search/illust', {params});
+		return this.fetch('/v1/search/illust', {params});
 	}
 
 	searchNovel(word, params) {
@@ -273,7 +273,7 @@ class PixivApp {
 			sort: 'date_desc',
 			filter
 		}, params);
-		return this._fetch('/v1/search/novel', {params});
+		return this.fetch('/v1/search/novel', {params});
 	}
 
 	searchUser(word, params) {
@@ -284,14 +284,14 @@ class PixivApp {
 			word,
 			filter
 		}, params);
-		return this._fetch('/v1/search/user', {params});
+		return this.fetch('/v1/search/user', {params});
 	}
 
 	searchAutoComplete(word) {
 		if (!word) {
 			return Promise.reject('word required');
 		}
-		return this._fetch('/v1/search/autocomplete', {params: {word}});
+		return this.fetch('/v1/search/autocomplete', {params: {word}});
 	}
 
 	illustBookmarkDetail(id, params) {
@@ -301,7 +301,7 @@ class PixivApp {
 		params = Object.assign({
 			illust_id: id
 		}, params);
-		return this._fetch('/v2/illust/bookmark/detail', {params});
+		return this.fetch('/v2/illust/bookmark/detail', {params});
 	}
 
 	illustBookmarkAdd(id, data) {
@@ -312,7 +312,7 @@ class PixivApp {
 			illust_id: id,
 			restrict: 'public'
 		}, data);
-		return this._fetch('/v1/illust/bookmark/add', {data});
+		return this.fetch('/v1/illust/bookmark/add', {data});
 	}
 
 	illustBookmarkDelete(id, data) {
@@ -322,14 +322,14 @@ class PixivApp {
 		data = Object.assign({
 			illust_id: id
 		}, data);
-		return this._fetch('/v1/illust/bookmark/delete', {data});
+		return this.fetch('/v1/illust/bookmark/delete', {data});
 	}
 
 	userBookmarkTagsIllust(params) {
 		params = Object.assign({
 			restrict: 'public'
 		}, params);
-		return this._fetch('/v1/user/bookmark-tags/illust', {params});
+		return this.fetch('/v1/user/bookmark-tags/illust', {params});
 	}
 
 	novelRecommended(params) {
@@ -337,7 +337,7 @@ class PixivApp {
 			include_ranking_novels: true,
 			filter
 		}, params);
-		return this._fetch('/v1/novel/recommended', {params});
+		return this.fetch('/v1/novel/recommended', {params});
 	}
 
 	mangaNew(params) {
@@ -345,7 +345,7 @@ class PixivApp {
 			content_type: 'manga',
 			filter
 		}, params);
-		return this._fetch('/v1/manga/new', {params});
+		return this.fetch('/v1/manga/new', {params});
 	}
 
 	mangaRecommended(params) {
@@ -353,7 +353,7 @@ class PixivApp {
 			include_ranking_label: true,
 			filter
 		}, params);
-		return this._fetch('/v1/manga/recommended', {params});
+		return this.fetch('/v1/manga/recommended', {params});
 	}
 
 	novelRecommendedNologin(params) {
@@ -361,14 +361,14 @@ class PixivApp {
 			include_ranking_novels: true,
 			filter
 		}, params);
-		return this._fetch('/v1/novel/recommended-nologin', {params});
+		return this.fetch('/v1/novel/recommended-nologin', {params});
 	}
 
 	novelNew(params) {
-		return this._fetch('/v1/novel/new', {params});
+		return this.fetch('/v1/novel/new', {params});
 	}
 
-	_fetch(target, opts) {
+	fetch(target, opts) {
 		if (!target) {
 			return Promise.reject('url required');
 		}
