@@ -9,8 +9,7 @@ const instance = axios.create({
 	headers: {
 		'App-OS': 'ios',
 		'App-OS-Version': '9.3.3',
-		'App-Version': '6.0.9',
-		'User-Agent': 'PixivIOSApp/6.0.9 (iOS 9.3.3; iPhone8,1)'
+		'App-Version': '6.0.9'
 	}
 });
 
