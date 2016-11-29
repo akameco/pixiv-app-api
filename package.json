@@ -16,7 +16,8 @@
     "test": "xo && ava"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "index.flow.js"
   ],
   "keywords": [
     "pixiv",
@@ -39,6 +40,7 @@
     "esnext": true,
     "rules": {
       "camelcase": 0
-    }
+    },
+    "ignores": ["*.flow.js"]
   }
 }
