@@ -87,7 +87,7 @@ class PixivApp {
 			user_id: id,
 			type: 'illust',
 			filter
-		});
+		}, params);
 		return this.fetch('/v1/user/illusts', {params});
 	}
 
