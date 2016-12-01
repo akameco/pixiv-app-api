@@ -28,12 +28,15 @@
     "pixiv-api"
   ],
   "dependencies": {
-    "axios": "^0.15.2"
+    "axios": "^0.15.2",
+    "camelcase-keys": "^4.0.0",
+    "decamelize-keys": "^1.1.0"
   },
   "devDependencies": {
     "ava": "^0.16.0",
     "co": "^4.6.0",
     "is-plain-obj": "^1.1.0",
+    "lodash.isequal": "^4.4.0",
     "pixiv-img": "^0.3.1",
     "xo": "^0.16.0"
   },

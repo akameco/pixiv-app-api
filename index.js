@@ -2,6 +2,8 @@
 const url = require('url');
 const {stringify} = require('querystring');
 const axios = require('axios');
+const camelcaseKeys = require('camelcase-keys');
+const decamelizeKeys = require('decamelize-keys');
 
 const baseURL = 'https://app-api.pixiv.net/';
 const instance = axios.create({
@@ -16,9 +18,13 @@ const instance = axios.create({
 const filter = 'for_ios';
 
 class PixivApp {
-	constructor(username, password) {
+	constructor(username, password, opts) {
 		this.username = username;
 		this.password = password;
+		opts = opts || {camelcaseKeys: true};
+		if (opts.camelcaseKeys) {
+			this.camelcaseKeys = true;
+		}
 	}
 
 	login(username, password) {
@@ -390,13 +396,17 @@ class PixivApp {
 
 		if (opts.data) {
 			opts.method = 'post';
-			opts.data = stringify(opts.data);
+			opts.data = stringify(decamelizeKeys(opts.data));
+		}
+
+		if (opts.params) {
+			opts.params = decamelizeKeys(opts.params);
 		}
 
 		return instance(target, opts).then(res => {
 			const {data} = res;
 			this.nextUrl = (data && data.next_url) ? data.next_url : null;
-			return data;
+			return this.camelcaseKeys ? camelcaseKeys(data, {deep: true}) : data;
 		});
 	}
 }

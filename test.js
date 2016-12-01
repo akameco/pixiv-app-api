@@ -1,5 +1,6 @@
 import test from 'ava';
 import isPlainObj from 'is-plain-obj';
+import isEqual from 'lodash.isequal';
 import PixivAppApi from './';
 
 const userId = 471355;
@@ -108,4 +109,20 @@ test('error if params missing', async t => {
 	macro(t.context.m.illustRelated, 'illust_id required');
 	macro(t.context.m.searchIllust, 'word required');
 	macro(t.context.m.illustBookmarkDetail, 'illust_id required');
+});
+
+test('decamelize params', async t => {
+	const json1 = await t.context.m.userIllusts(userId);
+	const json2 = await t.context.m.userIllusts(userId, {userId: 2957827});
+	t.false(isEqual(json1, json2));
+});
+
+test('camelcaseKeys', async t => {
+	const json = await t.context.m.userIllusts(userId, {userId: 2957827});
+	t.true({}.hasOwnProperty.call(json, 'nextUrl'));
+});
+
+test('not camelcaseKeys', async t => {
+	const json = await t.context.m.userIllusts(userId, {userId: 2957827});
+	t.false({}.hasOwnProperty.call(json, 'next_url'));
 });
