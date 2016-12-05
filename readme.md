@@ -6,6 +6,15 @@
 
 Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
 
+
+## Features
+
+- Promise base
+- Converts the output json key to camelCase
+- Converts the parameter to snakeCase
+- Supports API without login
+
+
 ## Install
 
 ```
@@ -31,84 +40,48 @@ pixiv.searchIllust('艦これ10000users入り')
 
 See examples.
 
-
 ## API
 
-### PixivAppApi(username, password)
+#### constructor(username?: string, password?: string): PixivAppApi;
+#### login(username?: string, password?: string): Promise<Object>;
+#### authInfo(): Object;
+#### hasNext(): bool;
+#### next(): Promise<string>;
+#### nextQuery(): string;
+#### userDetail(id: ID, params?: Object): Promise<Object>;
+#### userIllusts(id: ID, params?: Object): Promise<Object>;
+#### userFollowAdd(id: ID, data?: Object): Promise<Object>;
+#### userFollowDelete(id: ID, data?: Object): Promise<Object>;
+#### userBookmarksIllust(id: ID, params?: Object): Promise<Object>;
+#### userFollowing(id: ID, params?: Object): Promise<Object>;
+#### userFollower(id: ID, params?: Object): Promise<Object>;
+#### userMypixiv(id: ID, params?: Object): Promise<Object>;
+#### userList(id: ID, params?: Object): Promise<Object>;
+#### illustDetail(id: ID, params?: Object): Promise<Object>;
+#### illustNew(params?: Object): Promise<Object>;
+#### illustFollow(params?: Object): Promise<Object>;
+#### illustComments(id: ID, params?: Object): Promise<Object>;
+#### illustRelated(id: ID, params?: Object): Promise<Object>;
+#### illustRecommended(params?: Object): Promise<Object>;
+#### illustRecommendedNologin(params?: Object): Promise<Object>;
+#### illustRanking(params?: Object): Promise<Object>;
+#### trendingTagsIllust(params?: Object): Promise<Object>;
+#### searchIllust(word: Word, params?: Object): Promise<Object>;
+#### searchNovel(word: Word, params?: Object): Promise<Object>;
+#### searchUser(word: Word, params?: Object): Promise<Object>;
+#### searchAutoComplete(word: Word): Promise<Object>;
+#### illustBookmarkDetail(id: ID, params?: Object): Promise<Object>;
+#### illustBookmarkAdd(id: ID, data?: Object): Promise<Object>;
+#### illustBookmarkDelete(id: ID, data?: Object): Promise<Object>;
+#### userBookmarkTagsIllust(params?: Object): Promise<Object>;
+#### novelRecommended(params?: Object): Promise<Object>;
+#### mangaNew(params?: Object): Promise<Object>;
+#### mangaRecommended(params?: Object): Promise<Object>;
+#### novelRecommendedNologin(params?: Object): Promise<Object>;
+#### novelNew(params?: Object): Promise<Object>;
+#### fetch(target: string, opts?: Object): Promise<Object>;
 
-`username`: your pixiv username<br>
-`password`: your pixiv username
-
-<hr>
-
-#### pixiv.userDetail(userId, [params])
-
-#### userId
-
-Type: `number` or `string`
-
-
-#### pixiv.userIllusts(userId, [params])
-
-#### pixiv.userBookmarksIllust(userId, [params])
-
-##### params
-restrict: `public` | `private`
-
-#### pixiv.illustDetail(illustId, [params])
-
-#### pixiv.illustFollow([params])
-
-##### params
-restrict: `public` | `private`
-
-#### pixiv.illustComments(illustId, [params])
-
-#### illustId
-
-Type: `number` or `string`
-
-#### pixiv.illustRelated(illustId, [params])
-
-#### pixiv.illustRecommended([params])
-
-#### pixiv.illustRanking([params])
-
-##### params
-restrict: `public` | `private`<br>
-date: `2016-08-15`<br>
-mode: `day` | `week` | `month` | `day_male` | `day_female` | `week_original` | `week_rookie` | `day_mang` | `day_r18` | `day_male_r18` | `day_female_r18` | `week_r18` | `week_r18g`<br>
-
-#### pixiv.trendingTagsIllust([params])
-
-#### pixiv.searchIllust(word, [searchOptions])
-
-##### word
-
-Type: `string`
-
-##### searchOptions
-
-search_target: `partial_match_for_tags` | `exact_match_for_tags` | `title_and_caption` <br>
-sort: `date_desc` | `date_asc`<br>
-duration: `within_last_day` | `within_last_week` | `within_last_month`
-
-#### pixiv.illustBookmarkDetail(illustId, [params])
-
-#### pixiv.illustBookmarkAdd(illustId, [body])
-
-#### pixiv.illustBookmarkDelete(illustId, [body])
-
-#### pixiv.userBookmarkTagsIllust([params])
-
-<hr>
-
-#### default options
-restrict: `public`<br>
-mode: `day`<br>
-sort: `date_desc`<br>
-
-<hr>
+See [Sniffer for iOS 6.x Common API · upbit/pixivpy Wiki](https://github.com/upbit/pixivpy/wiki/Sniffer-for-iOS-6.x---Common-API)
 
 #### pixiv.next()
 
@@ -156,11 +129,10 @@ $ npm test
 
 ## Related
 
+- [PixivDeck](https://github.com/akameco/PixivDeck) - pixiv client for Desktop like TweetDeck
 - [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
 - [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
 - [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
-
-- [pixiv](https://github.com/akameco/pixiv) - pixiv client for public api
 
 ## License
 
