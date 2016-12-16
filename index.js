@@ -32,11 +32,11 @@ class PixivApp {
 		this.password = password || this.password;
 
 		if (typeof this.username !== 'string') {
-			throw new TypeError(`Expected a string, got ${typeof this.username}`);
+			return Promise.reject(new TypeError(`Expected a string, got ${typeof this.username}`));
 		}
 
 		if (typeof this.password !== 'string') {
-			throw new TypeError(`Expected a string, got ${typeof this.password}`);
+			return Promise.reject(new TypeError(`Expected a string, got ${typeof this.password}`));
 		}
 
 		const data = {
