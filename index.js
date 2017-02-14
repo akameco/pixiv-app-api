@@ -220,7 +220,7 @@ class PixivApp {
 			illust_id: id,
 			filter
 		}, params);
-		return this.fetch('/v1/illust/related', {params});
+		return this.fetch('/v2/illust/related', {params});
 	}
 
 	illustRecommended(params) {
@@ -317,7 +317,7 @@ class PixivApp {
 			illust_id: id,
 			restrict: 'public'
 		}, data);
-		return this.fetch('/v1/illust/bookmark/add', {data});
+		return this.fetch('/v2/illust/bookmark/add', {data});
 	}
 
 	illustBookmarkDelete(id, data) {
@@ -396,6 +396,9 @@ class PixivApp {
 
 		if (opts.data) {
 			opts.method = 'post';
+			opts.headers = {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			};
 			opts.data = stringify(decamelizeKeys(opts.data));
 		}
 
