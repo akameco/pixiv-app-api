@@ -15,11 +15,7 @@
   "scripts": {
     "test": "xo && ava"
   },
-  "files": [
-    "index.js",
-    ".flowconfig",
-    "index.flow.js"
-  ],
+  "files": ["index.js", ".flowconfig", "index.flow.js"],
   "keywords": [
     "pixiv",
     "api-client",
@@ -33,20 +29,22 @@
     "decamelize-keys": "^1.1.0"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.21.0",
     "co": "^4.6.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.1.2",
     "is-plain-obj": "^1.1.0",
     "lodash.isequal": "^4.4.0",
     "pixiv-img": "^0.3.1",
-    "xo": "^0.16.0"
+    "prettier": "^1.5.3",
+    "xo": "^0.18.2"
   },
   "xo": {
     "esnext": true,
+    "extends": ["prettier"],
     "rules": {
       "camelcase": 0
     },
-    "ignores": [
-      "*.flow.js"
-    ]
+    "ignores": ["*.flow.js"]
   }
 }
