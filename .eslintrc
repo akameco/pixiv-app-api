@@ -1,0 +1,6 @@
+{
+  "extends": "precure",
+  "rules": {
+    "camelcase": 0
+  }
+}

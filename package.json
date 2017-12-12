@@ -13,7 +13,9 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "xo && ava"
+    "fmt": "prettier --write '**/*.{js,json,md}'",
+    "lint": "eslint --fix .",
+    "test": "npm run lint && ava"
   },
   "files": ["index.js", ".flowconfig", "index.flow.js"],
   "keywords": [
@@ -31,20 +33,11 @@
   "devDependencies": {
     "ava": "^0.21.0",
     "co": "^4.6.0",
-    "eslint-config-prettier": "^2.3.0",
-    "eslint-plugin-prettier": "^2.1.2",
+    "eslint": "^4.13.1",
+    "eslint-config-precure": "^0.11.3",
     "is-plain-obj": "^1.1.0",
     "lodash.isequal": "^4.4.0",
     "pixiv-img": "^0.3.1",
-    "prettier": "^1.5.3",
-    "xo": "^0.18.2"
-  },
-  "xo": {
-    "esnext": true,
-    "extends": ["prettier"],
-    "rules": {
-      "camelcase": 0
-    },
-    "ignores": ["*.flow.js"]
+    "prettier": "^1.9.2"
   }
 }

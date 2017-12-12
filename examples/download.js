@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 'use strict'
 const co = require('co')
 const pixivImg = require('pixiv-img')
@@ -28,8 +29,8 @@ co(function*() {
     if (!pixiv.hasNext()) {
       break
     }
-    const json = yield pixiv.next()
-    yield dl(json)
+    const nextJson = yield pixiv.next()
+    yield dl(nextJson)
   }
   console.log('finish')
 }).catch(console.error)

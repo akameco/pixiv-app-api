@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 'use strict'
 const Pixiv = require('../')
 
@@ -20,8 +21,8 @@ pixiv.login().then(res => {
 
   pixiv
     .searchIllust(word)
-    .then(res => {
-      console.log(res)
+    .then(r => {
+      console.log(r)
     })
     .then(() => pixiv.next())
     .then(console.log)

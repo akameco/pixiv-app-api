@@ -4,16 +4,14 @@
 
 <img src="media/image.jpg" width=200>
 
-Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
-
+Inspired by [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixivpy).
 
 ## Features
 
-- Promise base
-- Converts the output json key to camelCase
-- Converts the parameter to snakeCase
-- Supports API without login
-
+* Promise base
+* Converts the output json key to camelCase
+* Converts the parameter to snakeCase
+* Supports API without login
 
 ## Install
 
@@ -21,21 +19,22 @@ Inspired by  [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixi
 $ npm install --save pixiv-app-api
 ```
 
-
 ## Usage
 
 ```js
-const PixivAppApi = require('pixiv-app-api');
-const pixivImg = require('pixiv-img');
-const pixiv = new PixivAppApi();
+const PixivAppApi = require('pixiv-app-api')
+const pixivImg = require('pixiv-img')
+const pixiv = new PixivAppApi()
 
-pixiv.searchIllust('艦これ10000users入り')
-	.then(json => {
-		console.log(`downloading ${json.illusts[0].title}`);
-		return pixivImg(json.illusts[0].image_urls.large);
-	}).then(() => {
-		console.log('finish');
-	});
+pixiv
+  .searchIllust('艦これ10000users入り')
+  .then(json => {
+    console.log(`downloading ${json.illusts[0].title}`)
+    return pixivImg(json.illusts[0].image_urls.large)
+  })
+  .then(() => {
+    console.log('finish')
+  })
 ```
 
 See examples.
@@ -43,6 +42,7 @@ See examples.
 ## API
 
 #### constructor(username?: string, password?: string): PixivAppApi;
+
 #### login(username?: string, password?: string): Promise<Object>;
 
 <details>
@@ -56,9 +56,12 @@ See examples.
   "refreshToken": "abcdefgabcdefgabcdefgabcdefg",
   "user": {
     "profileImageUrls": {
-      "px16x16": "https://i.pximg.net/user-profile/img/2016/12/07/18/45/34/11842543_d51209fed2b2566336b1296e07f49b81_16.png",
-      "px50x50": "https://i.pximg.net/user-profile/img/2016/12/07/18/45/34/11842543_d51209fed2b2566336b1296e07f49b81_50.png",
-      "px170x170": "https://i.pximg.net/user-profile/img/2016/12/07/18/45/34/11842543_d51209fed2b2566336b1296e07f49b81_170.png"
+      "px16x16":
+        "https://i.pximg.net/user-profile/img/2016/12/07/18/45/34/11842543_d51209fed2b2566336b1296e07f49b81_16.png",
+      "px50x50":
+        "https://i.pximg.net/user-profile/img/2016/12/07/18/45/34/11842543_d51209fed2b2566336b1296e07f49b81_50.png",
+      "px170x170":
+        "https://i.pximg.net/user-profile/img/2016/12/07/18/45/34/11842543_d51209fed2b2566336b1296e07f49b81_170.png"
     },
     "id": "19785907",
     "name": "akameco",
@@ -74,10 +77,15 @@ See examples.
 </details>
 
 #### authInfo(): Object;
+
 #### hasNext(): bool;
+
 #### next(): Promise<string>;
+
 #### nextQuery(): string;
+
 #### userDetail(id: ID, params?: Object): Promise<Object>;
+
 #### userIllusts(id: ID, params?: Object): Promise<Object>;
 
 <details>
@@ -90,18 +98,23 @@ See examples.
       "title": "Noise Pollution Vol.3",
       "type": "illust",
       "imageUrls": {
-        "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p0_square1200.jpg",
-        "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg",
-        "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg"
+        "squareMedium":
+          "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p0_square1200.jpg",
+        "medium":
+          "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg",
+        "large":
+          "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg"
       },
-      "caption": "夏コミ新刊の②<br /><br />東レ54b-CREAYUS<br />Noise Pollution Vol.3には会場限定A5サイズのクリアファイルがつきます。１冊につき１枚（先着）、なくなり次第終了です。<br /><br />とらのあな予約(フルカラー全年齢)<br /><a href=\"http://www.toranoana.jp/mailorder/article/04/0030/54/88/040030548805.html?rec=circle\" target=\"_blank\">http://www.toranoana.jp/mailorder/article/04/0030/54/88/040030548805.html?rec=circle</a>",
+      "caption":
+        "夏コミ新刊の②<br /><br />東レ54b-CREAYUS<br />Noise Pollution Vol.3には会場限定A5サイズのクリアファイルがつきます。１冊につき１枚（先着）、なくなり次第終了です。<br /><br />とらのあな予約(フルカラー全年齢)<br /><a href=\"http://www.toranoana.jp/mailorder/article/04/0030/54/88/040030548805.html?rec=circle\" target=\"_blank\">http://www.toranoana.jp/mailorder/article/04/0030/54/88/040030548805.html?rec=circle</a>",
       "restrict": 0,
       "user": {
         "id": 471355,
         "name": "嵐月",
         "account": "creayus",
         "profileImageUrls": {
-          "medium": "https://i3.pixiv.net/user-profile/img/2014/02/02/00/05/39/7393018_f1ce44676a8c0d902cc49aad2828e510_170.jpg"
+          "medium":
+            "https://i3.pixiv.net/user-profile/img/2014/02/02/00/05/39/7393018_f1ce44676a8c0d902cc49aad2828e510_170.jpg"
         },
         "isFollowed": true
       },
@@ -125,10 +138,7 @@ See examples.
           "name": "ルルーシュ・ランペルージ"
         }
       ],
-      "tools": [
-        "Photoshop",
-        "SAI"
-      ],
+      "tools": ["Photoshop", "SAI"],
       "createDate": "2017-07-30T12:20:55+09:00",
       "pageCount": 5,
       "width": 900,
@@ -138,42 +148,62 @@ See examples.
       "metaPages": [
         {
           "imageUrls": {
-            "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p0_square1200.jpg",
-            "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg",
-            "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg",
-            "original": "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p0.png"
+            "squareMedium":
+              "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p0_square1200.jpg",
+            "medium":
+              "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg",
+            "large":
+              "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p0_master1200.jpg",
+            "original":
+              "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p0.png"
           }
         },
         {
           "imageUrls": {
-            "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p1_square1200.jpg",
-            "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p1_master1200.jpg",
-            "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p1_master1200.jpg",
-            "original": "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p1.png"
+            "squareMedium":
+              "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p1_square1200.jpg",
+            "medium":
+              "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p1_master1200.jpg",
+            "large":
+              "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p1_master1200.jpg",
+            "original":
+              "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p1.png"
           }
         },
         {
           "imageUrls": {
-            "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p2_square1200.jpg",
-            "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p2_master1200.jpg",
-            "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p2_master1200.jpg",
-            "original": "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p2.png"
+            "squareMedium":
+              "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p2_square1200.jpg",
+            "medium":
+              "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p2_master1200.jpg",
+            "large":
+              "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p2_master1200.jpg",
+            "original":
+              "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p2.png"
           }
         },
         {
           "imageUrls": {
-            "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p3_square1200.jpg",
-            "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p3_master1200.jpg",
-            "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p3_master1200.jpg",
-            "original": "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p3.png"
+            "squareMedium":
+              "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p3_square1200.jpg",
+            "medium":
+              "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p3_master1200.jpg",
+            "large":
+              "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p3_master1200.jpg",
+            "original":
+              "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p3.png"
           }
         },
         {
           "imageUrls": {
-            "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p4_square1200.jpg",
-            "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p4_master1200.jpg",
-            "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p4_master1200.jpg",
-            "original": "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p4.png"
+            "squareMedium":
+              "https://i.pximg.net/c/360x360_70/img-master/img/2017/07/30/12/20/55/64124918_p4_square1200.jpg",
+            "medium":
+              "https://i.pximg.net/c/540x540_70/img-master/img/2017/07/30/12/20/55/64124918_p4_master1200.jpg",
+            "large":
+              "https://i.pximg.net/c/600x1200_90/img-master/img/2017/07/30/12/20/55/64124918_p4_master1200.jpg",
+            "original":
+              "https://i.pximg.net/img-original/img/2017/07/30/12/20/55/64124918_p4.png"
           }
         }
       ],
@@ -185,7 +215,8 @@ See examples.
       "totalComments": 33
     }
   ],
-  "nextUrl": "https://app-api.pixiv.net/v1/user/illusts?user_id=471355&type=illust&filter=for_ios&offset=40"
+  "nextUrl":
+    "https://app-api.pixiv.net/v1/user/illusts?user_id=471355&type=illust&filter=for_ios&offset=40"
 }
 ```
 
@@ -209,9 +240,12 @@ See examples.
     "title": "ロングヘアレムりん",
     "type": "illust",
     "imageUrls": {
-      "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2016/07/15/00/08/24/57907953_p0_square1200.jpg",
-      "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2016/07/15/00/08/24/57907953_p0_master1200.jpg",
-      "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2016/07/15/00/08/24/57907953_p0_master1200.jpg"
+      "squareMedium":
+        "https://i.pximg.net/c/360x360_70/img-master/img/2016/07/15/00/08/24/57907953_p0_square1200.jpg",
+      "medium":
+        "https://i.pximg.net/c/540x540_70/img-master/img/2016/07/15/00/08/24/57907953_p0_master1200.jpg",
+      "large":
+        "https://i.pximg.net/c/600x1200_90/img-master/img/2016/07/15/00/08/24/57907953_p0_master1200.jpg"
     },
     "caption": "デイリー32→5 ありがとうございます！",
     "restrict": 0,
@@ -220,7 +254,8 @@ See examples.
       "name": "こーやふ@三日目東に26b",
       "account": "burittohiroba",
       "profileImageUrls": {
-        "medium": "https://i2.pixiv.net/user-profile/img/2017/02/07/16/03/00/12115481_03cc0ec0f2580ac4a12a3682929b485a_170.jpg"
+        "medium":
+          "https://i2.pixiv.net/user-profile/img/2017/02/07/16/03/00/12115481_03cc0ec0f2580ac4a12a3682929b485a_170.jpg"
       },
       "isFollowed": false
     },
@@ -260,7 +295,8 @@ See examples.
     "height": 1412,
     "sanityLevel": 2,
     "metaSinglePage": {
-      "originalImageUrl": "https://i.pximg.net/img-original/img/2016/07/15/00/08/24/57907953_p0.jpg"
+      "originalImageUrl":
+        "https://i.pximg.net/img-original/img/2016/07/15/00/08/24/57907953_p0.jpg"
     },
     "metaPages": [],
     "totalView": 191059,
@@ -361,7 +397,6 @@ See examples.
 #### searchAutoComplete(word: Word): Promise<Object>;
 #### illustBookmarkDetail(id: ID, params?: Object): Promise<Object>;
 
-
 <details>
 
 ```json
@@ -414,7 +449,9 @@ See examples.
 </details>
 
 #### illustBookmarkAdd(id: ID, data?: Object): Promise<Object>;
+
 #### illustBookmarkDelete(id: ID, data?: Object): Promise<Object>;
+
 #### userBookmarkTagsIllust(params?: Object): Promise<Object>;
 
 <details>
@@ -444,12 +481,13 @@ Return next request result.
 ##### usage
 
 ```js
-pixiv.searchIllust(word)
-	.then(() => pixiv.next())
-	.then(() => pixiv.next())
-	.then(json => {
-		console.log(json);
-	});
+pixiv
+  .searchIllust(word)
+  .then(() => pixiv.next())
+  .then(() => pixiv.next())
+  .then(json => {
+    console.log(json)
+  })
 ```
 
 #### pixiv.hasNext()
@@ -460,7 +498,7 @@ Return `true` if `pixiv.next()` is able to run.
 
 ```js
 if (pixiv.hasNext()) {
-	pixiv.next().then();
+  pixiv.next().then()
 }
 ```
 
@@ -483,10 +521,10 @@ $ npm test
 
 ## Related
 
-- [PixivDeck](https://github.com/akameco/PixivDeck) - pixiv client for Desktop like TweetDeck
-- [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
-- [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
-- [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
+* [PixivDeck](https://github.com/akameco/PixivDeck) - pixiv client for Desktop like TweetDeck
+* [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
+* [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
+* [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
 
 ## License
 

@@ -57,7 +57,9 @@ class PixivApp {
       .then(res => {
         const { response } = res.data
         this.auth = response
-        instance.defaults.headers.common.Authorization = `Bearer ${response.access_token}`
+        instance.defaults.headers.common.Authorization = `Bearer ${
+          response.access_token
+        }`
         return response
       })
   }
