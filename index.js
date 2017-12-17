@@ -4,7 +4,7 @@ const { stringify } = require('querystring')
 const axios = require('axios')
 const camelcaseKeys = require('camelcase-keys')
 const decamelizeKeys = require('decamelize-keys')
-var loginInfo = {username: "", password: "", refresh: ""}
+var refreshToken = "";
 
 const baseURL = 'https://app-api.pixiv.net/'
 const instance = axios.create({
@@ -45,14 +45,15 @@ class PixivApp {
     }
 
     var data = {
-      client_id: 'bYGKuGVw91e0NMfPGp44euvGt59s',
-      client_secret: 'HP3RmkgAmEGro0gn1x9ioawQE8WMfvLXDz3ZqxpK',
+      client_id: 'KzEZED7aC0vird8jWyHM38mXjNTY',
+      client_secret: 'W9JZoJe00qPvJsiyCGT3CCtC6ZUtdpKpzMbNlUGP',
       get_secure_url: 1
     }
 
-    if (loginInfo.refresh !== "") {
+    if (refreshToken !== "") {
+	  console.log(refreshToken);
       data.grant_type = 'refresh_token'
-      data.refresh_token = loginInfo.refresh      
+      data.refresh_token = refreshToken
     }
     else {
       data.grant_type = 'password'
@@ -64,7 +65,7 @@ class PixivApp {
       .then(res => {
         const { response } = res.data
         this.auth = response
-        loginInfo.refresh = res.data.response.refresh_token
+        refreshToken = res.data.response.refresh_token
         instance.defaults.headers.common.Authorization = `Bearer ${
           response.access_token
         }`
