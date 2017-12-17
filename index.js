@@ -52,7 +52,7 @@ class PixivApp {
 
     if (loginInfo.refresh !== "") {
       data.grant_type = 'refresh_token'
-      data.refresh_token = this.refresh      
+      data.refresh_token = loginInfo.refresh      
     }
     else {
       data.grant_type = 'password'
