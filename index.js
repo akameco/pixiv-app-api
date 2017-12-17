@@ -50,14 +50,14 @@ class PixivApp {
       get_secure_url: 1
     }
 
-    if (refreshToken !== "") {
-      data.grant_type = 'refresh_token'
-      data.refresh_token = refreshToken
-    }
-    else {
+    if (refreshToken === "") {
       data.grant_type = 'password'
       data.username = this.username
       data.password = this.password
+    }
+    else {
+      data.grant_type = 'refresh_token'
+      data.refresh_token = refreshToken
     }
     return axios
       .post('https://oauth.secure.pixiv.net/auth/token', stringify(data))
