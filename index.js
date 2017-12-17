@@ -51,7 +51,6 @@ class PixivApp {
     }
 
     if (refreshToken !== "") {
-	  console.log(refreshToken);
       data.grant_type = 'refresh_token'
       data.refresh_token = refreshToken
     }
