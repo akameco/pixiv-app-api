@@ -51,13 +51,13 @@ class PixivApp {
     }
 
     if (loginInfo.refresh !== "") {
-      data.grant_type === 'refresh_token';
-      data.refresh_token === this.refresh;      
+      data.grant_type = 'refresh_token'
+      data.refresh_token = this.refresh      
     }
     else {
-      data.grant_type === 'password';
-      data.username === this.username;
-      data.password === this.password;
+      data.grant_type = 'password'
+      data.username = this.username
+      data.password = this.password
     }
     return axios
       .post('https://oauth.secure.pixiv.net/auth/token', stringify(data))
