@@ -15,6 +15,8 @@ const instance = axios.create({
   }
 })
 
+const CLIENT_ID = 'KzEZED7aC0vird8jWyHM38mXjNTY'
+const CLIENT_SECRET = 'W9JZoJe00qPvJsiyCGT3CCtC6ZUtdpKpzMbNlUGP'
 const filter = 'for_ios'
 
 class PixivApp {
@@ -45,8 +47,8 @@ class PixivApp {
     }
 
     const data = {
-      client_id: 'KzEZED7aC0vird8jWyHM38mXjNTY',
-      client_secret: 'W9JZoJe00qPvJsiyCGT3CCtC6ZUtdpKpzMbNlUGP',
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
       get_secure_url: 1
     }
 
