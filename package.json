@@ -14,8 +14,13 @@
   },
   "scripts": {
     "fmt": "prettier --write '**/*.{js,json,md}'",
+    "precommit": "lint-staged",
     "lint": "eslint --fix .",
     "test": "npm run lint && ava"
+  },
+  "lint-staged": {
+    "*.js": ["fmt", "validate", "git add"],
+    "*.{json,md}": ["fmt", "git add"]
   },
   "files": ["index.js", ".flowconfig", "index.flow.js"],
   "keywords": [
@@ -35,7 +40,9 @@
     "co": "^4.6.0",
     "eslint": "^4.13.1",
     "eslint-config-precure": "^0.11.3",
+    "husky": "^0.14.3",
     "is-plain-obj": "^1.1.0",
+    "lint-staged": "^6.0.0",
     "lodash.isequal": "^4.4.0",
     "pixiv-img": "^0.3.1",
     "prettier": "^1.9.2"

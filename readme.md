@@ -1,4 +1,7 @@
-# pixiv-app-api [![Build Status](https://travis-ci.org/akameco/pixiv-app-api.svg?branch=master)](https://travis-ci.org/akameco/pixiv-app-api)
+# pixiv-app-api
+
+[![Build Status](https://travis-ci.org/akameco/pixiv-app-api.svg?branch=master)](https://travis-ci.org/akameco/pixiv-app-api)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 > Promise base pixiv API client
 
@@ -221,14 +224,21 @@ See examples.
 ```
 
 </details>
-  
+
 #### userFollowAdd(id: ID, data?: Object): Promise<Object>;
+
 #### userFollowDelete(id: ID, data?: Object): Promise<Object>;
+
 #### userBookmarksIllust(id: ID, params?: Object): Promise<Object>;
+
 #### userFollowing(id: ID, params?: Object): Promise<Object>;
+
 #### userFollower(id: ID, params?: Object): Promise<Object>;
+
 #### userMypixiv(id: ID, params?: Object): Promise<Object>;
+
 #### userList(id: ID, params?: Object): Promise<Object>;
+
 #### illustDetail(id: ID, params?: Object): Promise<Object>;
 
 <details>
@@ -310,12 +320,13 @@ See examples.
 ```
 
 </details>
-  
+
 #### illustNew(params?: Object): Promise<Object>;
+
 #### illustFollow(params?: Object): Promise<Object>;
 
 <details>
-  
+
 ```json
 {
   "illusts": [
@@ -324,18 +335,23 @@ See examples.
       "title": "【PFRD】Chapter.6",
       "type": "illust",
       "imageUrls": {
-        "squareMedium": "https://i.pximg.net/c/360x360_70/img-master/img/2017/08/15/00/16/32/64419500_p0_square1200.jpg",
-        "medium": "https://i.pximg.net/c/540x540_70/img-master/img/2017/08/15/00/16/32/64419500_p0_master1200.jpg",
-        "large": "https://i.pximg.net/c/600x1200_90/img-master/img/2017/08/15/00/16/32/64419500_p0_master1200.jpg"
+        "squareMedium":
+          "https://i.pximg.net/c/360x360_70/img-master/img/2017/08/15/00/16/32/64419500_p0_square1200.jpg",
+        "medium":
+          "https://i.pximg.net/c/540x540_70/img-master/img/2017/08/15/00/16/32/64419500_p0_master1200.jpg",
+        "large":
+          "https://i.pximg.net/c/600x1200_90/img-master/img/2017/08/15/00/16/32/64419500_p0_master1200.jpg"
       },
-      "caption": "法尔卡岛.缇拉密林带 <br />挡在阿尔卡娜面前的数个复活者每个个体都带着伤，从摆起的架势来看也似乎毫无章法，但天生的直觉依然如同警铃般急促的敲打着阿尔卡娜的心。<br />“我这是在...害怕么？“感受到握剑的右手微微颤抖，阿尔卡娜自嘲的轻笑”呵..我还以为我已经忘了害怕是什么了呢”。<br /><br />来吧，不管【你们】是什么，堂堂正正的一决胜负吧！",
+      "caption":
+        "法尔卡岛.缇拉密林带 <br />挡在阿尔卡娜面前的数个复活者每个个体都带着伤，从摆起的架势来看也似乎毫无章法，但天生的直觉依然如同警铃般急促的敲打着阿尔卡娜的心。<br />“我这是在...害怕么？“感受到握剑的右手微微颤抖，阿尔卡娜自嘲的轻笑”呵..我还以为我已经忘了害怕是什么了呢”。<br /><br />来吧，不管【你们】是什么，堂堂正正的一决胜负吧！",
       "restrict": 0,
       "user": {
         "id": 22124330,
         "name": "超凶の狄璐卡",
         "account": "swd3e22",
         "profileImageUrls": {
-          "medium": "https://i4.pixiv.net/user-profile/img/2017/01/10/13/28/42/11988991_bae951a38d31d217fa1eceedc0aafdbe_170.jpg"
+          "medium":
+            "https://i4.pixiv.net/user-profile/img/2017/01/10/13/28/42/11988991_bae951a38d31d217fa1eceedc0aafdbe_170.jpg"
         },
         "isFollowed": true
       },
@@ -369,7 +385,8 @@ See examples.
       "height": 1150,
       "sanityLevel": 4,
       "metaSinglePage": {
-        "originalImageUrl": "https://i.pximg.net/img-original/img/2017/08/15/00/16/32/64419500_p0.jpg"
+        "originalImageUrl":
+          "https://i.pximg.net/img-original/img/2017/08/15/00/16/32/64419500_p0.jpg"
       },
       "metaPages": [],
       "totalView": 228,
@@ -377,24 +394,35 @@ See examples.
       "isBookmarked": false,
       "visible": true,
       "isMuted": false
-    },
+    }
   ],
-  "nextUrl": "https://app-api.pixiv.net/v2/illust/follow?restrict=public&offset=30"
+  "nextUrl":
+    "https://app-api.pixiv.net/v2/illust/follow?restrict=public&offset=30"
 }
 ```
-  
+
 </details>
-  
+
 #### illustComments(id: ID, params?: Object): Promise<Object>;
+
 #### illustRelated(id: ID, params?: Object): Promise<Object>;
+
 #### illustRecommended(params?: Object): Promise<Object>;
+
 #### illustRecommendedNologin(params?: Object): Promise<Object>;
+
 #### illustRanking(params?: Object): Promise<Object>;
+
 #### trendingTagsIllust(params?: Object): Promise<Object>;
+
 #### searchIllust(word: Word, params?: Object): Promise<Object>;
+
 #### searchNovel(word: Word, params?: Object): Promise<Object>;
+
 #### searchUser(word: Word, params?: Object): Promise<Object>;
+
 #### searchAutoComplete(word: Word): Promise<Object>;
+
 #### illustBookmarkDetail(id: ID, params?: Object): Promise<Object>;
 
 <details>
@@ -464,12 +492,17 @@ See examples.
 ```
 
 </details>
-  
+
 #### novelRecommended(params?: Object): Promise<Object>;
+
 #### mangaNew(params?: Object): Promise<Object>;
+
 #### mangaRecommended(params?: Object): Promise<Object>;
+
 #### novelRecommendedNologin(params?: Object): Promise<Object>;
+
 #### novelNew(params?: Object): Promise<Object>;
+
 #### fetch(target: string, opts?: Object): Promise<Object>;
 
 See [Sniffer for iOS 6.x Common API · upbit/pixivpy Wiki](https://github.com/upbit/pixivpy/wiki/Sniffer-for-iOS-6.x---Common-API)
