@@ -21,6 +21,7 @@ class PixivApp {
   constructor(username, password, opts) {
     this.username = username
     this.password = password
+    this.refreshToken = ''
     opts = opts || { camelcaseKeys: true }
     if (opts.camelcaseKeys) {
       this.camelcaseKeys = true
@@ -44,19 +45,25 @@ class PixivApp {
     }
 
     const data = {
-      client_id: 'bYGKuGVw91e0NMfPGp44euvGt59s',
-      client_secret: 'HP3RmkgAmEGro0gn1x9ioawQE8WMfvLXDz3ZqxpK',
-      get_secure_url: 1,
-      grant_type: 'password',
-      username: this.username,
-      password: this.password
+      client_id: 'KzEZED7aC0vird8jWyHM38mXjNTY',
+      client_secret: 'W9JZoJe00qPvJsiyCGT3CCtC6ZUtdpKpzMbNlUGP',
+      get_secure_url: 1
     }
 
+    if (this.refreshToken === '') {
+      data.grant_type = 'password'
+      data.username = this.username
+      data.password = this.password
+    } else {
+      data.grant_type = 'refresh_token'
+      data.refresh_token = this.refreshToken
+    }
     return axios
       .post('https://oauth.secure.pixiv.net/auth/token', stringify(data))
       .then(res => {
         const { response } = res.data
         this.auth = response
+        this.refreshToken = res.data.response.refresh_token
         instance.defaults.headers.common.Authorization = `Bearer ${
           response.access_token
         }`
