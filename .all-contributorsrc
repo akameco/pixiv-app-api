@@ -1,0 +1,43 @@
+{
+  "projectName": "pixiv-app-api",
+  "projectOwner": "akameco",
+  "files": [
+    "readme.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "akameco",
+      "name": "akameco",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4002137?v=4",
+      "profile": "http://akameco.github.io",
+      "contributions": [
+        "code",
+        "doc",
+        "test",
+        "infra"
+      ]
+    },
+    {
+      "login": "austinhuang0131",
+      "name": "Austin Huang",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/16656689?v=4",
+      "profile": "http://austinhuang.me",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "najimi",
+      "name": "Cake",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2237174?v=4",
+      "profile": "https://github.com/najimi",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    }
+  ]
+}

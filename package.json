@@ -13,6 +13,7 @@
     "node": ">=6"
   },
   "scripts": {
+    "add-contributor": "all-contributors add",
     "fmt": "prettier --write '**/*.{js,json,md}'",
     "precommit": "lint-staged",
     "lint": "eslint --fix .",
@@ -36,6 +37,7 @@
     "decamelize-keys": "^1.1.0"
   },
   "devDependencies": {
+    "all-contributors-cli": "^4.10.1",
     "ava": "^0.24.0",
     "co": "^4.6.0",
     "eslint": "^4.13.1",

@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/akameco/pixiv-app-api.svg?branch=master)](https://travis-ci.org/akameco/pixiv-app-api)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
 
 > Promise base pixiv API client
 
@@ -558,6 +559,20 @@ $ npm test
 * [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
 * [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
 * [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- prettier-ignore -->
+| [<img src="https://avatars2.githubusercontent.com/u/4002137?v=4" width="100px;"/><br /><sub><b>akameco</b></sub>](http://akameco.github.io)<br />[💻](https://github.com/akameco/pixiv-app-api/commits?author=akameco "Code") [📖](https://github.com/akameco/pixiv-app-api/commits?author=akameco "Documentation") [⚠️](https://github.com/akameco/pixiv-app-api/commits?author=akameco "Tests") [🚇](#infra-akameco "Infrastructure (Hosting, Build-Tools, etc)") | [<img src="https://avatars1.githubusercontent.com/u/16656689?v=4" width="100px;"/><br /><sub><b>Austin Huang</b></sub>](http://austinhuang.me)<br />[💻](https://github.com/akameco/pixiv-app-api/commits?author=austinhuang0131 "Code") [📖](https://github.com/akameco/pixiv-app-api/commits?author=austinhuang0131 "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/2237174?v=4" width="100px;"/><br /><sub><b>Cake</b></sub>](https://github.com/najimi)<br />[💻](https://github.com/akameco/pixiv-app-api/commits?author=najimi "Code") [⚠️](https://github.com/akameco/pixiv-app-api/commits?author=najimi "Tests") |
+| :---: | :---: | :---: |
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
 
 ## License
 
