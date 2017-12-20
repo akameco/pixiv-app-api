@@ -17,10 +17,10 @@
     "fmt": "prettier --write '**/*.{js,json,md}'",
     "precommit": "lint-staged",
     "lint": "eslint --fix .",
-    "test": "npm run lint && ava"
+    "test": "ava"
   },
   "lint-staged": {
-    "*.js": ["fmt", "validate", "git add"],
+    "*.js": ["fmt", "lint", "git add"],
     "*.{json,md}": ["fmt", "git add"]
   },
   "files": ["index.js", ".flowconfig", "index.flow.js"],
