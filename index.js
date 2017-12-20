@@ -21,7 +21,7 @@ class PixivApp {
   constructor(username, password, opts) {
     this.username = username
     this.password = password
-    this.refreshToken = "";
+    this.refreshToken = ''
     opts = opts || { camelcaseKeys: true }
     if (opts.camelcaseKeys) {
       this.camelcaseKeys = true
@@ -44,18 +44,17 @@ class PixivApp {
       )
     }
 
-    var data = {
+    const data = {
       client_id: 'KzEZED7aC0vird8jWyHM38mXjNTY',
       client_secret: 'W9JZoJe00qPvJsiyCGT3CCtC6ZUtdpKpzMbNlUGP',
       get_secure_url: 1
     }
 
-    if (this.refreshToken === "") {
+    if (this.refreshToken === '') {
       data.grant_type = 'password'
       data.username = this.username
       data.password = this.password
-    }
-    else {
+    } else {
       data.grant_type = 'refresh_token'
       data.refresh_token = this.refreshToken
     }
