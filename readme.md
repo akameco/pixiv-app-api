@@ -13,10 +13,10 @@ Inspired by [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixiv
 
 ## Features
 
-* Promise base
-* Converts the output json key to camelCase
-* Converts the parameter to snakeCase
-* Supports API without login
+- Promise base
+- Converts the output json key to camelCase
+- Converts the parameter to snakeCase
+- Supports API without login
 
 ## Install
 
@@ -556,10 +556,10 @@ $ npm test
 
 ## Related
 
-* [PixivDeck](https://github.com/akameco/PixivDeck) - pixiv client for Desktop like TweetDeck
-* [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
-* [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
-* [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
+- [PixivDeck](https://github.com/akameco/PixivDeck) - pixiv client for Desktop like TweetDeck
+- [pixiv-img](https://github.com/akameco/pixiv-img) - save the image of pixiv
+- [pixiv-dl](https://github.com/akameco/pixiv-dl) - pixiv image downloader
+- [pixiv-dl-preview](https://github.com/akameco/pixiv-dl-preview) - electron pixiv downloader
 
 ## Contributors
 

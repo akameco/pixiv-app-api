@@ -20,10 +20,21 @@
     "test": "ava"
   },
   "lint-staged": {
-    "*.js": ["fmt", "lint", "git add"],
-    "*.{json,md}": ["fmt", "git add"]
+    "*.js": [
+      "fmt",
+      "lint",
+      "git add"
+    ],
+    "*.{json,md}": [
+      "fmt",
+      "git add"
+    ]
   },
-  "files": ["index.js", ".flowconfig", "index.flow.js"],
+  "files": [
+    "index.js",
+    ".flowconfig",
+    "index.flow.js"
+  ],
   "keywords": [
     "pixiv",
     "api-client",
@@ -37,7 +48,7 @@
     "decamelize-keys": "^1.1.0"
   },
   "devDependencies": {
-    "all-contributors-cli": "^4.10.1",
+    "all-contributors-cli": "^5.2.1",
     "ava": "^0.25.0",
     "co": "^4.6.0",
     "eslint": "^4.13.1",
@@ -47,6 +58,6 @@
     "lint-staged": "^7.0.0",
     "lodash.isequal": "^4.4.0",
     "pixiv-img": "^0.3.1",
-    "prettier": "^1.9.2"
+    "prettier": "^1.13.7"
   }
 }
