@@ -21,12 +21,12 @@
   },
   "lint-staged": {
     "*.js": [
-      "fmt",
+      "prettier --write",
       "eslint --fix",
       "git add"
     ],
     "*.{json,md}": [
-      "fmt",
+      "prettier --write",
       "git add"
     ]
   },
