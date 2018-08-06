@@ -36,13 +36,15 @@ class PixivApp {
 
     if (typeof this.username !== 'string') {
       return Promise.reject(
-        new TypeError(`Expected a string, got ${typeof this.username}`)
+        new TypeError(`Auth is required.
+        Expected a string, got ${typeof this.username}`)
       )
     }
 
     if (typeof this.password !== 'string') {
       return Promise.reject(
-        new TypeError(`Expected a string, got ${typeof this.password}`)
+        new TypeError(`Auth is required.
+        Expected a string, got ${typeof this.password}`)
       )
     }
 

@@ -1,6 +1,6 @@
 /* eslint no-console:0 */
 'use strict'
-const Pixiv = require('../')
+const Pixiv = require('..')
 
 const { USERNAME, PASSWORD } = process.env
 const pixiv = new Pixiv(USERNAME, PASSWORD)

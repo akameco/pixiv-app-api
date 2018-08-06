@@ -2,7 +2,7 @@
 'use strict'
 const co = require('co')
 const pixivImg = require('pixiv-img')
-const Pixiv = require('../')
+const Pixiv = require('..')
 
 const pixiv = new Pixiv()
 

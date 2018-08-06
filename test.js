@@ -1,7 +1,7 @@
 import test from 'ava'
 import isPlainObj from 'is-plain-obj'
 import isEqual from 'lodash.isequal'
-import PixivAppApi from './'
+import PixivAppApi from '.'
 
 const userId = 471355
 const illustId = 57907953

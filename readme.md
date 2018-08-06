@@ -29,7 +29,7 @@ $ npm install --save pixiv-app-api
 ```js
 const PixivAppApi = require('pixiv-app-api')
 const pixivImg = require('pixiv-img')
-const pixiv = new PixivAppApi()
+const pixiv = new PixivAppApi(process.env.USERNAME, process.env.PASSWORD)
 
 pixiv
   .searchIllust('艦これ10000users入り')
