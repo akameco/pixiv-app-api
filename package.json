@@ -22,7 +22,7 @@
   "lint-staged": {
     "*.js": [
       "fmt",
-      "lint",
+      "eslint --fix",
       "git add"
     ],
     "*.{json,md}": [
