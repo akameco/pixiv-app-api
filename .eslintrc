@@ -1,5 +1,5 @@
 {
-  "extends": "precure",
+  "extends": "precure/auto",
   "rules": {
     "camelcase": 0
   }

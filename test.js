@@ -1,128 +1,135 @@
-import test from 'ava'
-import isPlainObj from 'is-plain-obj'
-import isEqual from 'lodash.isequal'
-import PixivAppApi from '.'
+const isEqual = require('lodash.isequal')
+const isPlainObj = require('is-plain-obj')
+const PixivAppApi = require('.')
 
 const userId = 471355
 const illustId = 57907953
 
-test.beforeEach('new Pixiv()', t => {
-  const username = process.env.USERNAME
-  const password = process.env.PASSWORD
-  t.context.m = new PixivAppApi(username, password)
+function setup() {
+  const { NAME, PASSWORD } = process.env
+  return new PixivAppApi(NAME, PASSWORD)
+}
+
+async function login() {
+  const pixiv = setup()
+  const auth = await pixiv.login()
+  return { auth, m: pixiv }
+}
+
+test('expose a constructor', () => {
+  expect(typeof PixivAppApi === 'function').toBe(true)
 })
 
-test('expose a constructor', t => {
-  t.true(typeof PixivAppApi === 'function')
+test('auth', async () => {
+  const { m } = await login()
+  const json = m.authInfo()
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('auth', async t => {
-  await t.context.m.login()
-  const json = await t.context.m.authInfo()
-  t.true(isPlainObj(json))
+test('userDetail', async () => {
+  const { m } = await login()
+  const json = await m.userDetail(userId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('userDetail', async t => {
-  await t.context.m.login()
-  const json = await t.context.m.userDetail(userId)
-  t.true(isPlainObj(json))
+test('userIllusts', async () => {
+  const m = setup()
+  const json = await m.userIllusts(userId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('userIllusts', async t => {
-  const json = await t.context.m.userIllusts(userId)
-  t.true(isPlainObj(json))
+test('userBookmarksIllust', async () => {
+  const { m, auth } = await login()
+  const json = await m.userBookmarksIllust(auth.user.id)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('userBookmarksIllust', async t => {
-  const auth = await t.context.m.login()
-  const json = await t.context.m.userBookmarksIllust(auth.user.id)
-  t.true(isPlainObj(json))
-})
-
-test('userBookmarksIllust private', async t => {
-  const auth = await t.context.m.login()
-  const json = await t.context.m.userBookmarksIllust(auth.user.id, {
+test('userBookmarksIllust private', async () => {
+  const { auth, m } = await login()
+  const json = await m.userBookmarksIllust(auth.user.id, {
     restrict: 'private'
   })
-  t.true(isPlainObj(json))
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustDetail', async t => {
-  await t.context.m.login()
-  const json = await t.context.m.illustDetail(illustId)
-  t.true(isPlainObj(json))
+test('illustDetail', async () => {
+  const { m } = await login()
+  const json = await m.illustDetail(illustId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustFollow', async t => {
-  await t.context.m.login()
-  const json = await t.context.m.illustFollow(userId)
-  t.true(isPlainObj(json))
+test('illustFollow', async () => {
+  const { m } = await login()
+  const json = await m.illustFollow(userId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustComments', async t => {
-  const json = await t.context.m.illustComments(illustId)
-  t.true(isPlainObj(json))
+test('illustComments', async () => {
+  const m = setup()
+  const json = await m.illustComments(illustId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustRelated', async t => {
-  const json = await t.context.m.illustRelated(illustId)
-  t.true(isPlainObj(json))
+test('illustRelated', async () => {
+  const m = setup()
+  const json = await m.illustRelated(illustId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustRecommended', async t => {
-  await t.context.m.login()
-  const json = await t.context.m.illustRecommended()
-  t.true(isPlainObj(json))
+test('illustRecommended', async () => {
+  const { m } = await login()
+  const json = await m.illustRecommended()
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustRanking', async t => {
-  const json = await t.context.m.illustRanking()
-  t.true(isPlainObj(json))
+test('illustRanking', async () => {
+  const m = setup()
+  const json = await m.illustRanking()
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('trendingTagsIllust', async t => {
-  const json = await t.context.m.trendingTagsIllust()
-  t.true(isPlainObj(json))
+test('trendingTagsIllust', async () => {
+  const m = setup()
+  const json = await m.trendingTagsIllust()
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('searchIllust', async t => {
-  const json = await t.context.m.searchIllust('レム')
-  t.true(isPlainObj(json))
+test('searchIllust', async () => {
+  const m = setup()
+  const json = await m.searchIllust('レム')
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('illustBookmarkDetail', async t => {
-  const json = await t.context.m.illustBookmarkDetail(illustId)
-  t.true(isPlainObj(json))
+test('illustBookmarkDetail', async () => {
+  const m = setup()
+  const json = await m.illustBookmarkDetail(illustId)
+  expect(isPlainObj(json)).toBe(true)
 })
 
-test('error if params missing', async t => {
-  async function macro(fn, message) {
-    const error = await t.throws(fn())
-    t.is(error.message, message)
-  }
-  const m = t.context.m
-
-  await macro(m.userDetail, 'user_id required')
-  await macro(m.userIllusts, 'user_id required')
-  await macro(m.userBookmarksIllust, 'user_id required')
-  await macro(m.illustComments, 'illust_id required')
-  await macro(m.illustRelated, 'illust_id required')
-  await macro(m.searchIllust, 'word required')
-  await macro(m.illustBookmarkDetail, 'illust_id required')
+test('error if params missing', async () => {
+  const { m } = await login()
+  await expect(m.userBookmarksIllust()).rejects.toThrow('user_id required')
+  await expect(m.illustComments()).rejects.toThrow('illust_id required')
+  await expect(m.illustRelated()).rejects.toThrow('illust_id required')
+  await expect(m.searchIllust()).rejects.toThrow('word required')
+  await expect(m.illustBookmarkDetail()).rejects.toThrow('illust_id required')
 })
 
-test('decamelize params', async t => {
-  const json1 = await t.context.m.userIllusts(userId)
-  const json2 = await t.context.m.userIllusts(userId, { userId: 2957827 })
-  t.false(isEqual(json1, json2))
+test('decamelize params', async () => {
+  const m = setup()
+  const json1 = await m.userIllusts(userId)
+  const json2 = await m.userIllusts(userId, { userId: 2957827 })
+  expect(isEqual(json1, json2)).toBe(false)
 })
 
-test('camelcaseKeys', async t => {
-  const json = await t.context.m.userIllusts(userId, { userId: 2957827 })
-  t.true({}.hasOwnProperty.call(json, 'nextUrl'))
+test('camelcaseKeys', async () => {
+  const m = setup()
+  const json = await m.userIllusts(userId, { userId: 2957827 })
+  expect({}.hasOwnProperty.call(json, 'nextUrl')).toBe(true)
 })
 
-test('not camelcaseKeys', async t => {
-  const json = await t.context.m.userIllusts(userId, { userId: 2957827 })
-  t.false({}.hasOwnProperty.call(json, 'next_url'))
+test('not camelcaseKeys', async () => {
+  const m = setup()
+  const json = await m.userIllusts(userId, { userId: 2957827 })
+  expect({}.hasOwnProperty.call(json, 'next_url')).toBe(false)
 })

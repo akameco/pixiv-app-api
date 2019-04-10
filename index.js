@@ -15,8 +15,8 @@ const instance = axios.create({
   }
 })
 
-const CLIENT_ID = 'KzEZED7aC0vird8jWyHM38mXjNTY'
-const CLIENT_SECRET = 'W9JZoJe00qPvJsiyCGT3CCtC6ZUtdpKpzMbNlUGP'
+const CLIENT_ID = 'MOBrBDS8blbauoSck0ZfDbtuzpyT'
+const CLIENT_SECRET = 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj'
 const filter = 'for_ios'
 
 class PixivApp {
@@ -30,7 +30,7 @@ class PixivApp {
     }
   }
 
-  login(username, password) {
+  async login(username, password) {
     this.username = username || this.username
     this.password = password || this.password
 
@@ -62,17 +62,17 @@ class PixivApp {
       data.grant_type = 'refresh_token'
       data.refresh_token = this.refreshToken
     }
-    return axios
-      .post('https://oauth.secure.pixiv.net/auth/token', stringify(data))
-      .then(res => {
-        const { response } = res.data
-        this.auth = response
-        this.refreshToken = res.data.response.refresh_token
-        instance.defaults.headers.common.Authorization = `Bearer ${
-          response.access_token
-        }`
-        return response
-      })
+    const res = await axios.post(
+      'https://oauth.secure.pixiv.net/auth/token',
+      stringify(data)
+    )
+    const { response } = res.data
+    this.auth = response
+    this.refreshToken = res.data.response.refresh_token
+    instance.defaults.headers.common.Authorization = `Bearer ${
+      response.access_token
+    }`
+    return response
   }
 
   authInfo() {
@@ -91,33 +91,22 @@ class PixivApp {
     return url.parse(this.nextUrl, true).params
   }
 
-  userDetail(id, params) {
-    if (!id) {
-      return Promise.reject(new Error('user_id required'))
+  userDetail(id, params = {}) {
+    params = {
+      user_id: id,
+      filter,
+      ...params
     }
-    params = Object.assign(
-      {
-        user_id: id,
-        filter
-      },
-      params
-    )
     return this.fetch('/v1/user/detail', { params })
   }
 
   userIllusts(id, params) {
-    if (!id) {
-      return Promise.reject(new Error('user_id required'))
+    params = {
+      user_id: id,
+      type: 'illust',
+      filter,
+      ...params
     }
-
-    params = Object.assign(
-      {
-        user_id: id,
-        type: 'illust',
-        filter
-      },
-      params
-    )
     return this.fetch('/v1/user/illusts', { params })
   }
 
@@ -125,14 +114,12 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    data = Object.assign(
-      {
-        user_id: id,
-        restrict: 'public',
-        filter
-      },
-      data
-    )
+    data = {
+      user_id: id,
+      restrict: 'public',
+      filter,
+      ...data
+    }
     return this.fetch('/v1/user/follow/add', { data })
   }
 
@@ -140,14 +127,12 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    data = Object.assign(
-      {
-        user_id: id,
-        restrict: 'public',
-        filter
-      },
-      data
-    )
+    data = {
+      user_id: id,
+      restrict: 'public',
+      filter,
+      ...data
+    }
     return this.fetch('/v1/user/follow/delete', { data })
   }
 
@@ -155,14 +140,12 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    params = Object.assign(
-      {
-        user_id: id,
-        restrict: 'public',
-        filter
-      },
-      params
-    )
+    params = {
+      user_id: id,
+      restrict: 'public',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/user/bookmarks/illust', { params })
   }
 
@@ -170,13 +153,11 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    params = Object.assign(
-      {
-        user_id: id,
-        restrict: 'public'
-      },
-      params
-    )
+    params = {
+      user_id: id,
+      restrict: 'public',
+      ...params
+    }
     return this.fetch('/v1/user/following', { params })
   }
 
@@ -184,12 +165,10 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    params = Object.assign(
-      {
-        user_id: id
-      },
-      params
-    )
+    params = {
+      user_id: id,
+      ...params
+    }
     return this.fetch('/v1/user/follower', { params })
   }
 
@@ -197,12 +176,10 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    params = Object.assign(
-      {
-        user_id: id
-      },
-      params
-    )
+    params = {
+      user_id: id,
+      ...params
+    }
     return this.fetch('/v1/user/mypixiv', { params })
   }
 
@@ -210,13 +187,11 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
-    params = Object.assign(
-      {
-        user_id: id,
-        filter
-      },
-      params
-    )
+    params = {
+      user_id: id,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/user/list', { params })
   }
 
@@ -224,34 +199,28 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
-    params = Object.assign(
-      {
-        illust_id: id,
-        filter
-      },
-      params
-    )
+    params = {
+      illust_id: id,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/illust/detail', { params })
   }
 
   illustNew(params) {
-    params = Object.assign(
-      {
-        content_type: 'illust',
-        filter
-      },
-      params
-    )
+    params = {
+      content_type: 'illust',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/illust/new', { params })
   }
 
   illustFollow(params) {
-    params = Object.assign(
-      {
-        restrict: 'public'
-      },
-      params
-    )
+    params = {
+      restrict: 'public',
+      ...params
+    }
     return this.fetch('/v2/illust/follow', { params })
   }
 
@@ -259,13 +228,11 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
-    params = Object.assign(
-      {
-        illust_id: id,
-        include_total_comments: 'true'
-      },
-      params
-    )
+    params = {
+      illust_id: id,
+      include_total_comments: 'true',
+      ...params
+    }
     return this.fetch('/v1/illust/comments', { params })
   }
 
@@ -273,57 +240,47 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
-    params = Object.assign(
-      {
-        illust_id: id,
-        filter
-      },
-      params
-    )
+    params = {
+      illust_id: id,
+      filter,
+      ...params
+    }
     return this.fetch('/v2/illust/related', { params })
   }
 
   illustRecommended(params) {
-    params = Object.assign(
-      {
-        content_type: 'illust',
-        include_ranking_label: 'true',
-        filter
-      },
-      params
-    )
+    params = {
+      content_type: 'illust',
+      include_ranking_label: 'true',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/illust/recommended', { params })
   }
 
   illustRecommendedNologin(params) {
-    params = Object.assign(
-      {
-        include_ranking_illusts: true,
-        filter
-      },
-      params
-    )
+    params = {
+      include_ranking_illusts: true,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/illust/recommended-nologin', { params })
   }
 
   illustRanking(params) {
-    params = Object.assign(
-      {
-        mode: 'day',
-        filter
-      },
-      params
-    )
+    params = {
+      mode: 'day',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/illust/ranking', { params })
   }
 
   trendingTagsIllust(params) {
-    params = Object.assign(
-      {
-        filter
-      },
-      params
-    )
+    params = {
+      filter,
+      ...params
+    }
     return this.fetch('/v1/trending-tags/illust', { params })
   }
 
@@ -331,15 +288,13 @@ class PixivApp {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
-    params = Object.assign(
-      {
-        word,
-        search_target: 'partial_match_for_tags',
-        sort: 'date_desc',
-        filter
-      },
-      params
-    )
+    params = {
+      word,
+      search_target: 'partial_match_for_tags',
+      sort: 'date_desc',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/search/illust', { params })
   }
 
@@ -347,15 +302,13 @@ class PixivApp {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
-    params = Object.assign(
-      {
-        word,
-        search_target: 'partial_match_for_tags',
-        sort: 'date_desc',
-        filter
-      },
-      params
-    )
+    params = {
+      word,
+      search_target: 'partial_match_for_tags',
+      sort: 'date_desc',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/search/novel', { params })
   }
 
@@ -363,13 +316,11 @@ class PixivApp {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
-    params = Object.assign(
-      {
-        word,
-        filter
-      },
-      params
-    )
+    params = {
+      word,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/search/user', { params })
   }
 
@@ -384,12 +335,10 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
-    params = Object.assign(
-      {
-        illust_id: id
-      },
-      params
-    )
+    params = {
+      illust_id: id,
+      ...params
+    }
     return this.fetch('/v2/illust/bookmark/detail', { params })
   }
 
@@ -397,13 +346,11 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
-    data = Object.assign(
-      {
-        illust_id: id,
-        restrict: 'public'
-      },
-      data
-    )
+    data = {
+      illust_id: id,
+      restrict: 'public',
+      ...data
+    }
     return this.fetch('/v2/illust/bookmark/add', { data })
   }
 
@@ -411,66 +358,54 @@ class PixivApp {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
-    data = Object.assign(
-      {
-        illust_id: id
-      },
-      data
-    )
+    data = {
+      illust_id: id,
+      ...data
+    }
     return this.fetch('/v1/illust/bookmark/delete', { data })
   }
 
   userBookmarkTagsIllust(params) {
-    params = Object.assign(
-      {
-        restrict: 'public'
-      },
-      params
-    )
+    params = {
+      restrict: 'public',
+      ...params
+    }
     return this.fetch('/v1/user/bookmark-tags/illust', { params })
   }
 
   novelRecommended(params) {
-    params = Object.assign(
-      {
-        include_ranking_novels: true,
-        filter
-      },
-      params
-    )
+    params = {
+      include_ranking_novels: true,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/novel/recommended', { params })
   }
 
   mangaNew(params) {
-    params = Object.assign(
-      {
-        content_type: 'manga',
-        filter
-      },
-      params
-    )
+    params = {
+      content_type: 'manga',
+      filter,
+      ...params
+    }
     return this.fetch('/v1/manga/new', { params })
   }
 
   mangaRecommended(params) {
-    params = Object.assign(
-      {
-        include_ranking_label: true,
-        filter
-      },
-      params
-    )
+    params = {
+      include_ranking_label: true,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/manga/recommended', { params })
   }
 
   novelRecommendedNologin(params) {
-    params = Object.assign(
-      {
-        include_ranking_novels: true,
-        filter
-      },
-      params
-    )
+    params = {
+      include_ranking_novels: true,
+      filter,
+      ...params
+    }
     return this.fetch('/v1/novel/recommended-nologin', { params })
   }
 
@@ -483,10 +418,10 @@ class PixivApp {
       return Promise.reject(new Error('url required'))
     }
 
-    return this._got(target, opts).catch(err => {
+    return this._got(target, opts).catch(error => {
       if (this.once) {
         this.once = false
-        throw err
+        throw error
       }
 
       return this.login().then(() => {

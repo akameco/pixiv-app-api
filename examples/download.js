@@ -1,36 +1,43 @@
 /* eslint no-console:0 */
 'use strict'
-const co = require('co')
+// eslint-disable-next-line import/no-extraneous-dependencies
 const pixivImg = require('pixiv-img')
 const Pixiv = require('..')
 
-const pixiv = new Pixiv()
-
-const word = '艦これ10000users入り'
-
 const wait = () => new Promise(resolve => setTimeout(() => resolve(), 100))
 
-function* dl(json) {
+async function dl(json) {
   for (const x of json.illusts) {
-    console.log(x.title)
-    const orignalImgUrl = x.meta_single_page.original_image_url
+    console.log(JSON.stringify(x, null, 2))
+    const { orignalImgUrl } = x.metaSinglePage
     if (orignalImgUrl) {
-      yield pixivImg(orignalImgUrl)
-      yield wait()
+      // eslint-disable-next-line no-await-in-loop
+      await pixivImg(orignalImgUrl)
+      // eslint-disable-next-line no-await-in-loop
+      await wait()
     }
   }
 }
 
-co(function*() {
-  const json = yield pixiv.searchIllust(word)
-  yield dl(json)
+async function main() {
+  const { NAME, PASSWORD } = process.env
+  const pixiv = new Pixiv(NAME, PASSWORD)
+  const word = '艦これ10000users入り'
+
+  await pixiv.login()
+  const json = await pixiv.searchIllust(word)
+  await dl(json)
   // eslint-disable-next-line no-constant-condition
   while (true) {
     if (!pixiv.hasNext()) {
       break
     }
-    const nextJson = yield pixiv.next()
-    yield dl(nextJson)
+    // eslint-disable-next-line no-await-in-loop
+    const nextJson = await pixiv.next()
+    // eslint-disable-next-line no-await-in-loop
+    await dl(nextJson)
   }
   console.log('finish')
-}).catch(console.error)
+}
+
+main().catch(console.error)

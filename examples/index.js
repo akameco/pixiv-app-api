@@ -2,42 +2,43 @@
 'use strict'
 const Pixiv = require('..')
 
-const { USERNAME, PASSWORD } = process.env
-const pixiv = new Pixiv(USERNAME, PASSWORD)
-const userId = 471355
-const illustId = 57907953
-const word = '艦これ10000users入り'
-pixiv.login().then(res => {
+async function main() {
+  const { NAME, PASSWORD } = process.env
+  const pixiv = new Pixiv(NAME, PASSWORD)
+  const userId = 471355
+  const illustId = 57907953
+  const word = '艦これ10000users入り'
+  const res = await pixiv.login()
   console.log(res)
-  pixiv.userIllusts(userId).then(console.log)
-  pixiv.userIllusts(userId).then(console.log)
-  pixiv.userBookmarksIllust(userId).then(console.log)
-  pixiv.userBookmarksIllust(userId).then(console.log)
-  pixiv.illustFollow().then(console.log)
-  pixiv.illustComments(illustId).then(console.log)
-  pixiv.trendingTagsIllust().then(console.log)
-  pixiv.userDetail(userId).then(console.log)
-  pixiv.illustDetail(illustId).then(console.log)
+  console.log(await pixiv.userIllusts(userId))
+  await pixiv.userIllusts(userId).then(console.log)
+  await pixiv.userBookmarksIllust(userId).then(console.log)
+  await pixiv.userBookmarksIllust(userId).then(console.log)
+  await pixiv.illustFollow().then(console.log)
+  await pixiv.illustComments(illustId).then(console.log)
+  await pixiv.trendingTagsIllust().then(console.log)
+  await pixiv.userDetail(userId).then(console.log)
+  await pixiv.illustDetail(illustId).then(console.log)
 
-  pixiv
-    .searchIllust(word)
-    .then(r => {
-      console.log(r)
-    })
-    .then(() => pixiv.next())
-    .then(console.log)
+  {
+    const res1 = await pixiv.searchIllust(word)
+    console.log(res1)
+    const res2 = await pixiv.next()
+    console.log(res2)
+  }
 
-  pixiv.illustBookmarkDetail(illustId).then(console.log)
+  await pixiv.illustBookmarkDetail(illustId).then(console.log)
 
-  pixiv
-    .illustBookmarkDelete(illustId)
-    .then(() => {
-      console.log('delete bookmak')
-    })
-    .then(() => pixiv.illustBookmarkAdd(illustId))
-    .then(() => {
-      console.log('add bookmak')
-    })
+  await pixiv.illustBookmarkDelete(illustId)
+  console.log('delete bookmak')
+  await pixiv.illustBookmarkAdd(illustId)
+  console.log('add bookmak')
 
-  pixiv.userBookmarkTagsIllust({ restrict: 'public' }).then(console.log)
-})
+  await pixiv.userBookmarkTagsIllust({ restrict: 'public' })
+}
+
+try {
+  main()
+} catch (error) {
+  console.log(error)
+}
