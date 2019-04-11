@@ -15,7 +15,6 @@
   "scripts": {
     "add-contributor": "all-contributors add",
     "fmt": "prettier --write '**/*.{js,json,md}'",
-    "precommit": "lint-staged",
     "lint": "eslint --fix .",
     "test": "jest"
   },
@@ -59,5 +58,10 @@
     "lodash.isequal": "^4.4.0",
     "pixiv-img": "^0.3.1",
     "prettier": "^1.13.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
