@@ -1,12 +1,14 @@
 language: node_js
 node_js:
-  - '10'
-  - '8'
+  - 'stable'
 cache:
   yarn: true
   directories:
     - ".eslintcache"
     - "node_modules"
-
+script:
+  - yarn run test --ci --runInBand
+branches:
+  only: master
 notifications:
   email: false
