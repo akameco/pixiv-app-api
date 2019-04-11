@@ -20,12 +20,12 @@ const CLIENT_SECRET = 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj'
 const filter = 'for_ios'
 
 class PixivApp {
-  constructor(username, password, opts) {
+  constructor(username, password, options) {
     this.username = username
     this.password = password
     this.refreshToken = ''
-    opts = opts || { camelcaseKeys: true }
-    if (opts.camelcaseKeys) {
+    options = options || { camelcaseKeys: true }
+    if (options.camelcaseKeys) {
       this.camelcaseKeys = true
     }
   }
@@ -62,13 +62,13 @@ class PixivApp {
       data.grant_type = 'refresh_token'
       data.refresh_token = this.refreshToken
     }
-    const res = await axios.post(
+    const axiosResponse = await axios.post(
       'https://oauth.secure.pixiv.net/auth/token',
       stringify(data)
     )
-    const { response } = res.data
+    const { response } = axiosResponse.data
     this.auth = response
-    this.refreshToken = res.data.response.refresh_token
+    this.refreshToken = axiosResponse.data.response.refresh_token
     instance.defaults.headers.common.Authorization = `Bearer ${
       response.access_token
     }`
@@ -413,12 +413,12 @@ class PixivApp {
     return this.fetch('/v1/novel/new', { params })
   }
 
-  fetch(target, opts) {
+  fetch(target, options) {
     if (!target) {
       return Promise.reject(new Error('url required'))
     }
 
-    return this._got(target, opts).catch(error => {
+    return this._got(target, options).catch(error => {
       if (this.once) {
         this.once = false
         throw error
@@ -426,28 +426,28 @@ class PixivApp {
 
       return this.login().then(() => {
         this.once = true
-        return this._got(target, opts)
+        return this._got(target, options)
       })
     })
   }
 
-  _got(target, opts) {
-    opts = opts || {}
+  _got(target, options) {
+    options = options || {}
 
-    if (opts.data) {
-      opts.method = 'post'
-      opts.headers = {
+    if (options.data) {
+      options.method = 'post'
+      options.headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
-      opts.data = stringify(decamelizeKeys(opts.data))
+      options.data = stringify(decamelizeKeys(options.data))
     }
 
-    if (opts.params) {
-      opts.params = decamelizeKeys(opts.params)
+    if (options.params) {
+      options.params = decamelizeKeys(options.params)
     }
 
-    return instance(target, opts).then(res => {
-      const { data } = res
+    return instance(target, options).then(response => {
+      const { data } = response
       this.nextUrl = data && data.next_url ? data.next_url : null
       return this.camelcaseKeys ? camelcaseKeys(data, { deep: true }) : data
     })
