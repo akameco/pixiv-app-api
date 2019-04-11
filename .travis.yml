@@ -7,7 +7,7 @@ cache:
     - ".eslintcache"
     - "node_modules"
 script:
-  - yarn run test --ci --runInBand
+  - yarn run test --ci --detectOpenHandles
 branches:
   only: master
 notifications:
