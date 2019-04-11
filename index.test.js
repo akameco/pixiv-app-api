@@ -13,9 +13,13 @@ function setup() {
 const pixiv = setup()
 let auth = null
 
-// リクエストを送りまくると制限されるので1度だけlogin
-beforeAll(async () => {
+async function setAuth() {
   auth = await pixiv.login()
+}
+
+// リクエストを送りまくると制限されるので1度だけlogin
+beforeAll(() => {
+  return setAuth()
 })
 
 test('expose a constructor', () => {
