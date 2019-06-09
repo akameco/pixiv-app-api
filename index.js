@@ -69,9 +69,7 @@ class PixivApp {
     const { response } = axiosResponse.data
     this.auth = response
     this.refreshToken = axiosResponse.data.response.refresh_token
-    instance.defaults.headers.common.Authorization = `Bearer ${
-      response.access_token
-    }`
+    instance.defaults.headers.common.Authorization = `Bearer ${response.access_token}`
     return response
   }
 
