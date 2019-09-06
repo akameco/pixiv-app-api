@@ -2,6 +2,7 @@
 const url = require('url')
 const { stringify } = require('querystring')
 const axios = require('axios')
+const crypto = require('crypto')
 const camelcaseKeys = require('camelcase-keys')
 const decamelizeKeys = require('decamelize-keys')
 
@@ -17,6 +18,7 @@ const instance = axios.create({
 
 const CLIENT_ID = 'MOBrBDS8blbauoSck0ZfDbtuzpyT'
 const CLIENT_SECRET = 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj'
+const HASH_SECRET = '28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c'
 const filter = 'for_ios'
 
 class PixivApp {
@@ -48,6 +50,12 @@ class PixivApp {
       )
     }
 
+    const local_time = new Date().toISOString();
+    const headers = {
+      'X-Client-Time': local_time,
+      'X-Client-Hash': crypto.createHash('md5').update(new Buffer(`${local_time}${HASH_SECRET}`, 'utf8')).digest('hex')
+    }
+
     const data = {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
@@ -64,7 +72,8 @@ class PixivApp {
     }
     const axiosResponse = await axios.post(
       'https://oauth.secure.pixiv.net/auth/token',
-      stringify(data)
+      stringify(data),
+      { headers }
     )
     const { response } = axiosResponse.data
     this.auth = response
