@@ -7,9 +7,10 @@ const Pixiv = require('..')
 const wait = () => new Promise(resolve => setTimeout(() => resolve(), 100))
 
 async function dl(json) {
-  for (const x of json.illusts) {
-    console.log(JSON.stringify(x, null, 2))
-    const { orignalImgUrl } = x.metaSinglePage
+  // eslint-disable-next-line no-unused-vars
+  for (const illust of json.illusts) {
+    console.log(JSON.stringify(illust, null, 2))
+    const { orignalImgUrl } = illust.metaSinglePage
     if (orignalImgUrl) {
       // eslint-disable-next-line no-await-in-loop
       await pixivImg(orignalImgUrl)

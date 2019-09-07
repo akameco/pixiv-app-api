@@ -1,7 +1,7 @@
 # pixiv-app-api
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 
 > Promise base pixiv API client
 
@@ -519,7 +519,8 @@ $ npm test
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="http://akameco.github.io"><img src="https://avatars2.githubusercontent.com/u/4002137?v=4" width="100px;" alt="akameco"/><br /><sub><b>akameco</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Documentation">📖</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Tests">⚠️</a> <a href="#infra-akameco" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
@@ -529,6 +530,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://www.linkedin.com/in/jiefenghe/"><img src="https://avatars0.githubusercontent.com/u/4796423?v=4" width="100px;" alt="yeti2018"/><br /><sub><b>yeti2018</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yeti2018" title="Code">💻</a></td>
   </tr>
 </table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
