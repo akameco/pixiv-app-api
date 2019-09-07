@@ -1,4 +1,10 @@
 module.exports = {
   testEnvironment: 'node',
-  testURL: 'http://localhost'
+  testURL: 'http://localhost',
+  preset: 'ts-jest',
+  globals: {
+    'ts-jest': {
+      diagnostics: false
+    }
+  }
 }
