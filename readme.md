@@ -1,7 +1,7 @@
 # pixiv-app-api
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 
 > Promise base pixiv API client
 
@@ -520,7 +520,15 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-<table><tr><td align="center"><a href="http://akameco.github.io"><img src="https://avatars2.githubusercontent.com/u/4002137?v=4" width="100px;" alt="akameco"/><br /><sub><b>akameco</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Documentation">📖</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Tests">⚠️</a> <a href="#infra-akameco" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td><td align="center"><a href="http://austinhuang.me"><img src="https://avatars1.githubusercontent.com/u/16656689?v=4" width="100px;" alt="Austin Huang"/><br /><sub><b>Austin Huang</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=austinhuang0131" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=austinhuang0131" title="Documentation">📖</a></td><td align="center"><a href="https://github.com/najimi"><img src="https://avatars3.githubusercontent.com/u/2237174?v=4" width="100px;" alt="Cake"/><br /><sub><b>Cake</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=najimi" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=najimi" title="Tests">⚠️</a></td><td align="center"><a href="https://www.linkedin.com/in/adefirmanf/"><img src="https://avatars0.githubusercontent.com/u/23324722?v=4" width="100px;" alt="Ade Firman Fauzi"/><br /><sub><b>Ade Firman Fauzi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=adefirmanf" title="Code">💻</a></td></tr></table>
+<table>
+  <tr>
+    <td align="center"><a href="http://akameco.github.io"><img src="https://avatars2.githubusercontent.com/u/4002137?v=4" width="100px;" alt="akameco"/><br /><sub><b>akameco</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Documentation">📖</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=akameco" title="Tests">⚠️</a> <a href="#infra-akameco" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="http://austinhuang.me"><img src="https://avatars1.githubusercontent.com/u/16656689?v=4" width="100px;" alt="Austin Huang"/><br /><sub><b>Austin Huang</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=austinhuang0131" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=austinhuang0131" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/najimi"><img src="https://avatars3.githubusercontent.com/u/2237174?v=4" width="100px;" alt="Cake"/><br /><sub><b>Cake</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=najimi" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=najimi" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/adefirmanf/"><img src="https://avatars0.githubusercontent.com/u/23324722?v=4" width="100px;" alt="Ade Firman Fauzi"/><br /><sub><b>Ade Firman Fauzi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=adefirmanf" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/jiefenghe/"><img src="https://avatars0.githubusercontent.com/u/4796423?v=4" width="100px;" alt="yeti2018"/><br /><sub><b>yeti2018</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yeti2018" title="Code">💻</a></td>
+  </tr>
+</table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
