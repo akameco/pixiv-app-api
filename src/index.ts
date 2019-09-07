@@ -1,10 +1,9 @@
-'use strict'
-const url = require('url')
-const { stringify } = require('querystring')
-const crypto = require('crypto')
-const axios = require('axios')
-const camelcaseKeys = require('camelcase-keys')
-const decamelizeKeys = require('decamelize-keys')
+import url from 'url'
+import { stringify } from 'querystring'
+import crypto from 'crypto'
+import axios from 'axios'
+import camelcaseKeys from 'camelcase-keys'
+import decamelizeKeys from 'decamelize-keys'
 
 const baseURL = 'https://app-api.pixiv.net/'
 const instance = axios.create({
@@ -23,18 +22,28 @@ const HASH_SECRET =
 const filter = 'for_ios'
 
 class PixivApp {
-  constructor(username, password, options) {
+  username: string
+  password: string
+  refreshToken: string
+  camelcaseKeys: boolean | undefined
+  nextUrl: any
+  auth: any
+  once: any
+  constructor(
+    username: string,
+    password: string,
+    options: { camelcaseKeys: boolean } = { camelcaseKeys: true }
+  ) {
     this.username = username
     this.password = password
     this.refreshToken = ''
-    options = options || { camelcaseKeys: true }
     if (options.camelcaseKeys) {
       this.camelcaseKeys = true
     }
   }
 
   // eslint-disable-next-line max-lines-per-function
-  async login(username, password) {
+  async login(username?: string, password?: string) {
     this.username = username || this.username
     this.password = password || this.password
 
@@ -61,7 +70,7 @@ class PixivApp {
         .digest('hex')
     }
 
-    const data = {
+    const data: any = {
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       get_secure_url: 1
@@ -80,6 +89,7 @@ class PixivApp {
       stringify(data),
       { headers }
     )
+
     const { response } = axiosResponse.data
     this.auth = response
     this.refreshToken = axiosResponse.data.response.refresh_token
@@ -100,29 +110,32 @@ class PixivApp {
   }
 
   nextQuery() {
+    // @ts-ignore
     return url.parse(this.nextUrl, true).params
   }
 
-  userDetail(id, params = {}) {
+  userDetail(id: number, params = {}) {
     params = {
       user_id: id,
       filter,
       ...params
     }
+
     return this.fetch('/v1/user/detail', { params })
   }
 
-  userIllusts(id, params) {
+  userIllusts(id, params?: any) {
     params = {
       user_id: id,
       type: 'illust',
       filter,
       ...params
     }
+
     return this.fetch('/v1/user/illusts', { params })
   }
 
-  userFollowAdd(id, data) {
+  userFollowAdd(id, data?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -132,10 +145,11 @@ class PixivApp {
       filter,
       ...data
     }
+
     return this.fetch('/v1/user/follow/add', { data })
   }
 
-  userFollowDelete(id, data) {
+  userFollowDelete(id, data?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -145,10 +159,11 @@ class PixivApp {
       filter,
       ...data
     }
+
     return this.fetch('/v1/user/follow/delete', { data })
   }
 
-  userBookmarksIllust(id, params) {
+  userBookmarksIllust(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -158,10 +173,11 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/user/bookmarks/illust', { params })
   }
 
-  userFollowing(id, params) {
+  userFollowing(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -170,10 +186,11 @@ class PixivApp {
       restrict: 'public',
       ...params
     }
+
     return this.fetch('/v1/user/following', { params })
   }
 
-  userFollower(id, params) {
+  userFollower(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -181,10 +198,11 @@ class PixivApp {
       user_id: id,
       ...params
     }
+
     return this.fetch('/v1/user/follower', { params })
   }
 
-  userMypixiv(id, params) {
+  userMypixiv(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -192,10 +210,11 @@ class PixivApp {
       user_id: id,
       ...params
     }
+
     return this.fetch('/v1/user/mypixiv', { params })
   }
 
-  userList(id, params) {
+  userList(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('user_id required'))
     }
@@ -204,10 +223,11 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/user/list', { params })
   }
 
-  illustDetail(id, params) {
+  illustDetail(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
@@ -216,27 +236,30 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/illust/detail', { params })
   }
 
-  illustNew(params) {
+  illustNew(params?: any) {
     params = {
       content_type: 'illust',
       filter,
       ...params
     }
+
     return this.fetch('/v1/illust/new', { params })
   }
 
-  illustFollow(params) {
+  illustFollow(params?: any) {
     params = {
       restrict: 'public',
       ...params
     }
+
     return this.fetch('/v2/illust/follow', { params })
   }
 
-  illustComments(id, params) {
+  illustComments(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
@@ -245,10 +268,11 @@ class PixivApp {
       include_total_comments: 'true',
       ...params
     }
+
     return this.fetch('/v1/illust/comments', { params })
   }
 
-  illustRelated(id, params) {
+  illustRelated(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
@@ -257,46 +281,51 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v2/illust/related', { params })
   }
 
-  illustRecommended(params) {
+  illustRecommended(params?: any) {
     params = {
       content_type: 'illust',
       include_ranking_label: 'true',
       filter,
       ...params
     }
+
     return this.fetch('/v1/illust/recommended', { params })
   }
 
-  illustRecommendedNologin(params) {
+  illustRecommendedNologin(params?: any) {
     params = {
       include_ranking_illusts: true,
       filter,
       ...params
     }
+
     return this.fetch('/v1/illust/recommended-nologin', { params })
   }
 
-  illustRanking(params) {
+  illustRanking(params?: any) {
     params = {
       mode: 'day',
       filter,
       ...params
     }
+
     return this.fetch('/v1/illust/ranking', { params })
   }
 
-  trendingTagsIllust(params) {
+  trendingTagsIllust(params?: any) {
     params = {
       filter,
       ...params
     }
+
     return this.fetch('/v1/trending-tags/illust', { params })
   }
 
-  searchIllust(word, params) {
+  searchIllust(word, params?: any) {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
@@ -307,10 +336,11 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/search/illust', { params })
   }
 
-  searchNovel(word, params) {
+  searchNovel(word, params?: any) {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
@@ -321,10 +351,11 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/search/novel', { params })
   }
 
-  searchUser(word, params) {
+  searchUser(word, params?: any) {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
@@ -333,17 +364,18 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/search/user', { params })
   }
 
-  searchAutoComplete(word) {
+  searchAutoComplete(word: string) {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
     return this.fetch('/v1/search/autocomplete', { params: { word } })
   }
 
-  illustBookmarkDetail(id, params) {
+  illustBookmarkDetail(id, params?: any) {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
@@ -351,10 +383,11 @@ class PixivApp {
       illust_id: id,
       ...params
     }
+
     return this.fetch('/v2/illust/bookmark/detail', { params })
   }
 
-  illustBookmarkAdd(id, data) {
+  illustBookmarkAdd(id, data?: any) {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
@@ -363,10 +396,11 @@ class PixivApp {
       restrict: 'public',
       ...data
     }
+
     return this.fetch('/v2/illust/bookmark/add', { data })
   }
 
-  illustBookmarkDelete(id, data) {
+  illustBookmarkDelete(id, data?: any) {
     if (!id) {
       return Promise.reject(new Error('illust_id required'))
     }
@@ -374,14 +408,16 @@ class PixivApp {
       illust_id: id,
       ...data
     }
+
     return this.fetch('/v1/illust/bookmark/delete', { data })
   }
 
-  userBookmarkTagsIllust(params) {
+  userBookmarkTagsIllust(params?: any) {
     params = {
       restrict: 'public',
       ...params
     }
+
     return this.fetch('/v1/user/bookmark-tags/illust', { params })
   }
 
@@ -391,6 +427,7 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/novel/recommended', { params })
   }
 
@@ -400,6 +437,7 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/manga/new', { params })
   }
 
@@ -409,6 +447,7 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/manga/recommended', { params })
   }
 
@@ -418,6 +457,7 @@ class PixivApp {
       filter,
       ...params
     }
+
     return this.fetch('/v1/novel/recommended-nologin', { params })
   }
 
@@ -425,7 +465,7 @@ class PixivApp {
     return this.fetch('/v1/novel/new', { params })
   }
 
-  fetch(target, options) {
+  fetch(target, options = {}) {
     if (!target) {
       return Promise.reject(new Error('url required'))
     }
@@ -443,7 +483,7 @@ class PixivApp {
     })
   }
 
-  _got(target, options) {
+  _got(target, options?: any) {
     options = options || {}
 
     if (options.data) {
@@ -451,6 +491,7 @@ class PixivApp {
       options.headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
+
       options.data = stringify(decamelizeKeys(options.data))
     }
 
@@ -466,4 +507,6 @@ class PixivApp {
   }
 }
 
+export default PixivApp
+module.exports.defaults = PixivApp
 module.exports = PixivApp

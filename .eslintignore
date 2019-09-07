@@ -1,1 +1,3 @@
-*.flow.js
+dist
+examples
+jest.config.js

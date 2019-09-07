@@ -2,7 +2,7 @@
 'use strict'
 // eslint-disable-next-line import/no-extraneous-dependencies
 const pixivImg = require('pixiv-img')
-const Pixiv = require('..')
+const Pixiv = require('../dist')
 
 const wait = () => new Promise(resolve => setTimeout(() => resolve(), 100))
 

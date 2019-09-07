@@ -1,6 +1,6 @@
 /* eslint no-console:0 */
 'use strict'
-const Pixiv = require('..')
+const Pixiv = require('../dist')
 
 const main = async () => {
   const { NAME, PASSWORD } = process.env

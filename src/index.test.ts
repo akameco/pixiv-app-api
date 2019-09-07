@@ -1,19 +1,20 @@
-const isEqual = require('lodash.isequal')
-const isPlainObj = require('is-plain-obj')
-const PixivAppApi = require('.')
+import isEqual from 'lodash.isequal'
+import isPlainObj from 'is-plain-obj'
+import PixivAppApi from '.'
 
 const userId = 471355
 const illustId = 57907953
+const PASSWORD = process.env.PASSWORD as string
+const NAME = process.env.NAME as string
 
 jest.setTimeout(10000)
 
 function setup() {
-  const { NAME, PASSWORD } = process.env
   return new PixivAppApi(NAME, PASSWORD)
 }
 
 const pixiv = setup()
-let auth = null
+let auth: any = null
 
 async function setAuth() {
   auth = await pixiv.login()
@@ -56,6 +57,7 @@ test('userBookmarksIllust private', async () => {
   const json = await pixiv.userBookmarksIllust(auth.user.id, {
     restrict: 'private'
   })
+
   expect(isPlainObj(json)).toBe(true)
 })
 
@@ -111,17 +113,6 @@ test('illustBookmarkDetail', async () => {
   expect.assertions(1)
   const json = await pixiv.illustBookmarkDetail(illustId)
   expect(isPlainObj(json)).toBe(true)
-})
-
-test('error if params missing', async () => {
-  expect.assertions(5)
-  await expect(pixiv.userBookmarksIllust()).rejects.toThrow('user_id required')
-  await expect(pixiv.illustComments()).rejects.toThrow('illust_id required')
-  await expect(pixiv.illustRelated()).rejects.toThrow('illust_id required')
-  await expect(pixiv.searchIllust()).rejects.toThrow('word required')
-  await expect(pixiv.illustBookmarkDetail()).rejects.toThrow(
-    'illust_id required'
-  )
 })
 
 test('decamelize params', async () => {

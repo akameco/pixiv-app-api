@@ -12,14 +12,17 @@
   "engines": {
     "node": ">=8"
   },
+  "main": "dist/index.js",
   "scripts": {
     "add-contributor": "all-contributors add",
-    "fmt": "prettier --write '**/*.{js,json,md}'",
+    "fmt": "prettier --write '**/*.{ts,js,json,md}'",
+    "build": "tsc",
     "lint": "eslint --fix .",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "yarn build"
   },
   "lint-staged": {
-    "*.js": [
+    "*.ts": [
       "prettier --write",
       "eslint --fix",
       "git add"
@@ -30,9 +33,7 @@
     ]
   },
   "files": [
-    "index.js",
-    ".flowconfig",
-    "index.flow.js"
+    "dist"
   ],
   "keywords": [
     "pixiv",
@@ -47,16 +48,23 @@
     "decamelize-keys": "^1.1.0"
   },
   "devDependencies": {
+    "@akameco/tsconfig": "^0.3.0",
+    "@types/is-plain-obj": "^2.0.2",
+    "@types/jest": "^24.0.18",
+    "@types/lodash.isequal": "^4.5.5",
+    "@types/node": "^12.7.4",
     "all-contributors-cli": "^6.9.0",
     "eslint": "^6.3.0",
-    "eslint-config-precure": "^5.0.2",
+    "eslint-config-precure": "^5.1.0",
     "husky": "^3.0.5",
     "is-plain-obj": "^2.0.0",
     "jest": "^24.9.0",
     "lint-staged": "^9.2.5",
     "lodash.isequal": "^4.4.0",
     "pixiv-img": "^1.0.0",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.6.2"
   },
   "husky": {
     "hooks": {
