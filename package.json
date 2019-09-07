@@ -17,7 +17,7 @@
     "add-contributor": "all-contributors add",
     "fmt": "prettier --write '**/*.{ts,js,json,md}'",
     "build": "tsc",
-    "lint": "eslint --fix .",
+    "lint": "eslint --fix src/*.ts",
     "test": "jest",
     "prepublish": "yarn build"
   },
