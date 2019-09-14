@@ -508,5 +508,5 @@ class PixivApp {
 }
 
 export default PixivApp
-module.exports.defaults = PixivApp
+module.exports.default = PixivApp
 module.exports = PixivApp
