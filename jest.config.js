@@ -6,5 +6,6 @@ module.exports = {
     'ts-jest': {
       diagnostics: false
     }
-  }
+  },
+  testPathIgnorePatterns: ["/node_modules/", "dist"]
 }
