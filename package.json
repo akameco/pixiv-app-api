@@ -1,6 +1,6 @@
 {
   "name": "pixiv-app-api",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "Promise base pixiv API client",
   "license": "MIT",
   "repository": "akameco/pixiv-app-api",
