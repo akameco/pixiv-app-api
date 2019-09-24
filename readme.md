@@ -80,6 +80,21 @@ See examples.
 
 #### nextQuery(): string;
 
+#### makeIterable(resp?: Object): AsyncIterable<Object>
+
+<details>
+
+```js
+const json = await pixiv.searchIllust('艦これ10000users入り')
+let ar = []
+for await (const r of pixiv.makeIterable(json)){
+  ar = ar.concat(r.illusts)
+}
+console.log(ar.length)
+```
+
+</details>
+
 #### userDetail(id: ID, params?: Object): Promise<Object>;
 
 #### userIllusts(id: ID, params?: Object): Promise<Object>;
