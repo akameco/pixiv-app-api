@@ -1,7 +1,7 @@
 # pixiv-app-api
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 
 > Promise base pixiv API client
 
@@ -79,6 +79,22 @@ See examples.
 #### next(): Promise<string>;
 
 #### nextQuery(): string;
+
+#### makeIterable(resp?: Object): AsyncIterable<Object>
+
+<details>
+
+```js
+const json = await pixiv.searchIllust('艦これ10000users入り')
+let ar = []
+for await (const r of pixiv.makeIterable(json)){
+  ar = ar.concat(r.illusts)
+  await sleep(1000) // if the request rate is too high, pixiv might ban you
+}
+console.log(ar.length)
+```
+
+</details>
 
 #### userDetail(id: ID, params?: Object): Promise<Object>;
 
@@ -528,6 +544,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/najimi"><img src="https://avatars3.githubusercontent.com/u/2237174?v=4" width="100px;" alt="Cake"/><br /><sub><b>Cake</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=najimi" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=najimi" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/adefirmanf/"><img src="https://avatars0.githubusercontent.com/u/23324722?v=4" width="100px;" alt="Ade Firman Fauzi"/><br /><sub><b>Ade Firman Fauzi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=adefirmanf" title="Code">💻</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/jiefenghe/"><img src="https://avatars0.githubusercontent.com/u/4796423?v=4" width="100px;" alt="yeti2018"/><br /><sub><b>yeti2018</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yeti2018" title="Code">💻</a></td>
+    <td align="center"><a href="https://blog.maple3142.net/"><img src="https://avatars1.githubusercontent.com/u/9370547?v=4" width="100px;" alt="maple"/><br /><sub><b>maple</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=maple3142" title="Code">💻</a></td>
   </tr>
 </table>
 

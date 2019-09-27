@@ -114,6 +114,23 @@ class PixivApp {
     return url.parse(this.nextUrl, true).params
   }
 
+  makeIterable(resp: object): AsyncIterable<object> {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    const nextUrl = this.camelcaseKeys ? 'nextUrl' : 'next_url'
+    return {
+      async *[Symbol.asyncIterator]() {
+        yield resp
+        // eslint-disable-next-line require-atomic-updates
+        while (resp[nextUrl]) {
+          // eslint-disable-next-line require-atomic-updates, no-await-in-loop
+          resp = await self.fetch(resp[nextUrl])
+          yield resp
+        }
+      }
+    }
+  }
+
   userDetail(id: number, params = {}) {
     params = {
       user_id: id,

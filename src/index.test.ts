@@ -133,3 +133,10 @@ test('not camelcaseKeys', async () => {
   const json = await pixiv.userIllusts(userId, { userId: 2957827 })
   expect({}.hasOwnProperty.call(json, 'next_url')).toBe(false)
 })
+
+test('makeIterable', async () => {
+  expect.assertions(1)
+  const json = await pixiv.userIllusts(userId, { userId: 2957827 })
+  const iterable = pixiv.makeIterable(json)
+  expect({}.hasOwnProperty.call(iterable, Symbol.asyncIterator)).toBe(true)
+})
