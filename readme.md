@@ -89,7 +89,7 @@ const json = await pixiv.searchIllust('艦これ10000users入り')
 let ar = []
 for await (const r of pixiv.makeIterable(json)){
   ar = ar.concat(r.illusts)
-  await sleep(1000) // if the request rate is too high, Pixiv might ban you
+  await sleep(1000) // if the request rate is too high, pixiv might ban you
 }
 console.log(ar.length)
 ```
