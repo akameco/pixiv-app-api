@@ -321,6 +321,8 @@ Gets your friends on Mypixiv.
 
 #### `userList(id: ID, params?: PixivParams): Promise<unknown>`
 
+Gets a user list.
+
 #### `illustDetail(id: ID, params?: PixivParams): Promise<PixivIllust>`
 
 Returns detailed info for a pixiv illust.
