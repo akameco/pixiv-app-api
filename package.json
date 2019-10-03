@@ -34,7 +34,10 @@
     ]
   },
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "tsconfig.json",
+    "declarations.d.ts"
   ],
   "keywords": [
     "pixiv",
