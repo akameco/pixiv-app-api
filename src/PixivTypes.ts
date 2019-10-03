@@ -1,7 +1,7 @@
 export interface PixivClient {
   accessToken: string
   expiresIn: number
-  tokeninterface: string
+  tokenType: string
   scope: string
   refreshToken: string
   user: PixivClientUser
@@ -37,7 +37,7 @@ export interface PixivParams {
   userId?: number
   type?: string
   filter?: string
-  restrict?: "public" | "private"
+  restrict?: 'public' | 'private'
   illustId?: number
   contentType?: string
   includeTotalComments?: boolean
@@ -45,28 +45,28 @@ export interface PixivParams {
   includeRankingIllusts?: boolean
   includeRankingNovels?: boolean
   mode?:
-    | "day"
-    | "week"
-    | "month"
-    | "day_male"
-    | "day_female"
-    | "week_original"
-    | "week_rookie"
-    | "day_r18"
-    | "day_male_r18"
-    | "day_female_r18"
-    | "week_r18"
-    | "week_r18g"
-    | "day_manga"
-    | "week_manga"
-    | "month_manga"
-    | "week_rookie_manga"
-    | "day_r18_manga"
-    | "week_r18_manga"
-    | "week_r18g_manga"
+    | 'day'
+    | 'week'
+    | 'month'
+    | 'day_male'
+    | 'day_female'
+    | 'week_original'
+    | 'week_rookie'
+    | 'day_r18'
+    | 'day_male_r18'
+    | 'day_female_r18'
+    | 'week_r18'
+    | 'week_r18g'
+    | 'day_manga'
+    | 'week_manga'
+    | 'month_manga'
+    | 'week_rookie_manga'
+    | 'day_r18_manga'
+    | 'week_r18_manga'
+    | 'week_r18g_manga'
   word?: string
-  searchTarget?: "partial_match_for_tags" | "exact_match_for_tags" | "title_and_caption"
-  sort?: "date_desc" | "date_asc" | "popular_desc"
+  searchTarget?: 'partial_match_for_tags' | 'exact_match_for_tags' | 'title_and_caption'
+  sort?: 'date_desc' | 'date_asc' | 'popular_desc'
   startDate?: string
   endDate?: string
 }
@@ -187,7 +187,7 @@ export interface PixivMangaSearch {
 export interface PixivIllust {
   id: number
   title: string
-  interface: string
+  type: string
   imageUrls: {
     squareMedium: string
     medium: string
@@ -275,7 +275,7 @@ export interface PixivNovel {
 export interface PixivManga {
   id: number
   title: string
-  interface: string
+  type: string
   imageUrls: {
     squareMedium: string
     medium: string

@@ -1,7 +1,7 @@
 export interface Pixiv_Client {
   access_token: string
   expires_in: number
-  token_interface: string
+  token_type: string
   scope: string
   refresh_token: string
   user: Pixiv_Client_User
@@ -27,7 +27,7 @@ export interface Pixiv_Request_Data {
   client_id: string
   client_secret: string
   get_secure_url: string
-  grant_interface: string
+  grant_type: string
   refresh_token: string
   username: string
   password: string
@@ -107,9 +107,9 @@ export interface Pixiv_User_Search {
     user: Pixiv_User
     illusts: Pixiv_Illust[]
     novels: Pixiv_Novel[]
-    isMuted: boolean
+    is_muted: boolean
   }[]
-  nextUrl: string | null
+  next_url: string | null
 }
 
 export interface Pixiv_Comment_Search {
@@ -120,9 +120,9 @@ export interface Pixiv_Comment_Search {
 
 export interface Pixiv_Novel_Search {
   novels: Pixiv_Novel[]
-  nextUrl: string | null
+  next_url: string | null
   privacy_policy?: {}
-  searchSpanLimit?: number
+  search_span_limit?: number
 }
 
 export interface Pixiv_Bookmark_Search {
@@ -132,15 +132,15 @@ export interface Pixiv_Bookmark_Search {
 
 export interface Pixiv_Manga_Search {
   illusts: Pixiv_Manga[]
-  rankingIllusts: Pixiv_Manga[] | []
-  privacyPolicy: {}
-  nextUrl: string | null
+  ranking_illusts: Pixiv_Manga[] | []
+  privacy_policy: {}
+  next_url: string | null
 }
 
 export interface Pixiv_Illust {
   id: number
   title: string
-  interface: string
+  type: string
   image_urls: {
     square_medium: string
     medium: string
@@ -228,7 +228,7 @@ export interface Pixiv_Novel {
 export interface Pixiv_Manga {
   id: number
   title: string
-  interface: string
+  type: string
   image_urls: {
     square_medium: string
     medium: string
@@ -255,7 +255,7 @@ export interface Pixiv_Manga {
   total_bookmarks: number
   is_bookmarked: boolean
   visible: boolean
-  isMuted: boolean
+  is_muted: boolean
 }
 
 export interface Pixiv_Trend_Tags {
