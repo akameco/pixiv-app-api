@@ -64,6 +64,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Tenpi",
+      "name": "Tenpi",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/37512637?v=4",
+      "profile": "https://www.youtube.com/tenpi",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "repoType": "github",
