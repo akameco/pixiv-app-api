@@ -65,7 +65,10 @@ export interface PixivParams {
     | 'week_r18_manga'
     | 'week_r18g_manga'
   word?: string
-  searchTarget?: 'partial_match_for_tags' | 'exact_match_for_tags' | 'title_and_caption'
+  searchTarget?:
+    | 'partial_match_for_tags'
+    | 'exact_match_for_tags'
+    | 'title_and_caption'
   sort?: 'date_desc' | 'date_asc' | 'popular_desc'
   startDate?: string
   endDate?: string
