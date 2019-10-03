@@ -1,129 +1,155 @@
-import url from 'url'
-import { stringify } from 'querystring'
-import crypto from 'crypto'
-import axios from 'axios'
-import camelcaseKeys from 'camelcase-keys'
-import decamelizeKeys from 'decamelize-keys'
+import {stringify} from "querystring"
+import * as crypto from "crypto"
+import url from "url"
+import axios, {AxiosRequestConfig} from "axios"
+import decamelizeKeys from "decamelize-keys"
+import camelcaseKeys from "camelcase-keys"
+import {
+  Pixiv_Client,
+  Pixiv_User_Detail,
+  Pixiv_Illust_Search,
+  Pixiv_User_Search,
+  Pixiv_Illust,
+  Pixiv_Comment_Search,
+  Pixiv_Trend_Tags,
+  Pixiv_Novel_Search,
+  Pixiv_Auto_Complete,
+  Pixiv_Bookmark_Detail,
+  Pixiv_Bookmark_Search,
+  Ugoira_Meta_Data
+} from "./Pixiv_Types"
+import {
+  PixivClient,
+  PixivIllustSearch,
+  PixivRequestData,
+  PixivParams,
+  PixivFetchOptions,
+  PixivBookmarkDetail,
+  PixivBookmarkSearch,
+  PixivUserDetail,
+  PixivUserSearch,
+  PixivIllust,
+  PixivCommentSearch,
+  PixivNovelSearch,
+  PixivAutoComplete,
+  UgoiraMetaData,
+  PixivTrendTags
+} from "./PixivTypes"
 
-const baseURL = 'https://app-api.pixiv.net/'
+const baseURL = "https://app-api.pixiv.net/"
 const instance = axios.create({
   baseURL,
   headers: {
-    'App-OS': 'ios',
-    'App-OS-Version': '9.3.3',
-    'App-Version': '6.0.9'
+    "App-OS": "ios",
+    "App-OS-Version": "9.3.3",
+    "App-Version": "6.0.9"
   }
 })
 
-const CLIENT_ID = 'MOBrBDS8blbauoSck0ZfDbtuzpyT'
-const CLIENT_SECRET = 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj'
-const HASH_SECRET =
-  '28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c'
-const filter = 'for_ios'
+const CLIENT_ID = "MOBrBDS8blbauoSck0ZfDbtuzpyT"
+const CLIENT_SECRET = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj"
+const HASH_SECRET = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c"
+const filter = "for_ios"
 
-class PixivApp {
-  username: string
-  password: string
-  refreshToken: string
-  camelcaseKeys: boolean | undefined
-  nextUrl: any
-  auth: any
-  once: any
-  constructor(
-    username: string,
-    password: string,
-    options: { camelcaseKeys: boolean } = { camelcaseKeys: true }
-  ) {
+export default class PixivApp<B extends boolean> {
+  public camelcaseKeys = true as B
+  private username: string | undefined
+  private password: string | undefined
+  private refreshToken: string
+  private nextUrl: string | null
+  private auth: PixivClient | null
+  private once: boolean
+
+  constructor(username?: string, password?: string, options?: {camelcaseKeys?: B}) {
     this.username = username
     this.password = password
-    this.refreshToken = ''
-    if (options.camelcaseKeys) {
-      this.camelcaseKeys = true
+    this.refreshToken = ""
+    this.nextUrl = null
+    this.auth = null
+    this.once = false
+    if (options) {
+      this.camelcaseKeys = Boolean(options.camelcaseKeys) as B
     }
   }
 
-  // eslint-disable-next-line max-lines-per-function
-  async login(username?: string, password?: string) {
+  public async login(username?: string, password?: string): Promise<B extends true ? PixivClient : Pixiv_Client> {
     this.username = username || this.username
     this.password = password || this.password
 
-    if (typeof this.username !== 'string') {
+    if (typeof this.username !== "string" && typeof this.password !== "string") {
       return Promise.reject(
         new TypeError(`Auth is required.
-        Expected a string, got ${typeof this.username}`)
-      )
-    }
-
-    if (typeof this.password !== 'string') {
-      return Promise.reject(
-        new TypeError(`Auth is required.
-        Expected a string, got ${typeof this.password}`)
+        Expected a string, got ${typeof this.username !== "string" ? typeof this.username : typeof this.password}`)
       )
     }
 
     const local_time = new Date().toISOString()
     const headers = {
-      'X-Client-Time': local_time,
-      'X-Client-Hash': crypto
-        .createHash('md5')
-        .update(Buffer.from(`${local_time}${HASH_SECRET}`, 'utf8'))
-        .digest('hex')
+      "X-Client-Time": local_time,
+      "X-Client-Hash": crypto
+        .createHash("md5")
+        .update(Buffer.from(`${local_time}${HASH_SECRET}`, "utf8"))
+        .digest("hex")
     }
 
-    const data: any = {
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      get_secure_url: 1
+    const data: PixivRequestData = {
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      getSecureUrl: "1",
+      grantType: "",
+      username: "",
+      password: "",
+      refreshToken: ""
     }
 
-    if (this.refreshToken === '') {
-      data.grant_type = 'password'
-      data.username = this.username
-      data.password = this.password
+    if (this.refreshToken === "") {
+      data.grantType = "password"
+      data.username = this.username!
+      data.password = this.password!
     } else {
-      data.grant_type = 'refresh_token'
-      data.refresh_token = this.refreshToken
+      data.grantType = "refresh_token"
+      data.refreshToken = this.refreshToken
     }
-    const axiosResponse = await axios.post(
-      'https://oauth.secure.pixiv.net/auth/token',
-      stringify(data),
-      { headers }
-    )
 
-    const { response } = axiosResponse.data
+    const axiosResponse = await axios.post("https://oauth.secure.pixiv.net/auth/token", stringify(decamelizeKeys(data)), {headers})
+
+    const {response} = axiosResponse.data
     this.auth = response
     this.refreshToken = axiosResponse.data.response.refresh_token
     instance.defaults.headers.common.Authorization = `Bearer ${response.access_token}`
-    return response
+    return this.camelcaseKeys ? camelcaseKeys(response, {deep: true}) : response
   }
 
-  authInfo() {
-    return this.auth
+  public authInfo(): B extends true ? PixivClient : Pixiv_Client {
+    type authInfoType = B extends true ? PixivClient : Pixiv_Client
+    return this.camelcaseKeys
+      ? ((camelcaseKeys(this.auth!, {
+          deep: true
+        }) as unknown) as authInfoType)
+      : (this.auth as authInfoType)
   }
 
-  hasNext() {
+  public hasNext(): boolean {
     return Boolean(this.nextUrl)
   }
 
-  next() {
-    return this.fetch(this.nextUrl)
+  public next(): Promise<string | null> {
+    return this.fetch(this.nextUrl!)
   }
 
-  nextQuery() {
+  public nextQuery(): undefined | string {
+    // This always returns undefined
     // @ts-ignore
-    return url.parse(this.nextUrl, true).params
+    return url.parse(this.nextUrl!, true).params
   }
 
-  makeIterable(resp: object): AsyncIterable<object> {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
+  public makeIterable(resp: any): AsyncIterable<any> {
     const self = this
-    const nextUrl = this.camelcaseKeys ? 'nextUrl' : 'next_url'
+    const nextUrl = this.camelcaseKeys ? "nextUrl" : "next_url"
     return {
       async *[Symbol.asyncIterator]() {
         yield resp
-        // eslint-disable-next-line require-atomic-updates
         while (resp[nextUrl]) {
-          // eslint-disable-next-line require-atomic-updates, no-await-in-loop
           resp = await self.fetch(resp[nextUrl])
           yield resp
         }
@@ -131,399 +157,394 @@ class PixivApp {
     }
   }
 
-  userDetail(id: number, params = {}) {
+  public userDetail(id: number, params?: PixivParams): Promise<B extends true ? PixivUserDetail : Pixiv_User_Detail> {
     params = {
-      user_id: id,
+      userId: id,
       filter,
       ...params
     }
-
-    return this.fetch('/v1/user/detail', { params })
+    return this.fetch("/v1/user/detail", {params})
   }
 
-  userIllusts(id, params?: any) {
+  public userIllusts(id: number, params?: PixivParams): Promise<B extends true ? PixivIllustSearch[] : Pixiv_Illust_Search[]> {
     params = {
-      user_id: id,
-      type: 'illust',
+      userId: id,
+      type: "illust",
       filter,
       ...params
     }
-
-    return this.fetch('/v1/user/illusts', { params })
+    return this.fetch("/v1/user/illusts", {params})
   }
 
-  userFollowAdd(id, data?: any) {
+  // This endpoint doesn't exist
+  public userFollowAdd(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
-    data = {
-      user_id: id,
-      restrict: 'public',
+    params = {
+      userId: id,
+      restrict: "public",
       filter,
-      ...data
+      ...params
     }
-
-    return this.fetch('/v1/user/follow/add', { data })
+    return this.fetch("/v1/user/follow/add", {params})
   }
 
-  userFollowDelete(id, data?: any) {
+  // This endpoint doesn't exist
+  public userFollowDelete(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
-    data = {
-      user_id: id,
-      restrict: 'public',
+    params = {
+      userId: id,
+      restrict: "public",
       filter,
-      ...data
+      ...params
     }
-
-    return this.fetch('/v1/user/follow/delete', { data })
+    return this.fetch("/v1/user/follow/delete", {params})
   }
 
-  userBookmarksIllust(id, params?: any) {
+  public userBookmarksIllust(id: number, params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
     params = {
-      user_id: id,
-      restrict: 'public',
+      userId: id,
+      restrict: "public",
       filter,
       ...params
     }
-
-    return this.fetch('/v1/user/bookmarks/illust', { params })
+    return this.fetch("/v1/user/bookmarks/illust", {params})
   }
 
-  userFollowing(id, params?: any) {
+  public userFollowing(id: number, params?: PixivParams): Promise<B extends true ? PixivUserSearch : Pixiv_User_Search> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
     params = {
-      user_id: id,
-      restrict: 'public',
+      userId: id,
+      restrict: "public",
       ...params
     }
-
-    return this.fetch('/v1/user/following', { params })
+    return this.fetch("/v1/user/following", {params})
   }
 
-  userFollower(id, params?: any) {
+  public userFollower(id: number, params?: PixivParams): Promise<B extends true ? PixivUserSearch : Pixiv_User_Search> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
     params = {
-      user_id: id,
+      userId: id,
       ...params
     }
-
-    return this.fetch('/v1/user/follower', { params })
+    return this.fetch("/v1/user/follower", {params})
   }
 
-  userMypixiv(id, params?: any) {
+  public userMypixiv(id: number, params?: PixivParams): Promise<B extends true ? PixivUserSearch : Pixiv_User_Search> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
     params = {
-      user_id: id,
+      userId: id,
       ...params
     }
 
-    return this.fetch('/v1/user/mypixiv', { params })
+    return this.fetch("/v1/user/mypixiv", {params})
   }
 
-  userList(id, params?: any) {
+  // This endpoint doesn't exist
+  public userList(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
-      return Promise.reject(new Error('user_id required'))
+      return Promise.reject(new Error("userId required"))
     }
     params = {
-      user_id: id,
+      userId: id,
       filter,
       ...params
     }
 
-    return this.fetch('/v1/user/list', { params })
+    return this.fetch("/v1/user/list", {params})
   }
 
-  illustDetail(id, params?: any) {
+  public illustDetail(id: number, params?: PixivParams): Promise<B extends true ? PixivIllust : Pixiv_Illust> {
     if (!id) {
-      return Promise.reject(new Error('illust_id required'))
+      return Promise.reject(new Error("illustId required"))
     }
     params = {
-      illust_id: id,
+      illustId: id,
       filter,
       ...params
     }
 
-    return this.fetch('/v1/illust/detail', { params })
+    return this.fetch("/v1/illust/detail", {params})
   }
 
-  illustNew(params?: any) {
+  public illustNew(params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     params = {
-      content_type: 'illust',
+      contentType: "illust",
       filter,
       ...params
     }
-
-    return this.fetch('/v1/illust/new', { params })
+    return this.fetch("/v1/illust/new", {params})
   }
 
-  illustFollow(params?: any) {
+  public illustFollow(id: number, params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     params = {
-      restrict: 'public',
+      userId: id,
+      restrict: "public",
       ...params
     }
-
-    return this.fetch('/v2/illust/follow', { params })
+    return this.fetch("/v2/illust/follow", {params})
   }
 
-  illustComments(id, params?: any) {
+  public illustComments(id: number, params?: PixivParams): Promise<B extends true ? PixivCommentSearch : Pixiv_Comment_Search> {
     if (!id) {
-      return Promise.reject(new Error('illust_id required'))
+      return Promise.reject(new Error("illustId required"))
     }
     params = {
-      illust_id: id,
-      include_total_comments: 'true',
+      illustId: id,
+      includeTotalComments: "true",
       ...params
     }
-
-    return this.fetch('/v1/illust/comments', { params })
+    return this.fetch("/v1/illust/comments", {params})
   }
 
-  illustRelated(id, params?: any) {
+  public illustRelated(id: number, params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     if (!id) {
-      return Promise.reject(new Error('illust_id required'))
+      return Promise.reject(new Error("illustId required"))
     }
     params = {
-      illust_id: id,
+      illustId: id,
+      filter,
+      ...params
+    }
+    return this.fetch("/v2/illust/related", {params})
+  }
+
+  public illustRecommended(params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
+    params = {
+      contentType: "illust",
+      includeRankingLabel: true,
       filter,
       ...params
     }
 
-    return this.fetch('/v2/illust/related', { params })
+    return this.fetch("/v1/illust/recommended", {params})
   }
 
-  illustRecommended(params?: any) {
+  public illustRecommendedNologin(params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     params = {
-      content_type: 'illust',
-      include_ranking_label: 'true',
+      includeRankingIllusts: true,
       filter,
       ...params
     }
-
-    return this.fetch('/v1/illust/recommended', { params })
+    return this.fetch("/v1/illust/recommended-nologin", {params})
   }
 
-  illustRecommendedNologin(params?: any) {
+  public illustRanking(params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     params = {
-      include_ranking_illusts: true,
+      mode: "day",
       filter,
       ...params
     }
-
-    return this.fetch('/v1/illust/recommended-nologin', { params })
+    return this.fetch("/v1/illust/ranking", {params})
   }
 
-  illustRanking(params?: any) {
-    params = {
-      mode: 'day',
-      filter,
-      ...params
-    }
-
-    return this.fetch('/v1/illust/ranking', { params })
-  }
-
-  trendingTagsIllust(params?: any) {
+  public trendingTagsIllust(params?: PixivParams): Promise<B extends true ? PixivTrendTags : Pixiv_Trend_Tags> {
     params = {
       filter,
       ...params
     }
-
-    return this.fetch('/v1/trending-tags/illust', { params })
+    return this.fetch("/v1/trending-tags/illust", {params})
   }
 
-  searchIllust(word, params?: any) {
+  public searchIllust(word: string, params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     if (!word) {
-      return Promise.reject(new Error('word required'))
+      return Promise.reject(new Error("Word required"))
     }
     params = {
       word,
-      search_target: 'partial_match_for_tags',
-      sort: 'date_desc',
+      searchTarget: "partial_match_for_tags",
+      sort: "date_desc",
       filter,
       ...params
     }
-
-    return this.fetch('/v1/search/illust', { params })
+    return this.fetch("/v1/search/illust", {params})
   }
 
-  searchNovel(word, params?: any) {
+  public searchNovel(word: string, params?: PixivParams): Promise<B extends true ? PixivNovelSearch : Pixiv_Novel_Search> {
     if (!word) {
-      return Promise.reject(new Error('word required'))
+      return Promise.reject(new Error("Word required"))
     }
     params = {
       word,
-      search_target: 'partial_match_for_tags',
-      sort: 'date_desc',
+      searchTarget: "partial_match_for_tags",
+      sort: "date_desc",
       filter,
       ...params
     }
-
-    return this.fetch('/v1/search/novel', { params })
+    return this.fetch("/v1/search/novel", {params})
   }
 
-  searchUser(word, params?: any) {
+  public searchUser(word: string, params?: PixivParams): Promise<B extends true ? PixivUserSearch : Pixiv_User_Search> {
     if (!word) {
-      return Promise.reject(new Error('word required'))
+      return Promise.reject(new Error("Word required"))
     }
     params = {
       word,
       filter,
       ...params
     }
-
-    return this.fetch('/v1/search/user', { params })
+    return this.fetch("/v1/search/user", {params})
   }
 
-  searchAutoComplete(word: string) {
+  public searchAutoComplete(word: string): Promise<B extends true ? PixivAutoComplete : Pixiv_Auto_Complete> {
     if (!word) {
-      return Promise.reject(new Error('word required'))
+      return Promise.reject(new Error("word required"))
     }
-    return this.fetch('/v1/search/autocomplete', { params: { word } })
+    return this.fetch("/v1/search/autocomplete", {params: {word}})
   }
 
-  illustBookmarkDetail(id, params?: any) {
+  public illustBookmarkDetail(id: number, params?: PixivParams): Promise<B extends true ? PixivBookmarkDetail : Pixiv_Bookmark_Detail> {
     if (!id) {
-      return Promise.reject(new Error('illust_id required'))
+      return Promise.reject(new Error("illustId required"))
     }
     params = {
-      illust_id: id,
+      illustId: id,
       ...params
     }
-
-    return this.fetch('/v2/illust/bookmark/detail', { params })
+    return this.fetch("/v2/illust/bookmark/detail", {params})
   }
 
-  illustBookmarkAdd(id, data?: any) {
+  // This endpoint doesn't exist
+  public illustBookmarkAdd(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
-      return Promise.reject(new Error('illust_id required'))
+      return Promise.reject(new Error("illustId required"))
     }
-    data = {
-      illust_id: id,
-      restrict: 'public',
-      ...data
+    params = {
+      illustId: id,
+      restrict: "public",
+      ...params
     }
 
-    return this.fetch('/v2/illust/bookmark/add', { data })
+    return this.fetch("/v2/illust/bookmark/add", {params})
   }
 
-  illustBookmarkDelete(id, data?: any) {
+  // This endpoint doesn't exist
+  public illustBookmarkDelete(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
-      return Promise.reject(new Error('illust_id required'))
+      return Promise.reject(new Error("illustId required"))
     }
-    data = {
-      illust_id: id,
-      ...data
-    }
-
-    return this.fetch('/v1/illust/bookmark/delete', { data })
-  }
-
-  userBookmarkTagsIllust(params?: any) {
     params = {
-      restrict: 'public',
+      illustId: id,
       ...params
     }
-
-    return this.fetch('/v1/user/bookmark-tags/illust', { params })
+    return this.fetch("/v1/illust/bookmark/delete", {params})
   }
 
-  novelRecommended(params) {
+  public userBookmarkTagsIllust(params?: PixivParams): Promise<B extends true ? PixivBookmarkSearch : Pixiv_Bookmark_Search> {
     params = {
-      include_ranking_novels: true,
+      restrict: "public",
+      ...params
+    }
+    return this.fetch("/v1/user/bookmark-tags/illust", {params})
+  }
+
+  public novelRecommended(params?: PixivParams): Promise<B extends true ? PixivNovelSearch : Pixiv_Novel_Search> {
+    params = {
+      includeRankingNovels: true,
+      filter,
+      ...params
+    }
+    return this.fetch("/v1/novel/recommended", {params})
+  }
+
+  // This endpoint doesn't exist
+  public mangaNew(params?: PixivParams) {
+    params = {
+      contentType: "manga",
+      filter,
+      ...params
+    }
+    return this.fetch("/v1/manga/new", {params})
+  }
+
+  public mangaRecommended(params?: PixivParams) {
+    params = {
+      includeRankingLabel: true,
+      filter,
+      ...params
+    }
+    return this.fetch("/v1/manga/recommended", {params})
+  }
+
+  public novelRecommendedNologin(params?: PixivParams): Promise<B extends true ? PixivNovelSearch : Pixiv_Novel_Search> {
+    params = {
+      includeRankingNovels: true,
       filter,
       ...params
     }
 
-    return this.fetch('/v1/novel/recommended', { params })
+    return this.fetch("/v1/novel/recommended-nologin", {params})
   }
 
-  mangaNew(params) {
+  public novelNew(params?: PixivParams): Promise<B extends true ? PixivNovelSearch : Pixiv_Novel_Search> {
     params = {
-      content_type: 'manga',
       filter,
       ...params
     }
-
-    return this.fetch('/v1/manga/new', { params })
+    return this.fetch("/v1/novel/new", {params})
   }
 
-  mangaRecommended(params) {
+  public ugoiraMetaData(id: number, params?: PixivParams): Promise<B extends true ? UgoiraMetaData : Ugoira_Meta_Data> {
+    if (!id) {
+      return Promise.reject(new Error("illustId required"))
+    }
     params = {
-      include_ranking_label: true,
+      illustId: id,
       filter,
       ...params
     }
-
-    return this.fetch('/v1/manga/recommended', { params })
+    return this.fetch("/v1/ugoira/metadata", {params})
   }
 
-  novelRecommendedNologin(params) {
-    params = {
-      include_ranking_novels: true,
-      filter,
-      ...params
-    }
-
-    return this.fetch('/v1/novel/recommended-nologin', { params })
-  }
-
-  novelNew(params) {
-    return this.fetch('/v1/novel/new', { params })
-  }
-
-  fetch(target, options = {}) {
+  public async fetch(target: string, options?: PixivFetchOptions): Promise<any> {
     if (!target) {
-      return Promise.reject(new Error('url required'))
+      return Promise.reject(new Error("url required"))
     }
 
-    return this._got(target, options).catch(error => {
+    try {
+      return this._get(target, options)
+    } catch (error) {
       if (this.once) {
         this.once = false
         throw error
       }
-
-      return this.login().then(() => {
-        this.once = true
-        return this._got(target, options)
-      })
-    })
+      await this.login()
+      this.once = true
+      return this._get(target, options)
+    }
   }
 
-  _got(target, options?: any) {
+  private async _get(target: string, options: PixivFetchOptions = {}): Promise<any> {
     options = options || {}
 
     if (options.data) {
-      options.method = 'post'
+      options.method = "post"
       options.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        "Content-Type": "application/x-www-form-urlencoded"
       }
-
       options.data = stringify(decamelizeKeys(options.data))
     }
 
     if (options.params) {
       options.params = decamelizeKeys(options.params)
     }
-
-    return instance(target, options).then(response => {
-      const { data } = response
-      this.nextUrl = data && data.next_url ? data.next_url : null
-      return this.camelcaseKeys ? camelcaseKeys(data, { deep: true }) : data
-    })
+    const {data} = await instance(target, options as AxiosRequestConfig)
+    this.nextUrl = data && data.next_url ? data.next_url : null
+    return this.camelcaseKeys ? camelcaseKeys(data, {deep: true}) : data
   }
 }
 
-export default PixivApp
 module.exports.default = PixivApp
 module.exports = PixivApp

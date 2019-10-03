@@ -3,7 +3,7 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 
-> Promise base pixiv API client
+> Promise based pixiv API client
 
 <img src="media/image.jpg" width=200>
 
@@ -11,9 +11,9 @@ Inspired by [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixiv
 
 ## Features
 
-- Promise base
-- Converts the output json key to camelCase
-- Converts the parameter to snakeCase
+- Promise based
+- Converts the output json keys to camelCase
+- Converts the parameters to snakeCase
 - Supports API without login
 
 ## Install
@@ -25,24 +25,37 @@ $ npm install --save pixiv-app-api
 ## Usage
 
 ```js
-const PixivAppApi = require('pixiv-app-api')
-const pixivImg = require('pixiv-img')
+const PixivAppApi = require("pixiv-app-api")
+const pixivImg = require("pixiv-img")
 const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD)
 
 ;(async () => {
-  const json = await pixiv.searchIllust('艦これ10000users入り')
+  const json = await pixiv.searchIllust("艦これ10000users入り")
   await pixivImg(json.illusts[0].imageUrls.large)
-  console.log('finish')
+  console.log("finish")
 })()
 ```
 
-See examples.
+## Typescript
+
+All functions will return either a camelCaseType or a snake_case_type depending on the value of `camelcaseKeys`.
+
+```ts
+import PixivAppApi from "pixiv-app-api"
+import pixivImg from "pixiv-img"
+const pixivCamelCase = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: true})
+const pixiv_snake_case = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: false})
+;(async () => {
+  const jsonCamelCase = await pixivCamelCase.illustRanking() //Promise<PixivIllustSearch>
+  const json_snake_case = await pixiv_snake_case.illustRanking() //Promise<Pixiv_Illust_Search>
+})()
+```
 
 ## API
 
-#### constructor(username?: string, password?: string): PixivAppApi;
+#### constructor(username?: string, password?: string, options? {camelcaseKeys?: B}): PixivAppApi<B extends boolean>
 
-#### login(username?: string, password?: string): Promise<Object>;
+#### login(username?: string, password?: string): Promise<B extends true ? PixivClient : Pixiv_Client>
 
 <details>
 
@@ -72,13 +85,27 @@ See examples.
 
 </details>
 
-#### authInfo(): Object;
+#### authInfo(): B extends true ? PixivClient : Pixiv_Client;
 
-#### hasNext(): bool;
+<PixivClient>
 
-#### next(): Promise<string>;
+interface PixivClient {
+accessToken: string
+expiresIn: number
+tokenType: string
+scope: string
+refreshToken: string
+user: PixivClientUser
+deviceToken: string
+}
 
-#### nextQuery(): string;
+</PixivClient>
+
+#### hasNext(): boolean
+
+#### next(): Promise<string | null>
+
+#### nextQuery(): string | undefined;
 
 #### makeIterable(resp?: Object): AsyncIterable<Object>
 
@@ -96,9 +123,9 @@ console.log(ar.length)
 
 </details>
 
-#### userDetail(id: ID, params?: Object): Promise<Object>;
+#### userDetail(id: ID, params?: PixivParams): Promise<B extends true ? PixivUserDetail : Pixiv_User_Detail>
 
-#### userIllusts(id: ID, params?: Object): Promise<Object>;
+#### userIllusts(id: ID, params?: PixivParams): Promise<B extends true ? PixivIllustSearch[] : Pixiv_Illust_Search[]>
 
 <details>
 

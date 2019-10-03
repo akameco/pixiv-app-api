@@ -2,8 +2,8 @@
   "extends": "@akameco/tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "strict": false,
-    "noImplicitAny": false
+    "strict": true,
+    "noImplicitAny": true
   },
-  "include": ["src"]
+  "include": ["src", "declarations.d.ts"]
 }

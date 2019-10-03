@@ -7,7 +7,7 @@
   "author": {
     "name": "akameco",
     "email": "akameco.t@gmail.com",
-    "url": "akameco.github.io"
+    "url": "https://akameco.github.io"
   },
   "engines": {
     "node": ">=8"
@@ -19,7 +19,8 @@
     "build": "tsc",
     "lint": "eslint --fix src/*.ts",
     "test": "jest",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "start": "tsc && node dist/test.js"
   },
   "lint-staged": {
     "*.ts": [
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@akameco/tsconfig": "^0.3.0",
+    "@types/camelcase-keys": "^5.1.1",
     "@types/is-plain-obj": "^2.0.2",
     "@types/jest": "^24.0.18",
     "@types/lodash.isequal": "^4.5.5",
