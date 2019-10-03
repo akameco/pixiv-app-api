@@ -107,7 +107,6 @@ Logs into the API.
 
 Gets your authInfo.
 
-<details>
 ```ts
 interface PixivClient {
   accessToken: string
@@ -119,7 +118,6 @@ interface PixivClient {
   deviceToken: string
 }
 ```
-</details>
 
 #### `makeIterable(resp?: Object): AsyncIterable<Object>`
 
@@ -141,6 +139,64 @@ console.log(ar.length)
 
 Get a user's profile.
 
+<details>
+
+```ts
+export interface PixivUserDetail {
+  user: PixivUser
+  profile: {
+    webpage: string
+    gender: string
+    birth: string
+    birthDay: string
+    birthYear: number
+    region: string
+    addressId: number
+    countryCode: string
+    job: string
+    jobId: number
+    totalFollowUsers: number
+    totalMypixivUsers: number
+    totalIllusts: number
+    totalManga: number
+    totalNovels: number
+    totalIllustBookmarksPublic: number
+    totalIllustSeries: number
+    backgroundImageUrl: string
+    twitterAccount: string
+    twitterUrl: string
+    pawooUrl: string
+    isPremium: boolean
+    isUsingCustomProfileImage: boolean
+  }
+  profilePublicity: {
+    gender: string
+    region: string
+    birthDay: string
+    birthYear: string
+    job: string
+    pawoo: boolean
+  }
+  workspace: {
+    pc: string
+    monitor: string
+    tool: string
+    scanner: string
+    tablet: string
+    mouse: string
+    printer: string
+    desktop: string
+    music: string
+    desk: string
+    chair: string
+    comment: string
+    workspaceImageUrl: string | null
+  }
+}
+```
+
+</details>
+
 The type PixivParams is defined as follows:
 
 ```ts
@@ -151,9 +207,10 @@ export interface PixivParams {
   restrict?: "public" | "private"
   illustId?: number
   contentType?: string
-  includeTotalComments?: string
+  includeTotalComments?: boolean
   includeRankingLabel?: boolean
   includeRankingIllusts?: boolean
+  includeRankingNovels?: boolean
   mode?:
     | "day"
     | "week"
@@ -177,7 +234,6 @@ export interface PixivParams {
   word?: string
   searchTarget?: "partial_match_for_tags" | "exact_match_for_tags" | "title_and_caption"
   sort?: "date_desc" | "date_asc" | "popular_desc"
-  includeRankingNovels?: boolean
   startDate?: string
   endDate?: string
 }
@@ -186,6 +242,14 @@ export interface PixivParams {
 #### `userIllusts(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
 
 Retrieves all of a users illusts.
+
+```ts
+export interface PixivIllustSearch {
+  illusts: PixivIllust[]
+  nextUrl: string | null
+  searchSpanLimit?: number
+}
+```
 
 <details>
 
@@ -311,6 +375,18 @@ Gets a user's bookmarked illusts.
 
 Gets the users that a user is following.
 
+```ts
+export interface PixivUserSearch {
+  userPreviews: {
+    user: PixivUser
+    illusts: PixivIllust[]
+    novels: PixivNovel[]
+    isMuted: boolean
+  }[]
+  nextUrl: string | null
+}
+```
+
 #### `userFollower(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
 
 Gets the users who follow a user.
@@ -326,6 +402,39 @@ Gets a user list.
 #### `illustDetail(id: ID, params?: PixivParams): Promise<PixivIllust>`
 
 Returns detailed info for a pixiv illust.
+
+```ts
+export interface PixivIllust {
+  id: number
+  title: string
+  interface: string
+  imageUrls: {
+    squareMedium: string
+    medium: string
+    large?: string
+  }
+  caption: string
+  restrict: number
+  user: PixivUser
+  tags: PixivTag[]
+  tools: string[]
+  createDate: string
+  pageCount: number
+  width: number
+  height: number
+  sanityLevel: number
+  metaSinglePage: {
+    originalImageUrl?: string
+  }
+  metaPages: PixivMetaPage[]
+  totalView: number
+  totalBookmarks: number
+  isBookmarked: boolean
+  visible: boolean
+  isMuted: boolean
+  totalComments: number
+}
+```
 
 <details>
 
@@ -485,6 +594,14 @@ Searches new illusts from users you follow.
 
 Returns the comments on an illust.
 
+```ts
+export interface PixivCommentSearch {
+  totalComments: number
+  comments: PixivComment[]
+  nextUrl: string | null
+}
+```
+
 #### `illustRelated(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
 
 Searches for illusts related to the one provided.
@@ -505,6 +622,12 @@ Returns top daily illusts by default.
 
 Returns an array of trending tags.
 
+```ts
+export interface PixivTrendTags {
+  trend_tags: PixivTag[]
+}
+```
+
 #### `searchIllust(word: Word, params?: PixivParams): Promise<PixivIllustSearch>`
 
 Searches for illusts with the provided query.
@@ -512,6 +635,15 @@ Searches for illusts with the provided query.
 #### `searchNovel(word: Word, params?: PixivParams): Promise<PixivNovelSearch>`
 
 Searches for novels with the provided query.
+
+```ts
+export interface PixivNovelSearch {
+  novels: PixivNovel[]
+  nextUrl: string | null
+  privacyPolicy?: {}
+  searchSpanLimit?: number
+}
+```
 
 #### `searchUser(word: Word, params?: PixivParams): Promise<PixivUserSearch>`
 
@@ -521,9 +653,23 @@ Searches for users with the provided query.
 
 Returns an array of auto-completed words from the input.
 
+```ts
+export interface PixivAutoComplete {
+  searchAutoCompleteKeywords: string[]
+}
+```
+
 #### `illustBookmarkDetail(id: ID, params?: PixivParams): Promise<PixivBookmarkDetail>`
 
 Returns detailed info on a bookmark.
+
+```ts
+export interface PixivBookmarkDetail {
+  isBookmarked: boolean
+  tags: PixivTag[]
+  restrict: string
+}
+```
 
 <details>
 
@@ -588,6 +734,13 @@ Deletes a bookmark.
 
 Searches your bookmark tags.
 
+```ts
+export interface PixivBookmarkSearch {
+  bookmarkTags: PixivTag[]
+  nextUrl: string | null
+}
+```
+
 <details>
 
 ```json
@@ -611,6 +764,15 @@ Searches new manga.
 
 Searches recommended manga.
 
+```ts
+export interface PixivMangaSearch {
+  illusts: PixivManga[]
+  rankingIllusts: PixivManga[] | []
+  privacyPolicy: {}
+  nextUrl: string | null
+}
+```
+
 #### `novelRecommendedNologin(params?: PixivParams): Promise<PixivNovelSearch>`
 
 Searches recommended novels (logged out).
@@ -622,6 +784,20 @@ Searches new novels.
 #### `ugoiraMetaData(id: number, params?: PixivParams): Promise<UgoiraMetaData>`
 
 Retrieves the zip url and frames for a Pixiv Ugoira.
+
+```ts
+export interface UgoiraMetaData {
+  ugoiraMetadata: {
+    zipUrls: {
+      medium: string
+    }
+    frames: {
+      file: string
+      delay: number
+    }[]
+  }
+}
+```
 
 #### `fetch(target: string, opts?: PixivFetchOptions): Promise<any>`
 

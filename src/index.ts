@@ -305,7 +305,7 @@ export default class PixivApp<B extends boolean> {
     }
     params = {
       illustId: id,
-      includeTotalComments: "true",
+      includeTotalComments: true,
       ...params
     }
     return this.fetch("/v1/illust/comments", {params})

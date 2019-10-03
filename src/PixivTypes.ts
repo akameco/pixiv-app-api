@@ -40,9 +40,10 @@ export interface PixivParams {
   restrict?: "public" | "private"
   illustId?: number
   contentType?: string
-  includeTotalComments?: string
+  includeTotalComments?: boolean
   includeRankingLabel?: boolean
   includeRankingIllusts?: boolean
+  includeRankingNovels?: boolean
   mode?:
     | "day"
     | "week"
@@ -66,7 +67,6 @@ export interface PixivParams {
   word?: string
   searchTarget?: "partial_match_for_tags" | "exact_match_for_tags" | "title_and_caption"
   sort?: "date_desc" | "date_asc" | "popular_desc"
-  includeRankingNovels?: boolean
   startDate?: string
   endDate?: string
 }
