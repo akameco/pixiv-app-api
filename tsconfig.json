@@ -5,7 +5,7 @@
     "strict": true,
     "noImplicitAny": true,
     "declaration": true,
-    "declarationDir": "dist"
+    "declarationMap": true
   },
   "include": ["src", "declarations.d.ts"]
 }

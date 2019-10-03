@@ -49,17 +49,22 @@ class PixivApp {
         this.refreshToken = '';
         this.nextUrl = null;
         this.auth = null;
-        this.once = false;
+        this._once = false;
         if (options) {
             this.camelcaseKeys = Boolean(options.camelcaseKeys);
+        }
+        else {
+            this.camelcaseKeys = true;
         }
     }
     async login(username, password) {
         this.username = username || this.username;
         this.password = password || this.password;
-        if (typeof this.username !== 'string' && typeof this.password !== 'string') {
-            return Promise.reject(new TypeError(`Auth is required.
-        Expected a string, got ${typeof this.username !== 'string' ? typeof this.username : typeof this.password}`));
+        if (typeof this.username !== 'string') {
+            return Promise.reject(new TypeError(`Auth is required. Expected a string, got ${typeof this.username}`));
+        }
+        if (typeof this.password !== 'string') {
+            return Promise.reject(new TypeError(`Auth is required. Expected a string, got ${typeof this.password}`));
         }
         const local_time = new Date().toISOString();
         const headers = {
@@ -92,7 +97,9 @@ class PixivApp {
         this.auth = response;
         this.refreshToken = axiosResponse.data.response.refresh_token;
         instance.defaults.headers.common.Authorization = `Bearer ${response.access_token}`;
-        return this.camelcaseKeys ? camelcase_keys_1.default(response, { deep: true }) : response;
+        return this.camelcaseKeys
+            ? camelcase_keys_1.default(response, { deep: true })
+            : response;
     }
     authInfo() {
         return this.camelcaseKeys
@@ -113,6 +120,7 @@ class PixivApp {
         return url_1.default.parse(this.nextUrl, true).params;
     }
     makeIterable(resp) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         const nextUrl = this.camelcaseKeys ? 'nextUrl' : 'next_url';
         return {
@@ -120,6 +128,7 @@ class PixivApp {
                 return __asyncGenerator(this, arguments, function* _a() {
                     yield yield __await(resp);
                     while (resp[nextUrl]) {
+                        // eslint-disable-next-line require-atomic-updates
                         resp = yield __await(self.fetch(resp[nextUrl]));
                         yield yield __await(resp);
                     }
@@ -323,12 +332,12 @@ class PixivApp {
             return this._get(target, options);
         }
         catch (error) {
-            if (this.once) {
-                this.once = false;
+            if (this._once) {
+                this._once = false;
                 throw error;
             }
             await this.login();
-            this.once = true;
+            this._once = true;
             return this._get(target, options);
         }
     }

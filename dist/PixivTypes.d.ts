@@ -311,3 +311,4 @@ export interface UgoiraMetaData {
     }[]
   }
 }
+//# sourceMappingURL=PixivTypes.d.ts.map
