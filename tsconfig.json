@@ -3,7 +3,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "strict": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "declaration": true,
+    "declarationDir": "dist"
   },
   "include": ["src", "declarations.d.ts"]
 }

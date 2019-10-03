@@ -76,6 +76,8 @@ export default class PixivApp<CamelcaseKeys extends boolean> {
     this._once = false
     if (options) {
       this.camelcaseKeys = Boolean(options.camelcaseKeys) as CamelcaseKeys
+    } else {
+      this.camelcaseKeys = true as CamelcaseKeys
     }
   }
 
