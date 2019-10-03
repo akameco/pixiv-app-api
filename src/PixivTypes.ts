@@ -1,14 +1,14 @@
-export type PixivClient = {
+export interface PixivClient {
   accessToken: string
   expiresIn: number
-  tokenType: string
+  tokeninterface: string
   scope: string
   refreshToken: string
   user: PixivClientUser
   deviceToken: string
 }
 
-export type PixivClientUser = {
+export interface PixivClientUser {
   profileImageUrls: {
     px16X16: string
     px50X50: string
@@ -23,7 +23,7 @@ export type PixivClientUser = {
   isMailAuthorized: boolean
 }
 
-export type PixivRequestData = {
+export interface PixivRequestData {
   clientId: string
   clientSecret: string
   getSecureUrl: string
@@ -33,7 +33,7 @@ export type PixivRequestData = {
   password: string
 }
 
-export type PixivParams = {
+export interface PixivParams {
   userId?: number
   type?: string
   filter?: string
@@ -71,7 +71,7 @@ export type PixivParams = {
   endDate?: string
 }
 
-export type PixivFetchOptions = {
+export interface PixivFetchOptions {
   data?: string
   method?: string
   headers?: {
@@ -80,7 +80,7 @@ export type PixivFetchOptions = {
   params?: PixivParams
 }
 
-export type PixivUser = {
+export interface PixivUser {
   id: number
   name: string
   account: string
@@ -91,7 +91,7 @@ export type PixivUser = {
   isFollowed: boolean
 }
 
-export type PixivUserDetail = {
+export interface PixivUserDetail {
   user: PixivUser
   profile: {
     webpage: string
@@ -143,13 +143,13 @@ export type PixivUserDetail = {
   }
 }
 
-export type PixivIllustSearch = {
+export interface PixivIllustSearch {
   illusts: PixivIllust[]
   nextUrl: string | null
   searchSpanLimit?: number
 }
 
-export type PixivUserSearch = {
+export interface PixivUserSearch {
   userPreviews: {
     user: PixivUser
     illusts: PixivIllust[]
@@ -159,35 +159,35 @@ export type PixivUserSearch = {
   nextUrl: string | null
 }
 
-export type PixivCommentSearch = {
+export interface PixivCommentSearch {
   totalComments: number
   comments: PixivComment[]
   nextUrl: string | null
 }
 
-export type PixivNovelSearch = {
+export interface PixivNovelSearch {
   novels: PixivNovel[]
   nextUrl: string | null
   privacyPolicy?: {}
   searchSpanLimit?: number
 }
 
-export type PixivBookmarkSearch = {
+export interface PixivBookmarkSearch {
   bookmarkTags: PixivTag[]
   nextUrl: string | null
 }
 
-export type PixivMangaSearch = {
+export interface PixivMangaSearch {
   illusts: PixivManga[]
   rankingIllusts: PixivManga[] | []
   privacyPolicy: {}
   nextUrl: string | null
 }
 
-export type PixivIllust = {
+export interface PixivIllust {
   id: number
   title: string
-  type: string
+  interface: string
   imageUrls: {
     squareMedium: string
     medium: string
@@ -215,7 +215,7 @@ export type PixivIllust = {
   totalComments: number
 }
 
-export type PixivTag = {
+export interface PixivTag {
   name: string
   translatedName: string | null
   addedByUploadedUser?: boolean
@@ -223,7 +223,7 @@ export type PixivTag = {
   isRegistered?: boolean
 }
 
-export type PixivMetaPage = {
+export interface PixivMetaPage {
   imageUrls: {
     squareMedium: string
     medium: string
@@ -232,7 +232,7 @@ export type PixivMetaPage = {
   }
 }
 
-export type PixivComment = {
+export interface PixivComment {
   id: number
   comment: string
   date: string
@@ -240,7 +240,7 @@ export type PixivComment = {
   parentComment: PixivComment | {}
 }
 
-export type PixivNovel = {
+export interface PixivNovel {
   id: number
   title: string
   caption: string
@@ -272,10 +272,10 @@ export type PixivNovel = {
   isXRestricted: boolean
 }
 
-export type PixivManga = {
+export interface PixivManga {
   id: number
   title: string
-  type: string
+  interface: string
   imageUrls: {
     squareMedium: string
     medium: string
@@ -305,21 +305,21 @@ export type PixivManga = {
   isMuted: boolean
 }
 
-export type PixivTrendTags = {
+export interface PixivTrendTags {
   trend_tags: PixivTag[]
 }
 
-export type PixivAutoComplete = {
+export interface PixivAutoComplete {
   searchAutoCompleteKeywords: string[]
 }
 
-export type PixivBookmarkDetail = {
+export interface PixivBookmarkDetail {
   isBookmarked: boolean
   tags: PixivTag[]
   restrict: string
 }
 
-export type UgoiraMetaData = {
+export interface UgoiraMetaData {
   ugoiraMetadata: {
     zipUrls: {
       medium: string

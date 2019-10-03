@@ -1,3 +1,5 @@
 dist
 examples
 jest.config.js
+src/PixivTypes.ts
+src/Pixiv_Types.ts

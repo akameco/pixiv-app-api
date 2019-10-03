@@ -25,9 +25,9 @@ $ npm install --save pixiv-app-api
 ## Usage
 
 ```js
-const PixivAppApi = require("pixiv-app-api")
-const pixivImg = require("pixiv-img")
-const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD)
+import PixivAppApi from "pixiv-app-api" //const PixivAppApi = require("pixiv-app-api")
+import pixivImg from "pixiv-img" //const pixivImg = require("pixiv-img")
+const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: true})
 
 ;(async () => {
   const json = await pixiv.searchIllust("艦これ10000users入り")
@@ -39,23 +39,41 @@ const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD)
 ## Typescript
 
 All functions will return either a camelCaseType or a snake_case_type depending on the value of `camelcaseKeys`.
+For example:
 
 ```ts
-import PixivAppApi from "pixiv-app-api"
-import pixivImg from "pixiv-img"
-const pixivCamelCase = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: true})
-const pixiv_snake_case = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: false})
-;(async () => {
-  const jsonCamelCase = await pixivCamelCase.illustRanking() //Promise<PixivIllustSearch>
-  const json_snake_case = await pixiv_snake_case.illustRanking() //Promise<Pixiv_Illust_Search>
-})()
+//const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: true})
+interface PixivClient = {
+  accessToken: string
+  expiresIn: number
+  tokenType: string
+  scope: string
+  refreshToken: string
+  user: PixivClientUser
+  deviceToken: string
+}
+
+//const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: false})
+interface Pixiv_Client = {
+  access_token: string
+  expires_in: number
+  token_type: string
+  scope: string
+  refresh_token: string
+  user: Pixiv_Client_User
+  device_token: string
+}
 ```
 
 ## API
 
-#### constructor(username?: string, password?: string, options? {camelcaseKeys?: B}): PixivAppApi<B extends boolean>
+#### `constructor(username?: string, password?: string, options? {camelcaseKeys?: boolean})`
 
-#### login(username?: string, password?: string): Promise<B extends true ? PixivClient : Pixiv_Client>
+Creates a new PixivAppApi object. `camelcaseKeys` defaults to `true` if it is omitted.
+
+#### `login(username?: string, password?: string): Promise<PixivClient>`
+
+Logs into the API.
 
 <details>
 
@@ -85,29 +103,25 @@ const pixiv_snake_case = new PixivAppApi(process.env.NAME, process.env.PASSWORD,
 
 </details>
 
-#### authInfo(): B extends true ? PixivClient : Pixiv_Client;
+#### `authInfo(): PixivClient`
 
-<PixivClient>
+Gets your authInfo.
 
+<details>
+```ts
 interface PixivClient {
-accessToken: string
-expiresIn: number
-tokenType: string
-scope: string
-refreshToken: string
-user: PixivClientUser
-deviceToken: string
+  accessToken: string
+  expiresIn: number
+  tokenType: string
+  scope: string
+  refreshToken: string
+  user: PixivClientUser
+  deviceToken: string
 }
+```
+</details>
 
-</PixivClient>
-
-#### hasNext(): boolean
-
-#### next(): Promise<string | null>
-
-#### nextQuery(): string | undefined;
-
-#### makeIterable(resp?: Object): AsyncIterable<Object>
+#### `makeIterable(resp?: Object): AsyncIterable<Object>`
 
 <details>
 
@@ -123,9 +137,55 @@ console.log(ar.length)
 
 </details>
 
-#### userDetail(id: ID, params?: PixivParams): Promise<B extends true ? PixivUserDetail : Pixiv_User_Detail>
+#### `userDetail(id: ID, params?: PixivParams): Promise<PixivUserDetail>.`
 
-#### userIllusts(id: ID, params?: PixivParams): Promise<B extends true ? PixivIllustSearch[] : Pixiv_Illust_Search[]>
+Get a user's profile.
+
+The type PixivParams is defined as follows:
+
+```ts
+export interface PixivParams {
+  userId?: number
+  type?: string
+  filter?: string
+  restrict?: "public" | "private"
+  illustId?: number
+  contentType?: string
+  includeTotalComments?: string
+  includeRankingLabel?: boolean
+  includeRankingIllusts?: boolean
+  mode?:
+    | "day"
+    | "week"
+    | "month"
+    | "day_male"
+    | "day_female"
+    | "week_original"
+    | "week_rookie"
+    | "day_r18"
+    | "day_male_r18"
+    | "day_female_r18"
+    | "week_r18"
+    | "week_r18g"
+    | "day_manga"
+    | "week_manga"
+    | "month_manga"
+    | "week_rookie_manga"
+    | "day_r18_manga"
+    | "week_r18_manga"
+    | "week_r18g_manga"
+  word?: string
+  searchTarget?: "partial_match_for_tags" | "exact_match_for_tags" | "title_and_caption"
+  sort?: "date_desc" | "date_asc" | "popular_desc"
+  includeRankingNovels?: boolean
+  startDate?: string
+  endDate?: string
+}
+```
+
+#### `userIllusts(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
+
+Retrieves all of a users illusts.
 
 <details>
 
@@ -235,21 +295,35 @@ console.log(ar.length)
 
 </details>
 
-#### userFollowAdd(id: ID, data?: Object): Promise<Object>;
+#### `userFollowAdd(id: ID, data?: Object): Promise<unknown>`
 
-#### userFollowDelete(id: ID, data?: Object): Promise<Object>;
+Follows a user.
 
-#### userBookmarksIllust(id: ID, params?: Object): Promise<Object>;
+#### `userFollowDelete(id: ID, data?: Object): Promise<unknown>`
 
-#### userFollowing(id: ID, params?: Object): Promise<Object>;
+Unfollows a user.
 
-#### userFollower(id: ID, params?: Object): Promise<Object>;
+#### `userBookmarksIllust(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### userMypixiv(id: ID, params?: Object): Promise<Object>;
+Gets a user's bookmarked illusts.
 
-#### userList(id: ID, params?: Object): Promise<Object>;
+#### `userFollowing(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
 
-#### illustDetail(id: ID, params?: Object): Promise<Object>;
+Gets the users that a user is following.
+
+#### `userFollower(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
+
+Gets the users who follow a user.
+
+#### `userMypixiv(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
+
+Gets your friends on Mypixiv.
+
+#### `userList(id: ID, params?: PixivParams): Promise<unknown>`
+
+#### `illustDetail(id: ID, params?: PixivParams): Promise<PixivIllust>`
+
+Returns detailed info for a pixiv illust.
 
 <details>
 
@@ -326,9 +400,13 @@ console.log(ar.length)
 
 </details>
 
-#### illustNew(params?: Object): Promise<Object>;
+#### `illustNew(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### illustFollow(params?: Object): Promise<Object>;
+Searches new illusts.
+
+#### `illustFollow(params?: PixivParams): Promise<PixivIllustSearch>`
+
+Searches new illusts from users you follow.
 
 <details>
 
@@ -401,27 +479,49 @@ console.log(ar.length)
 
 </details>
 
-#### illustComments(id: ID, params?: Object): Promise<Object>;
+#### `illustComments(id: ID, params?: PixivParams): Promise<PixivCommentSearch>`
 
-#### illustRelated(id: ID, params?: Object): Promise<Object>;
+Returns the comments on an illust.
 
-#### illustRecommended(params?: Object): Promise<Object>;
+#### `illustRelated(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### illustRecommendedNologin(params?: Object): Promise<Object>;
+Searches for illusts related to the one provided.
 
-#### illustRanking(params?: Object): Promise<Object>;
+#### `illustRecommended(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### trendingTagsIllust(params?: Object): Promise<Object>;
+Returns recommended illusts.
 
-#### searchIllust(word: Word, params?: Object): Promise<Object>;
+#### `illustRecommendedNologin(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### searchNovel(word: Word, params?: Object): Promise<Object>;
+Returns recommended illusts (logged out).
 
-#### searchUser(word: Word, params?: Object): Promise<Object>;
+#### `illustRanking(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### searchAutoComplete(word: Word): Promise<Object>;
+Returns top daily illusts by default.
 
-#### illustBookmarkDetail(id: ID, params?: Object): Promise<Object>;
+#### `trendingTagsIllust(params?: PixivParams): Promise<PixivTrendTags>`
+
+Returns an array of trending tags.
+
+#### `searchIllust(word: Word, params?: PixivParams): Promise<PixivIllustSearch>`
+
+Searches for illusts with the provided query.
+
+#### `searchNovel(word: Word, params?: PixivParams): Promise<PixivNovelSearch>`
+
+Searches for novels with the provided query.
+
+#### `searchUser(word: Word, params?: PixivParams): Promise<PixivUserSearch>`
+
+Searches for users with the provided query.
+
+#### `searchAutoComplete(word: Word): Promise<PixivAutoComplete>`
+
+Returns an array of auto-completed words from the input.
+
+#### `illustBookmarkDetail(id: ID, params?: PixivParams): Promise<PixivBookmarkDetail>`
+
+Returns detailed info on a bookmark.
 
 <details>
 
@@ -474,11 +574,17 @@ console.log(ar.length)
 
 </details>
 
-#### illustBookmarkAdd(id: ID, data?: Object): Promise<Object>;
+#### `illustBookmarkAdd(id: ID, data?: Object): Promise<unknown>`
 
-#### illustBookmarkDelete(id: ID, data?: Object): Promise<Object>;
+Adds a new bookmark.
 
-#### userBookmarkTagsIllust(params?: Object): Promise<Object>;
+#### `illustBookmarkDelete(id: ID, data?: Object): Promise<unknown>`
+
+Deletes a bookmark.
+
+#### `userBookmarkTagsIllust(params?: PixivParams): Promise<PixivBookmarkSearch>`
+
+Searches your bookmark tags.
 
 <details>
 
@@ -491,21 +597,37 @@ console.log(ar.length)
 
 </details>
 
-#### novelRecommended(params?: Object): Promise<Object>;
+#### `novelRecommended(params?: PixivParams): Promise<PixivNovelSearch>`
 
-#### mangaNew(params?: Object): Promise<Object>;
+Searches recommended novels.
 
-#### mangaRecommended(params?: Object): Promise<Object>;
+#### `mangaNew(params?: PixivParams): Promise<unknown>`
 
-#### novelRecommendedNologin(params?: Object): Promise<Object>;
+Searches new manga.
 
-#### novelNew(params?: Object): Promise<Object>;
+#### `mangaRecommended(params?: PixivParams): Promise<PixivMangaSearch>`
 
-#### fetch(target: string, opts?: Object): Promise<Object>;
+Searches recommended manga.
+
+#### `novelRecommendedNologin(params?: PixivParams): Promise<PixivNovelSearch>`
+
+Searches recommended novels (logged out).
+
+#### `novelNew(params?: PixivParams): Promise<PixivNovelSearch>`
+
+Searches new novels.
+
+#### `ugoiraMetaData(id: number, params?: PixivParams): Promise<UgoiraMetaData>`
+
+Retrieves the zip url and frames for a Pixiv Ugoira.
+
+#### `fetch(target: string, opts?: PixivFetchOptions): Promise<any>`
+
+Fetches a route in the Pixiv API and returns the result.
 
 See [Sniffer for iOS 6.x Common API · upbit/pixivpy Wiki](https://github.com/upbit/pixivpy/wiki/Sniffer-for-iOS-6.x---Common-API)
 
-#### pixiv.next()
+#### `pixiv.next(): Promise<any>`
 
 Return next request result.
 
@@ -521,7 +643,7 @@ pixiv
   })
 ```
 
-#### pixiv.hasNext()
+#### `pixiv.hasNext(): boolean`
 
 Return `true` if `pixiv.next()` is able to run.
 
@@ -533,7 +655,7 @@ if (pixiv.hasNext()) {
 }
 ```
 
-#### pixiv.nextQuery()
+#### `pixiv.nextQuery(): Promise<string | undefined>`
 
 Return next params parameter.
 

@@ -1,14 +1,14 @@
-export type Pixiv_Client = {
+export interface Pixiv_Client {
   access_token: string
   expires_in: number
-  token_type: string
+  token_interface: string
   scope: string
   refresh_token: string
   user: Pixiv_Client_User
   device_token: string
 }
 
-export type Pixiv_Client_User = {
+export interface Pixiv_Client_User {
   profile_image_urls: {
     px_16x16: string
     px_50x50: string
@@ -23,17 +23,17 @@ export type Pixiv_Client_User = {
   is_mail_authorized: boolean
 }
 
-export type Pixiv_Request_Data = {
+export interface Pixiv_Request_Data {
   client_id: string
   client_secret: string
   get_secure_url: string
-  grant_type: string
+  grant_interface: string
   refresh_token: string
   username: string
   password: string
 }
 
-export type Pixiv_User = {
+export interface Pixiv_User {
   id: number
   name: string
   account: string
@@ -44,7 +44,7 @@ export type Pixiv_User = {
   is_followed: boolean
 }
 
-export type Pixiv_User_Detail = {
+export interface Pixiv_User_Detail {
   user: Pixiv_User
   profile: {
     webpage: string
@@ -96,13 +96,13 @@ export type Pixiv_User_Detail = {
   }
 }
 
-export type Pixiv_Illust_Search = {
+export interface Pixiv_Illust_Search {
   illusts: Pixiv_Illust[]
   next_url: string | null
   search_span_limit?: number
 }
 
-export type Pixiv_User_Search = {
+export interface Pixiv_User_Search {
   user_previews: {
     user: Pixiv_User
     illusts: Pixiv_Illust[]
@@ -112,35 +112,35 @@ export type Pixiv_User_Search = {
   nextUrl: string | null
 }
 
-export type Pixiv_Comment_Search = {
+export interface Pixiv_Comment_Search {
   total_comments: number
   comments: Pixiv_Comment[]
   next_url: string | null
 }
 
-export type Pixiv_Novel_Search = {
+export interface Pixiv_Novel_Search {
   novels: Pixiv_Novel[]
   nextUrl: string | null
   privacy_policy?: {}
   searchSpanLimit?: number
 }
 
-export type Pixiv_Bookmark_Search = {
+export interface Pixiv_Bookmark_Search {
   bookmark_tags: Pixiv_Tag[]
   next_url: string | null
 }
 
-export type Pixiv_Manga_Search = {
+export interface Pixiv_Manga_Search {
   illusts: Pixiv_Manga[]
   rankingIllusts: Pixiv_Manga[] | []
   privacyPolicy: {}
   nextUrl: string | null
 }
 
-export type Pixiv_Illust = {
+export interface Pixiv_Illust {
   id: number
   title: string
-  type: string
+  interface: string
   image_urls: {
     square_medium: string
     medium: string
@@ -168,7 +168,7 @@ export type Pixiv_Illust = {
   total_comments: number
 }
 
-export type Pixiv_Tag = {
+export interface Pixiv_Tag {
   name: string
   translated_name: string | null
   added_by_uploaded_user?: boolean
@@ -176,7 +176,7 @@ export type Pixiv_Tag = {
   is_registered?: boolean
 }
 
-export type Pixiv_Meta_Page = {
+export interface Pixiv_Meta_Page {
   image_urls: {
     square_medium: string
     medium: string
@@ -185,7 +185,7 @@ export type Pixiv_Meta_Page = {
   }
 }
 
-export type Pixiv_Comment = {
+export interface Pixiv_Comment {
   id: number
   comment: string
   date: string
@@ -193,7 +193,7 @@ export type Pixiv_Comment = {
   parent_comment: Pixiv_Comment | {}
 }
 
-export type Pixiv_Novel = {
+export interface Pixiv_Novel {
   id: number
   title: string
   caption: string
@@ -225,10 +225,10 @@ export type Pixiv_Novel = {
   is_x_restricted: boolean
 }
 
-export type Pixiv_Manga = {
+export interface Pixiv_Manga {
   id: number
   title: string
-  type: string
+  interface: string
   image_urls: {
     square_medium: string
     medium: string
@@ -258,21 +258,21 @@ export type Pixiv_Manga = {
   isMuted: boolean
 }
 
-export type Pixiv_Trend_Tags = {
+export interface Pixiv_Trend_Tags {
   trend_tags: Pixiv_Tag[]
 }
 
-export type Pixiv_Auto_Complete = {
+export interface Pixiv_Auto_Complete {
   search_auto_complete_keywords: string[]
 }
 
-export type Pixiv_Bookmark_Detail = {
+export interface Pixiv_Bookmark_Detail {
   is_bookmarked: boolean
   tags: Pixiv_Tag[]
   restrict: string
 }
 
-export type Ugoira_Meta_Data = {
+export interface Ugoira_Meta_Data {
   ugoira_metadata: {
     zip_urls: {
       medium: string

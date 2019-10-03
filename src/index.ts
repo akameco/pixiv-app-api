@@ -16,7 +16,8 @@ import {
   Pixiv_Auto_Complete,
   Pixiv_Bookmark_Detail,
   Pixiv_Bookmark_Search,
-  Ugoira_Meta_Data
+  Ugoira_Meta_Data,
+  Pixiv_Manga_Search
 } from "./Pixiv_Types"
 import {
   PixivClient,
@@ -33,6 +34,7 @@ import {
   PixivNovelSearch,
   PixivAutoComplete,
   UgoiraMetaData,
+  PixivMangaSearch,
   PixivTrendTags
 } from "./PixivTypes"
 
@@ -133,7 +135,7 @@ export default class PixivApp<B extends boolean> {
     return Boolean(this.nextUrl)
   }
 
-  public next(): Promise<string | null> {
+  public next(): Promise<any> {
     return this.fetch(this.nextUrl!)
   }
 
@@ -469,7 +471,7 @@ export default class PixivApp<B extends boolean> {
     return this.fetch("/v1/manga/new", {params})
   }
 
-  public mangaRecommended(params?: PixivParams) {
+  public mangaRecommended(params?: PixivParams): Promise<B extends true ? PixivMangaSearch : Pixiv_Manga_Search> {
     params = {
       includeRankingLabel: true,
       filter,
