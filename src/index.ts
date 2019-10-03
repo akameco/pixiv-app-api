@@ -168,7 +168,7 @@ export default class PixivApp<B extends boolean> {
     return this.fetch('/v1/user/detail', {params})
   }
 
-  public userIllusts(id: number, params?: PixivParams): Promise<B extends true ? PixivIllustSearch[] : Pixiv_Illust_Search[]> {
+  public userIllusts(id: number, params?: PixivParams): Promise<B extends true ? PixivIllustSearch : Pixiv_Illust_Search> {
     params = {
       userId: id,
       type: 'illust',
