@@ -1,9 +1,11 @@
 {
   "extends": "precure/auto",
   "rules": {
-    "camelcase": 0,
     "@typescript-eslint/camelcase": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/no-explicit-any": 0
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "no-await-in-loop": 0,
+    "max-lines-per-function": 0
   }
 }

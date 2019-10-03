@@ -7,5 +7,5 @@ module.exports = {
       diagnostics: false
     }
   },
-  testPathIgnorePatterns: ["/node_modules/", "dist"]
+  testPathIgnorePatterns: ['/node_modules/', 'dist']
 }

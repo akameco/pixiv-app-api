@@ -1,9 +1,9 @@
 # pixiv-app-api
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 
-> Promise base pixiv API client
+> Promise based pixiv API client
 
 <img src="media/image.jpg" width=200>
 
@@ -11,9 +11,9 @@ Inspired by [upbit/pixivpy: Pixiv API for Python](https://github.com/upbit/pixiv
 
 ## Features
 
-- Promise base
-- Converts the output json key to camelCase
-- Converts the parameter to snakeCase
+- Promise based
+- Converts the output json keys to camelCase
+- Converts the parameters to snakeCase
 - Supports API without login
 
 ## Install
@@ -25,9 +25,11 @@ $ npm install --save pixiv-app-api
 ## Usage
 
 ```js
-const PixivAppApi = require('pixiv-app-api')
-const pixivImg = require('pixiv-img')
-const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD)
+import PixivAppApi from 'pixiv-app-api' //const PixivAppApi = require("pixiv-app-api")
+import pixivImg from 'pixiv-img' //const pixivImg = require("pixiv-img")
+const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {
+  camelcaseKeys: true
+})
 
 ;(async () => {
   const json = await pixiv.searchIllust('艦これ10000users入り')
@@ -36,13 +38,44 @@ const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD)
 })()
 ```
 
-See examples.
+## Typescript
+
+All functions will return either a camelCaseType or a snake_case_type depending on the value of `camelcaseKeys`.
+For example:
+
+```ts
+//const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: true})
+interface PixivClient = {
+  accessToken: string
+  expiresIn: number
+  tokenType: string
+  scope: string
+  refreshToken: string
+  user: PixivClientUser
+  deviceToken: string
+}
+
+//const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {camelcaseKeys: false})
+interface Pixiv_Client = {
+  access_token: string
+  expires_in: number
+  token_type: string
+  scope: string
+  refresh_token: string
+  user: Pixiv_Client_User
+  device_token: string
+}
+```
 
 ## API
 
-#### constructor(username?: string, password?: string): PixivAppApi;
+#### `constructor(username?: string, password?: string, options? {camelcaseKeys?: boolean})`
 
-#### login(username?: string, password?: string): Promise<Object>;
+Creates a new PixivAppApi object. `camelcaseKeys` defaults to `true` if it is omitted.
+
+#### `login(username?: string, password?: string): Promise<PixivClient>`
+
+Logs into the API.
 
 <details>
 
@@ -72,15 +105,23 @@ See examples.
 
 </details>
 
-#### authInfo(): Object;
+#### `authInfo(): PixivClient`
 
-#### hasNext(): bool;
+Gets your authInfo.
 
-#### next(): Promise<string>;
+```ts
+interface PixivClient {
+  accessToken: string
+  expiresIn: number
+  tokenType: string
+  scope: string
+  refreshToken: string
+  user: PixivClientUser
+  deviceToken: string
+}
+```
 
-#### nextQuery(): string;
-
-#### makeIterable(resp?: Object): AsyncIterable<Object>
+#### `makeIterable(resp?: Object): AsyncIterable<Object>`
 
 <details>
 
@@ -96,9 +137,124 @@ console.log(ar.length)
 
 </details>
 
-#### userDetail(id: ID, params?: Object): Promise<Object>;
+#### `userDetail(id: ID, params?: PixivParams): Promise<PixivUserDetail>.`
 
-#### userIllusts(id: ID, params?: Object): Promise<Object>;
+Get a user's profile.
+
+<details>
+
+```ts
+export interface PixivUserDetail {
+  user: PixivUser
+  profile: {
+    webpage: string
+    gender: string
+    birth: string
+    birthDay: string
+    birthYear: number
+    region: string
+    addressId: number
+    countryCode: string
+    job: string
+    jobId: number
+    totalFollowUsers: number
+    totalMypixivUsers: number
+    totalIllusts: number
+    totalManga: number
+    totalNovels: number
+    totalIllustBookmarksPublic: number
+    totalIllustSeries: number
+    backgroundImageUrl: string
+    twitterAccount: string
+    twitterUrl: string
+    pawooUrl: string
+    isPremium: boolean
+    isUsingCustomProfileImage: boolean
+  }
+  profilePublicity: {
+    gender: string
+    region: string
+    birthDay: string
+    birthYear: string
+    job: string
+    pawoo: boolean
+  }
+  workspace: {
+    pc: string
+    monitor: string
+    tool: string
+    scanner: string
+    tablet: string
+    mouse: string
+    printer: string
+    desktop: string
+    music: string
+    desk: string
+    chair: string
+    comment: string
+    workspaceImageUrl: string | null
+  }
+}
+```
+
+</details>
+
+The type PixivParams is defined as follows:
+
+```ts
+export interface PixivParams {
+  userId?: number
+  type?: string
+  filter?: string
+  restrict?: 'public' | 'private'
+  illustId?: number
+  contentType?: string
+  includeTotalComments?: boolean
+  includeRankingLabel?: boolean
+  includeRankingIllusts?: boolean
+  includeRankingNovels?: boolean
+  mode?:
+    | 'day'
+    | 'week'
+    | 'month'
+    | 'day_male'
+    | 'day_female'
+    | 'week_original'
+    | 'week_rookie'
+    | 'day_r18'
+    | 'day_male_r18'
+    | 'day_female_r18'
+    | 'week_r18'
+    | 'week_r18g'
+    | 'day_manga'
+    | 'week_manga'
+    | 'month_manga'
+    | 'week_rookie_manga'
+    | 'day_r18_manga'
+    | 'week_r18_manga'
+    | 'week_r18g_manga'
+  word?: string
+  searchTarget?:
+    | 'partial_match_for_tags'
+    | 'exact_match_for_tags'
+    | 'title_and_caption'
+  sort?: 'date_desc' | 'date_asc' | 'popular_desc'
+  startDate?: string
+  endDate?: string
+}
+```
+
+#### `userIllusts(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
+
+Retrieves all of a users illusts.
+
+```ts
+export interface PixivIllustSearch {
+  illusts: PixivIllust[]
+  nextUrl: string | null
+  searchSpanLimit?: number
+}
+```
 
 <details>
 
@@ -208,21 +364,82 @@ console.log(ar.length)
 
 </details>
 
-#### userFollowAdd(id: ID, data?: Object): Promise<Object>;
+#### `userFollowAdd(id: ID, data?: Object): Promise<unknown>`
 
-#### userFollowDelete(id: ID, data?: Object): Promise<Object>;
+Follows a user.
 
-#### userBookmarksIllust(id: ID, params?: Object): Promise<Object>;
+#### `userFollowDelete(id: ID, data?: Object): Promise<unknown>`
 
-#### userFollowing(id: ID, params?: Object): Promise<Object>;
+Unfollows a user.
 
-#### userFollower(id: ID, params?: Object): Promise<Object>;
+#### `userBookmarksIllust(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### userMypixiv(id: ID, params?: Object): Promise<Object>;
+Gets a user's bookmarked illusts.
 
-#### userList(id: ID, params?: Object): Promise<Object>;
+#### `userFollowing(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
 
-#### illustDetail(id: ID, params?: Object): Promise<Object>;
+Gets the users that a user is following.
+
+```ts
+export interface PixivUserSearch {
+  userPreviews: {
+    user: PixivUser
+    illusts: PixivIllust[]
+    novels: PixivNovel[]
+    isMuted: boolean
+  }[]
+  nextUrl: string | null
+}
+```
+
+#### `userFollower(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
+
+Gets the users who follow a user.
+
+#### `userMypixiv(id: ID, params?: PixivParams): Promise<PixivUserSearch>`
+
+Gets your friends on Mypixiv.
+
+#### `userList(id: ID, params?: PixivParams): Promise<unknown>`
+
+Gets a user list.
+
+#### `illustDetail(id: ID, params?: PixivParams): Promise<PixivIllust>`
+
+Returns detailed info for a pixiv illust.
+
+```ts
+export interface PixivIllust {
+  id: number
+  title: string
+  interface: string
+  imageUrls: {
+    squareMedium: string
+    medium: string
+    large?: string
+  }
+  caption: string
+  restrict: number
+  user: PixivUser
+  tags: PixivTag[]
+  tools: string[]
+  createDate: string
+  pageCount: number
+  width: number
+  height: number
+  sanityLevel: number
+  metaSinglePage: {
+    originalImageUrl?: string
+  }
+  metaPages: PixivMetaPage[]
+  totalView: number
+  totalBookmarks: number
+  isBookmarked: boolean
+  visible: boolean
+  isMuted: boolean
+  totalComments: number
+}
+```
 
 <details>
 
@@ -299,9 +516,13 @@ console.log(ar.length)
 
 </details>
 
-#### illustNew(params?: Object): Promise<Object>;
+#### `illustNew(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### illustFollow(params?: Object): Promise<Object>;
+Searches new illusts.
+
+#### `illustFollow(params?: PixivParams): Promise<PixivIllustSearch>`
+
+Searches new illusts from users you follow.
 
 <details>
 
@@ -374,27 +595,86 @@ console.log(ar.length)
 
 </details>
 
-#### illustComments(id: ID, params?: Object): Promise<Object>;
+#### `illustComments(id: ID, params?: PixivParams): Promise<PixivCommentSearch>`
 
-#### illustRelated(id: ID, params?: Object): Promise<Object>;
+Returns the comments on an illust.
 
-#### illustRecommended(params?: Object): Promise<Object>;
+```ts
+export interface PixivCommentSearch {
+  totalComments: number
+  comments: PixivComment[]
+  nextUrl: string | null
+}
+```
 
-#### illustRecommendedNologin(params?: Object): Promise<Object>;
+#### `illustRelated(id: ID, params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### illustRanking(params?: Object): Promise<Object>;
+Searches for illusts related to the one provided.
 
-#### trendingTagsIllust(params?: Object): Promise<Object>;
+#### `illustRecommended(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### searchIllust(word: Word, params?: Object): Promise<Object>;
+Returns recommended illusts.
 
-#### searchNovel(word: Word, params?: Object): Promise<Object>;
+#### `illustRecommendedNologin(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### searchUser(word: Word, params?: Object): Promise<Object>;
+Returns recommended illusts (logged out).
 
-#### searchAutoComplete(word: Word): Promise<Object>;
+#### `illustRanking(params?: PixivParams): Promise<PixivIllustSearch>`
 
-#### illustBookmarkDetail(id: ID, params?: Object): Promise<Object>;
+Returns top daily illusts by default.
+
+#### `trendingTagsIllust(params?: PixivParams): Promise<PixivTrendTags>`
+
+Returns an array of trending tags.
+
+```ts
+export interface PixivTrendTags {
+  trend_tags: PixivTag[]
+}
+```
+
+#### `searchIllust(word: Word, params?: PixivParams): Promise<PixivIllustSearch>`
+
+Searches for illusts with the provided query.
+
+#### `searchNovel(word: Word, params?: PixivParams): Promise<PixivNovelSearch>`
+
+Searches for novels with the provided query.
+
+```ts
+export interface PixivNovelSearch {
+  novels: PixivNovel[]
+  nextUrl: string | null
+  privacyPolicy?: {}
+  searchSpanLimit?: number
+}
+```
+
+#### `searchUser(word: Word, params?: PixivParams): Promise<PixivUserSearch>`
+
+Searches for users with the provided query.
+
+#### `searchAutoComplete(word: Word): Promise<PixivAutoComplete>`
+
+Returns an array of auto-completed words from the input.
+
+```ts
+export interface PixivAutoComplete {
+  searchAutoCompleteKeywords: string[]
+}
+```
+
+#### `illustBookmarkDetail(id: ID, params?: PixivParams): Promise<PixivBookmarkDetail>`
+
+Returns detailed info on a bookmark.
+
+```ts
+export interface PixivBookmarkDetail {
+  isBookmarked: boolean
+  tags: PixivTag[]
+  restrict: string
+}
+```
 
 <details>
 
@@ -447,11 +727,24 @@ console.log(ar.length)
 
 </details>
 
-#### illustBookmarkAdd(id: ID, data?: Object): Promise<Object>;
+#### `illustBookmarkAdd(id: ID, data?: Object): Promise<unknown>`
 
-#### illustBookmarkDelete(id: ID, data?: Object): Promise<Object>;
+Adds a new bookmark.
 
-#### userBookmarkTagsIllust(params?: Object): Promise<Object>;
+#### `illustBookmarkDelete(id: ID, data?: Object): Promise<unknown>`
+
+Deletes a bookmark.
+
+#### `userBookmarkTagsIllust(params?: PixivParams): Promise<PixivBookmarkSearch>`
+
+Searches your bookmark tags.
+
+```ts
+export interface PixivBookmarkSearch {
+  bookmarkTags: PixivTag[]
+  nextUrl: string | null
+}
+```
 
 <details>
 
@@ -464,21 +757,60 @@ console.log(ar.length)
 
 </details>
 
-#### novelRecommended(params?: Object): Promise<Object>;
+#### `novelRecommended(params?: PixivParams): Promise<PixivNovelSearch>`
 
-#### mangaNew(params?: Object): Promise<Object>;
+Searches recommended novels.
 
-#### mangaRecommended(params?: Object): Promise<Object>;
+#### `mangaNew(params?: PixivParams): Promise<unknown>`
 
-#### novelRecommendedNologin(params?: Object): Promise<Object>;
+Searches new manga.
 
-#### novelNew(params?: Object): Promise<Object>;
+#### `mangaRecommended(params?: PixivParams): Promise<PixivMangaSearch>`
 
-#### fetch(target: string, opts?: Object): Promise<Object>;
+Searches recommended manga.
+
+```ts
+export interface PixivMangaSearch {
+  illusts: PixivManga[]
+  rankingIllusts: PixivManga[] | []
+  privacyPolicy: {}
+  nextUrl: string | null
+}
+```
+
+#### `novelRecommendedNologin(params?: PixivParams): Promise<PixivNovelSearch>`
+
+Searches recommended novels (logged out).
+
+#### `novelNew(params?: PixivParams): Promise<PixivNovelSearch>`
+
+Searches new novels.
+
+#### `ugoiraMetaData(id: number, params?: PixivParams): Promise<UgoiraMetaData>`
+
+Retrieves the zip url and frames for a Pixiv Ugoira.
+
+```ts
+export interface UgoiraMetaData {
+  ugoiraMetadata: {
+    zipUrls: {
+      medium: string
+    }
+    frames: {
+      file: string
+      delay: number
+    }[]
+  }
+}
+```
+
+#### `fetch(target: string, opts?: PixivFetchOptions): Promise<any>`
+
+Fetches a route in the Pixiv API and returns the result.
 
 See [Sniffer for iOS 6.x Common API · upbit/pixivpy Wiki](https://github.com/upbit/pixivpy/wiki/Sniffer-for-iOS-6.x---Common-API)
 
-#### pixiv.next()
+#### `pixiv.next(): Promise<any>`
 
 Return next request result.
 
@@ -494,7 +826,7 @@ pixiv
   })
 ```
 
-#### pixiv.hasNext()
+#### `pixiv.hasNext(): boolean`
 
 Return `true` if `pixiv.next()` is able to run.
 
@@ -506,7 +838,7 @@ if (pixiv.hasNext()) {
 }
 ```
 
-#### pixiv.nextQuery()
+#### `pixiv.nextQuery(): Promise<string | undefined>`
 
 Return next params parameter.
 
@@ -545,6 +877,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://www.linkedin.com/in/adefirmanf/"><img src="https://avatars0.githubusercontent.com/u/23324722?v=4" width="100px;" alt="Ade Firman Fauzi"/><br /><sub><b>Ade Firman Fauzi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=adefirmanf" title="Code">💻</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/jiefenghe/"><img src="https://avatars0.githubusercontent.com/u/4796423?v=4" width="100px;" alt="yeti2018"/><br /><sub><b>yeti2018</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yeti2018" title="Code">💻</a></td>
     <td align="center"><a href="https://blog.maple3142.net/"><img src="https://avatars1.githubusercontent.com/u/9370547?v=4" width="100px;" alt="maple"/><br /><sub><b>maple</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=maple3142" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.youtube.com/tenpi"><img src="https://avatars1.githubusercontent.com/u/37512637?v=4" width="100px;" alt="Tenpi"/><br /><sub><b>Tenpi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=Tenpi" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=Tenpi" title="Documentation">📖</a></td>
   </tr>
 </table>
 
