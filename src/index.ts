@@ -66,7 +66,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   constructor(
     username?: string,
     password?: string,
-    options?: { camelcaseKeys: CamelcaseKeys }
+    options?: { camelcaseKeys?: CamelcaseKeys }
   ) {
     this.username = username
     this.password = password
