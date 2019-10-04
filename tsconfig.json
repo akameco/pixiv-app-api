@@ -4,8 +4,7 @@
     "outDir": "dist",
     "strict": true,
     "noImplicitAny": true,
-    "declaration": true,
-    "declarationMap": true
+    "declaration": true
   },
   "include": ["src", "declarations.d.ts"]
 }

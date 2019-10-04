@@ -1,3 +1,5 @@
 node_modules
 .envrc
 .vscode
+dist
+src/test.ts

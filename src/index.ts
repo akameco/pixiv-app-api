@@ -54,8 +54,8 @@ const HASH_SECRET =
   '28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c'
 const filter = 'for_ios'
 
-export default class PixivApp<CamelcaseKeys extends boolean> {
-  camelcaseKeys = true as CamelcaseKeys
+export default class PixivApp<CamelcaseKeys extends boolean = true> {
+  camelcaseKeys: CamelcaseKeys
   username: string | undefined
   password: string | undefined
   refreshToken: string
@@ -66,7 +66,7 @@ export default class PixivApp<CamelcaseKeys extends boolean> {
   constructor(
     username?: string,
     password?: string,
-    options?: { camelcaseKeys?: CamelcaseKeys }
+    options?: { camelcaseKeys: CamelcaseKeys }
   ) {
     this.username = username
     this.password = password
@@ -74,6 +74,7 @@ export default class PixivApp<CamelcaseKeys extends boolean> {
     this.nextUrl = null
     this.auth = null
     this._once = false
+    this.camelcaseKeys = true as CamelcaseKeys
     if (options) {
       this.camelcaseKeys = Boolean(options.camelcaseKeys) as CamelcaseKeys
     } else {
