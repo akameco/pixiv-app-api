@@ -39,6 +39,7 @@ export interface PixivParams {
   filter?: string
   restrict?: 'public' | 'private'
   illustId?: number
+  parentCommentId?: number
   contentType?: string
   includeTotalComments?: boolean
   includeRankingLabel?: boolean
@@ -72,6 +73,7 @@ export interface PixivParams {
   sort?: 'date_desc' | 'date_asc' | 'popular_desc'
   startDate?: string
   endDate?: string
+  offset?: string
 }
 
 export interface PixivFetchOptions {
@@ -182,7 +184,7 @@ export interface PixivBookmarkSearch {
 
 export interface PixivMangaSearch {
   illusts: PixivManga[]
-  rankingIllusts: PixivManga[] | []
+  rankingIllusts: PixivManga[]
   privacyPolicy: {}
   nextUrl: string | null
 }
@@ -240,7 +242,7 @@ export interface PixivComment {
   comment: string
   date: string
   user: PixivUser
-  parentComment: PixivComment | {}
+  parentComment: PixivComment
 }
 
 export interface PixivNovel {
@@ -259,12 +261,10 @@ export interface PixivNovel {
   pageCount: number
   textLength: number
   user: PixivUser
-  series:
-    | {
-        id: number
-        title: string
-      }
-    | {}
+  series: {
+    id: number
+    title: string
+  }
   isBookmarked: boolean
   totalBookmarks: number
   totalView: number

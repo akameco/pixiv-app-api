@@ -23,16 +23,6 @@ export interface Pixiv_Client_User {
   is_mail_authorized: boolean
 }
 
-export interface Pixiv_Request_Data {
-  client_id: string
-  client_secret: string
-  get_secure_url: string
-  grant_type: string
-  refresh_token: string
-  username: string
-  password: string
-}
-
 export interface Pixiv_User {
   id: number
   name: string
@@ -132,7 +122,7 @@ export interface Pixiv_Bookmark_Search {
 
 export interface Pixiv_Manga_Search {
   illusts: Pixiv_Manga[]
-  ranking_illusts: Pixiv_Manga[] | []
+  ranking_illusts: Pixiv_Manga[]
   privacy_policy: {}
   next_url: string | null
 }
@@ -190,7 +180,7 @@ export interface Pixiv_Comment {
   comment: string
   date: string
   user: Pixiv_User
-  parent_comment: Pixiv_Comment | {}
+  parent_comment: Pixiv_Comment
 }
 
 export interface Pixiv_Novel {
@@ -209,12 +199,10 @@ export interface Pixiv_Novel {
   page_count: number
   text_length: number
   user: Pixiv_User
-  series:
-    | {
-        id: number
-        title: string
-      }
-    | {}
+  series: {
+    id: number
+    title: string
+  }
   is_bookmarked: boolean
   total_bookmarks: number
   total_view: number
