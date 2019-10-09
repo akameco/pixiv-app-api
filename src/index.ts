@@ -7,6 +7,8 @@ import camelcaseKeys from 'camelcase-keys'
 import {
   Pixiv_Client,
   Pixiv_Client_User,
+  Pixiv_Params,
+  Pixiv_Request_Data,
   Pixiv_User,
   Pixiv_Tag,
   Pixiv_Meta_Page,
@@ -183,8 +185,11 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     return url.parse(this.nextUrl!, true).params
   }
 
-  nextParams(): PixivParams {
-    const paramUrl = this.nextUrl!.split('?')
+  nextParams(): Pixiv_Params | null {
+    if (!this.nextUrl) {
+      return null
+    }
+    const paramUrl = this.nextUrl.split('?')
     paramUrl.shift()
     const searchParams = new URLSearchParams(paramUrl.join(''))
     const params: any = {}
@@ -740,6 +745,8 @@ module.exports = PixivApp
 export {
   Pixiv_Client,
   Pixiv_Client_User,
+  Pixiv_Params,
+  Pixiv_Request_Data,
   Pixiv_User,
   Pixiv_Tag,
   Pixiv_Meta_Page,

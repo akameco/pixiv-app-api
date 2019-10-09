@@ -850,9 +850,9 @@ if (pixiv.hasNext()) {
 
 Return next params parameter.
 
-#### `pixiv.nextParams(): PixivParams`
+#### `pixiv.nextParams(): Pixiv_Params | null`
 
-Returns the parameters of the search query.
+Returns the parameters from the search query.
 
 ## Tests
 

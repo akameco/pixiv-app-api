@@ -23,6 +23,59 @@ export interface Pixiv_Client_User {
   is_mail_authorized: boolean
 }
 
+export interface Pixiv_Request_Data {
+  client_id: string
+  client_secret: string
+  get_secure_url: string
+  grant_type: string
+  refresh_token: string
+  username: string
+  password: string
+}
+
+export interface Pixiv_Params {
+  user_id?: number
+  type?: string
+  filter?: string
+  restrict?: 'public' | 'private'
+  illust_id?: number
+  parent_comment_id?: number
+  content_type?: string
+  include_total_comments?: boolean
+  include_ranking_label?: boolean
+  include_ranking_illusts?: boolean
+  include_ranking_novels?: boolean
+  mode?:
+    | 'day'
+    | 'week'
+    | 'month'
+    | 'day_male'
+    | 'day_female'
+    | 'week_original'
+    | 'week_rookie'
+    | 'day_r18'
+    | 'day_male_r18'
+    | 'day_female_r18'
+    | 'week_r18'
+    | 'week_r18g'
+    | 'day_manga'
+    | 'week_manga'
+    | 'month_manga'
+    | 'week_rookie_manga'
+    | 'day_r18_manga'
+    | 'week_r18_manga'
+    | 'week_r18g_manga'
+  word?: string
+  search_target?:
+    | 'partial_match_for_tags'
+    | 'exact_match_for_tags'
+    | 'title_and_caption'
+  sort?: 'date_desc' | 'date_asc' | 'popular_desc'
+  start_date?: string
+  end_date?: string
+  offset?: string
+}
+
 export interface Pixiv_User {
   id: number
   name: string
