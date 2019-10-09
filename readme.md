@@ -735,6 +735,14 @@ Adds a new bookmark.
 
 Deletes a bookmark.
 
+#### `illustWalkthrough(params?: PixivParams): Promise<PixivIllustSearch>`
+
+Searches walkthrough illusts.
+
+#### `illustPopularPreview(word: string, params?: PixivParams): Promise<PixivIllustSearch>`
+
+Searches illusts that are shown in the popular previews.
+
 #### `userBookmarkTagsIllust(params?: PixivParams): Promise<PixivBookmarkSearch>`
 
 Searches your bookmark tags.
@@ -841,6 +849,10 @@ if (pixiv.hasNext()) {
 #### `pixiv.nextQuery(): Promise<string | undefined>`
 
 Return next params parameter.
+
+#### `pixiv.nextParams(): PixivParams`
+
+Returns the parameters of the search query.
 
 ## Tests
 
