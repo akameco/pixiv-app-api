@@ -121,7 +121,7 @@ interface PixivClient {
 }
 ```
 
-#### `makeIterable(resp?: Object): AsyncIterable<Object>`
+#### `makeIterable(resp: Object): AsyncIterable<Object>`
 
 <details>
 
