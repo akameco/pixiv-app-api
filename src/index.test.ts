@@ -137,6 +137,13 @@ test('ugoiraMetaData', async () => {
   expect(isPlainObj(json)).toBe(true)
 })
 
+test('nextParams', async () => {
+  expect.assertions(1)
+  await pixiv.searchIllust('女の子')
+  const params = pixiv.nextParams()
+  expect(isPlainObj(params)).toBe(true)
+})
+
 test('decamelize params', async () => {
   expect.assertions(1)
   const json1 = await pixiv.userIllusts(userId)
