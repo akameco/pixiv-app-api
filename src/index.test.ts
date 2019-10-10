@@ -2,8 +2,12 @@ import isEqual from 'lodash.isequal'
 import isPlainObj from 'is-plain-obj'
 import PixivAppApi from '.'
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('dotenv').config()
+
 const userId = 471355
 const illustId = 57907953
+const ugoiraId = 77186418
 const PASSWORD = process.env.PASSWORD as string
 const NAME = process.env.NAME as string
 
@@ -112,6 +116,24 @@ test('searchIllust', async () => {
 test('illustBookmarkDetail', async () => {
   expect.assertions(1)
   const json = await pixiv.illustBookmarkDetail(illustId)
+  expect(isPlainObj(json)).toBe(true)
+})
+
+test('illustWalkthrough', async () => {
+  expect.assertions(1)
+  const json = await pixiv.illustWalkthrough()
+  expect(isPlainObj(json)).toBe(true)
+})
+
+test('illustPopularPreview', async () => {
+  expect.assertions(1)
+  const json = await pixiv.illustPopularPreview('女の子')
+  expect(isPlainObj(json)).toBe(true)
+})
+
+test('ugoiraMetaData', async () => {
+  expect.assertions(1)
+  const json = await pixiv.ugoiraMetaData(ugoiraId)
   expect(isPlainObj(json)).toBe(true)
 })
 
