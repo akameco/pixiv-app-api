@@ -2,9 +2,6 @@ import isEqual from 'lodash.isequal'
 import isPlainObj from 'is-plain-obj'
 import PixivAppApi from '.'
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require('dotenv').config()
-
 const userId = 471355
 const illustId = 57907953
 const ugoiraId = 77186418
