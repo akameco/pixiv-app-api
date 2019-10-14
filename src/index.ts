@@ -10,7 +10,7 @@ import {
   Pixiv_User_Detail,
   Pixiv_Illust_Search,
   Pixiv_User_Search,
-  Pixiv_Illust,
+  Pixiv_Illust_Detail,
   Pixiv_Comment_Search,
   Pixiv_Trend_Tags,
   Pixiv_Novel_Search,
@@ -30,7 +30,7 @@ import {
   PixivBookmarkSearch,
   PixivUserDetail,
   PixivUserSearch,
-  PixivIllust,
+  PixivIllustDetail,
   PixivCommentSearch,
   PixivNovelSearch,
   PixivAutoComplete,
@@ -334,7 +334,9 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   illustDetail(
     illustId: number,
     params?: PixivParams
-  ): Promise<CamelcaseKeys extends true ? PixivIllust : Pixiv_Illust> {
+  ): Promise<
+    CamelcaseKeys extends true ? PixivIllustDetail : Pixiv_Illust_Detail
+  > {
     if (!illustId) {
       return Promise.reject(new Error('illustId required'))
     }

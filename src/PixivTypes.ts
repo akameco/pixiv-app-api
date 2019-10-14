@@ -148,6 +148,10 @@ export interface PixivUserDetail {
   }
 }
 
+export interface PixivIllustDetail {
+  illust: PixivIllust
+}
+
 export interface PixivIllustSearch {
   illusts: PixivIllust[]
   nextUrl: string | null

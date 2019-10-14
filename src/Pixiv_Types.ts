@@ -139,6 +139,10 @@ export interface Pixiv_User_Detail {
   }
 }
 
+export interface Pixiv_Illust_Detail {
+  illust: Pixiv_Illust
+}
+
 export interface Pixiv_Illust_Search {
   illusts: Pixiv_Illust[]
   next_url: string | null
