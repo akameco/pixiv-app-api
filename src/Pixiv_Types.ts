@@ -207,6 +207,7 @@ export interface Pixiv_Illust {
   total_bookmarks: number
   is_bookmarked: boolean
   visible: boolean
+  x_restrict: number
   is_muted: boolean
   total_comments: number
 }
