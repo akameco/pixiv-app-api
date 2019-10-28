@@ -104,7 +104,19 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       )
     }
 
-    const local_time = new Date().toISOString()
+    const now_time = new Date()
+    const local_time = `${now_time.getUTCFullYear()}-${now_time.getUTCMonth() +
+      1}-${now_time.getUTCDate()}T${now_time
+      .getUTCHours()
+      .toString()
+      .padStart(2, '0')}:${now_time
+      .getUTCMinutes()
+      .toString()
+      .padStart(2, '0')}:${now_time
+      .getUTCSeconds()
+      .toString()
+      .padStart(2, '0')}+00:00`
+
     const headers = {
       'X-Client-Time': local_time,
       'X-Client-Hash': crypto
