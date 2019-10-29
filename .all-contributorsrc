@@ -74,6 +74,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "yanagiragi",
+      "name": "yanagiragi",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7404517?v=4",
+      "profile": "http://yanagiragi.wordpress.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
