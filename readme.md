@@ -1,7 +1,7 @@
 # pixiv-app-api
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 
 > Promise based pixiv API client
 
@@ -878,6 +878,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://www.linkedin.com/in/jiefenghe/"><img src="https://avatars0.githubusercontent.com/u/4796423?v=4" width="100px;" alt="yeti2018"/><br /><sub><b>yeti2018</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yeti2018" title="Code">💻</a></td>
     <td align="center"><a href="https://blog.maple3142.net/"><img src="https://avatars1.githubusercontent.com/u/9370547?v=4" width="100px;" alt="maple"/><br /><sub><b>maple</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=maple3142" title="Code">💻</a></td>
     <td align="center"><a href="https://www.youtube.com/tenpi"><img src="https://avatars1.githubusercontent.com/u/37512637?v=4" width="100px;" alt="Tenpi"/><br /><sub><b>Tenpi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=Tenpi" title="Code">💻</a> <a href="https://github.com/akameco/pixiv-app-api/commits?author=Tenpi" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://yanagiragi.wordpress.com"><img src="https://avatars2.githubusercontent.com/u/7404517?v=4" width="100px;" alt="yanagiragi"/><br /><sub><b>yanagiragi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yanagiragi" title="Code">💻</a></td>
   </tr>
 </table>
 
