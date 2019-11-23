@@ -404,11 +404,15 @@ Gets your friends on Mypixiv.
 
 Gets a user list.
 
-#### `illustDetail(id: ID, params?: PixivParams): Promise<PixivIllust>`
+#### `illustDetail(id: ID, params?: PixivParams): Promise<PixivIllustDetail>`
 
 Returns detailed info for a pixiv illust.
 
 ```ts
+export interface PixivIllustDetail {
+  illust: PixivIllust
+}
+
 export interface PixivIllust {
   id: number
   title: string
