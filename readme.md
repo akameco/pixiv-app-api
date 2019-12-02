@@ -32,6 +32,7 @@ const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {
 })
 
 ;(async () => {
+  await pixiv.login()
   const json = await pixiv.searchIllust('艦これ10000users入り')
   await pixivImg(json.illusts[0].imageUrls.large)
   console.log('finish')
