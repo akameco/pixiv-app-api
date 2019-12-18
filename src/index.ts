@@ -1,6 +1,6 @@
 import { stringify } from 'querystring'
-import * as crypto from 'crypto'
-import url from 'url'
+import { createHash as cryptoCreateHash } from 'crypto'
+import { parse as urlParse } from 'url'
 import axios, { AxiosRequestConfig } from 'axios'
 import decamelizeKeys from 'decamelize-keys'
 import camelcaseKeys from 'camelcase-keys'
@@ -119,8 +119,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
 
     const headers = {
       'X-Client-Time': local_time,
-      'X-Client-Hash': crypto
-        .createHash('md5')
+      'X-Client-Hash': cryptoCreateHash('md5')
         .update(Buffer.from(`${local_time}${HASH_SECRET}`, 'utf8'))
         .digest('hex')
     }
@@ -179,7 +178,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   nextQuery(): undefined | string {
     // This always returns undefined
     // @ts-ignore
-    return url.parse(this.nextUrl!, true).params
+    return urlParse(this.nextUrl!, true).params
   }
 
   makeIterable(resp: any): AsyncIterable<any> {
