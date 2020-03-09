@@ -1,7 +1,7 @@
 # pixiv-app-api
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 
 > Promise based pixiv API client
 
@@ -889,6 +889,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="http://yanagiragi.wordpress.com"><img src="https://avatars2.githubusercontent.com/u/7404517?v=4" width="100px;" alt="yanagiragi"/><br /><sub><b>yanagiragi</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=yanagiragi" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/NigridsVa"><img src="https://avatars2.githubusercontent.com/u/4570860?v=4" width="100px;" alt="NigridsVa"/><br /><sub><b>NigridsVa</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=NigridsVa" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Antosik"><img src="https://avatars1.githubusercontent.com/u/4852791?v=4" width="100px;" alt="Anton Grigoryev"/><br /><sub><b>Anton Grigoryev</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=Antosik" title="Code">💻</a></td>
+    <td align="center"><a href="http://kokororin.github.io"><img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;" alt="そら"/><br /><sub><b>そら</b></sub></a><br /><a href="https://github.com/akameco/pixiv-app-api/commits?author=kokororin" title="Code">💻</a></td>
   </tr>
 </table>
 
