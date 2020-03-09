@@ -72,6 +72,7 @@ export interface PixivParams {
   sort?: 'date_desc' | 'date_asc' | 'popular_desc'
   startDate?: string
   endDate?: string
+  offset?: number
 }
 
 export interface PixivFetchOptions {
