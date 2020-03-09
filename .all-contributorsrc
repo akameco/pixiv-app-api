@@ -103,6 +103,5 @@
       ]
     }
   ],
-  "repoType": "github",
-  "commitConvention": "none"
+  "repoType": "github"
 }
