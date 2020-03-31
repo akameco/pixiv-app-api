@@ -55,7 +55,7 @@ test('userBookmarksIllust', async () => {
 test('userBookmarksIllust private', async () => {
   expect.assertions(1)
   const json = await pixiv.userBookmarksIllust(auth.user.id, {
-    restrict: 'private'
+    restrict: 'private',
   })
 
   expect(isPlainObj(json)).toBe(true)

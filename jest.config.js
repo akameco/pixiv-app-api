@@ -4,8 +4,8 @@ module.exports = {
   preset: 'ts-jest',
   globals: {
     'ts-jest': {
-      diagnostics: false
-    }
+      diagnostics: false,
+    },
   },
-  testPathIgnorePatterns: ['/node_modules/', 'dist']
+  testPathIgnorePatterns: ['/node_modules/', 'dist'],
 }

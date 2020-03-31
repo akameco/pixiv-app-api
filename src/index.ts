@@ -17,7 +17,7 @@ import {
   Pixiv_Bookmark_Detail,
   Pixiv_Bookmark_Search,
   Ugoira_Meta_Data,
-  Pixiv_Manga_Search
+  Pixiv_Manga_Search,
 } from './Pixiv_Types'
 import {
   PixivClient,
@@ -35,7 +35,7 @@ import {
   PixivAutoComplete,
   UgoiraMetaData,
   PixivMangaSearch,
-  PixivTrendTags
+  PixivTrendTags,
 } from './PixivTypes'
 
 const baseURL = 'https://app-api.pixiv.net/'
@@ -44,8 +44,8 @@ const instance = axios.create({
   headers: {
     'App-OS': 'ios',
     'App-OS-Version': '9.3.3',
-    'App-Version': '6.0.9'
-  }
+    'App-Version': '6.0.9',
+  },
 })
 
 const CLIENT_ID = 'MOBrBDS8blbauoSck0ZfDbtuzpyT'
@@ -105,8 +105,9 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     }
 
     const now_time = new Date()
-    const local_time = `${now_time.getUTCFullYear()}-${now_time.getUTCMonth() +
-      1}-${now_time.getUTCDate()}T${now_time
+    const local_time = `${now_time.getUTCFullYear()}-${
+      now_time.getUTCMonth() + 1
+    }-${now_time.getUTCDate()}T${now_time
       .getUTCHours()
       .toString()
       .padStart(2, '0')}:${now_time
@@ -121,7 +122,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       'X-Client-Time': local_time,
       'X-Client-Hash': cryptoCreateHash('md5')
         .update(Buffer.from(`${local_time}${HASH_SECRET}`, 'utf8'))
-        .digest('hex')
+        .digest('hex'),
     }
 
     const data: PixivRequestData = {
@@ -131,7 +132,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       grantType: '',
       username: '',
       password: '',
-      refreshToken: ''
+      refreshToken: '',
     }
 
     if (this.refreshToken === '') {
@@ -162,7 +163,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     type authInfoType = CamelcaseKeys extends true ? PixivClient : Pixiv_Client
     return this.camelcaseKeys
       ? ((camelcaseKeys(this.auth!, {
-          deep: true
+          deep: true,
         }) as unknown) as authInfoType)
       : (this.auth as authInfoType)
   }
@@ -193,7 +194,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
           resp = await self.fetch(resp[nextUrl])
           yield resp
         }
-      }
+      },
     }
   }
 
@@ -204,7 +205,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       userId: id,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/detail', { params })
   }
@@ -219,7 +220,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       userId: id,
       type: 'illust',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/illusts', { params })
   }
@@ -233,7 +234,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       userId: id,
       restrict: 'public',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/follow/add', { params })
   }
@@ -247,7 +248,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       userId: id,
       restrict: 'public',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/follow/delete', { params })
   }
@@ -265,7 +266,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       userId: id,
       restrict: 'public',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/bookmarks/illust', { params })
   }
@@ -280,7 +281,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       userId: id,
       restrict: 'public',
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/following', { params })
   }
@@ -294,7 +295,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     }
     params = {
       userId: id,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/follower', { params })
   }
@@ -308,7 +309,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     }
     params = {
       userId: id,
-      ...params
+      ...params,
     }
 
     return this.fetch('/v1/user/mypixiv', { params })
@@ -322,7 +323,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       userId: id,
       filter,
-      ...params
+      ...params,
     }
 
     return this.fetch('/v1/user/list', { params })
@@ -340,7 +341,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       illustId: id,
       filter,
-      ...params
+      ...params,
     }
 
     return this.fetch('/v1/illust/detail', { params })
@@ -354,7 +355,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       contentType: 'illust',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/illust/new', { params })
   }
@@ -368,7 +369,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       userId: id,
       restrict: 'public',
-      ...params
+      ...params,
     }
     return this.fetch('/v2/illust/follow', { params })
   }
@@ -385,7 +386,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       illustId: id,
       includeTotalComments: true,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/illust/comments', { params })
   }
@@ -402,7 +403,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       illustId: id,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v2/illust/related', { params })
   }
@@ -416,7 +417,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       contentType: 'illust',
       includeRankingLabel: true,
       filter,
-      ...params
+      ...params,
     }
 
     return this.fetch('/v1/illust/recommended', { params })
@@ -430,7 +431,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       includeRankingIllusts: true,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/illust/recommended-nologin', { params })
   }
@@ -443,7 +444,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       mode: 'day',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/illust/ranking', { params })
   }
@@ -453,7 +454,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   ): Promise<CamelcaseKeys extends true ? PixivTrendTags : Pixiv_Trend_Tags> {
     params = {
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/trending-tags/illust', { params })
   }
@@ -472,7 +473,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       searchTarget: 'partial_match_for_tags',
       sort: 'date_desc',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/search/illust', { params })
   }
@@ -491,7 +492,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       searchTarget: 'partial_match_for_tags',
       sort: 'date_desc',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/search/novel', { params })
   }
@@ -506,7 +507,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       word,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/search/user', { params })
   }
@@ -533,7 +534,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     }
     params = {
       illustId: id,
-      ...params
+      ...params,
     }
     return this.fetch('/v2/illust/bookmark/detail', { params })
   }
@@ -546,7 +547,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       illustId: id,
       restrict: 'public',
-      ...params
+      ...params,
     }
 
     return this.fetch('/v2/illust/bookmark/add', { params })
@@ -559,7 +560,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     }
     params = {
       illustId: id,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/illust/bookmark/delete', { params })
   }
@@ -571,7 +572,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   > {
     params = {
       restrict: 'public',
-      ...params
+      ...params,
     }
     return this.fetch('/v1/user/bookmark-tags/illust', { params })
   }
@@ -584,7 +585,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       includeRankingNovels: true,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/novel/recommended', { params })
   }
@@ -594,7 +595,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       contentType: 'manga',
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/manga/new', { params })
   }
@@ -607,7 +608,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       includeRankingLabel: true,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/manga/recommended', { params })
   }
@@ -620,7 +621,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       includeRankingNovels: true,
       filter,
-      ...params
+      ...params,
     }
 
     return this.fetch('/v1/novel/recommended-nologin', { params })
@@ -633,7 +634,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   > {
     params = {
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/novel/new', { params })
   }
@@ -648,7 +649,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     params = {
       illustId: id,
       filter,
-      ...params
+      ...params,
     }
     return this.fetch('/v1/ugoira/metadata', { params })
   }
@@ -680,7 +681,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     if (options.data) {
       options.method = 'post'
       options.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
       }
       options.data = stringify(decamelizeKeys(options.data))
     }

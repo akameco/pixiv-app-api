@@ -4,7 +4,7 @@
 const pixivImg = require('pixiv-img')
 const Pixiv = require('../dist')
 
-const wait = () => new Promise(resolve => setTimeout(() => resolve(), 100))
+const wait = () => new Promise((resolve) => setTimeout(() => resolve(), 100))
 
 async function dl(json) {
   // eslint-disable-next-line no-unused-vars

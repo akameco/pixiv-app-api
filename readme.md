@@ -28,7 +28,7 @@ $ npm install --save pixiv-app-api
 import PixivAppApi from 'pixiv-app-api' //const PixivAppApi = require("pixiv-app-api")
 import pixivImg from 'pixiv-img' //const pixivImg = require("pixiv-img")
 const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {
-  camelcaseKeys: true
+  camelcaseKeys: true,
 })
 
 ;(async () => {
@@ -827,7 +827,7 @@ pixiv
   .searchIllust(word)
   .then(() => pixiv.next())
   .then(() => pixiv.next())
-  .then(json => {
+  .then((json) => {
     console.log(json)
   })
 ```
