@@ -681,7 +681,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       options.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
       }
-      options.data = stringify(decamelizeKeys(options.data))
+      options.data = stringify(decamelizeKeys(options.data)) as PixivParams
     }
 
     if (options.params) {
