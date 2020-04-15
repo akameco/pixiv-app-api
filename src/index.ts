@@ -153,7 +153,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     const { response } = axiosResponse.data
     this.auth = response
     this.refreshToken = axiosResponse.data.response.refresh_token
-    instance.defaults.headers.common.Authorization = `Bearer ${response.access_token}`
+    this.authToken = response.access_token
     return this.camelcaseKeys
       ? camelcaseKeys(response, { deep: true })
       : response
@@ -166,6 +166,11 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
           deep: true,
         }) as unknown) as authInfoType)
       : (this.auth as authInfoType)
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  set authToken(accessToken: string) {
+    instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
   }
 
   hasNext(): boolean {
