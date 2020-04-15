@@ -539,7 +539,6 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     return this.fetch('/v2/illust/bookmark/detail', { params })
   }
 
-  // This endpoint doesn't exist
   illustBookmarkAdd(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
       return Promise.reject(new Error('illustId required'))
@@ -550,10 +549,9 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       ...params,
     }
 
-    return this.fetch('/v2/illust/bookmark/add', { params })
+    return this.fetch('/v2/illust/bookmark/add', { data: params })
   }
 
-  // This endpoint doesn't exist
   illustBookmarkDelete(id: number, params?: PixivParams): Promise<unknown> {
     if (!id) {
       return Promise.reject(new Error('illustId required'))
@@ -562,7 +560,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       illustId: id,
       ...params,
     }
-    return this.fetch('/v1/illust/bookmark/delete', { params })
+    return this.fetch('/v1/illust/bookmark/delete', { data: params })
   }
 
   userBookmarkTagsIllust(
