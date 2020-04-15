@@ -76,7 +76,7 @@ export interface PixivParams {
 }
 
 export interface PixivFetchOptions {
-  data?: string
+  data?: PixivParams
   method?: string
   headers?: {
     [header: string]: string
