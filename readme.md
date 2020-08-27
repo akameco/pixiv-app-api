@@ -37,12 +37,14 @@ const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {
   camelcaseKeys: true,
 })
 
-(async () => {
+async function usage() {
   await pixiv.login()
   const json = await pixiv.searchIllust('艦これ10000users入り')
   await pixivImg(json.illusts[0].imageUrls.large)
   console.log('finish')
-})()
+}
+
+usage()
 ```
 
 ## Typescript
