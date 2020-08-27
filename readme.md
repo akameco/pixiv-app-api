@@ -25,13 +25,19 @@ $ npm install --save pixiv-app-api
 ## Usage
 
 ```js
-import PixivAppApi from 'pixiv-app-api' //const PixivAppApi = require("pixiv-app-api")
-import pixivImg from 'pixiv-img' //const pixivImg = require("pixiv-img")
+// ES6
+import PixivAppApi from 'pixiv-app-api' //
+import pixivImg from 'pixiv-img' //
+
+// CommonJS
+const pixivImg = require("pixiv-img")
+const PixivAppApi = require("pixiv-app-api")
+
 const pixiv = new PixivAppApi(process.env.NAME, process.env.PASSWORD, {
   camelcaseKeys: true,
 })
 
-;(async () => {
+(async () => {
   await pixiv.login()
   const json = await pixiv.searchIllust('艦これ10000users入り')
   await pixivImg(json.illusts[0].imageUrls.large)
