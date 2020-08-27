@@ -26,8 +26,8 @@ $ npm install --save pixiv-app-api
 
 ```js
 // ES6
-import PixivAppApi from 'pixiv-app-api' //
-import pixivImg from 'pixiv-img' //
+import PixivAppApi from 'pixiv-app-api'
+import pixivImg from 'pixiv-img'
 
 // CommonJS
 const pixivImg = require("pixiv-img")
