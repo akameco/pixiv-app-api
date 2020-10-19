@@ -39,13 +39,14 @@ import {
 } from './PixivTypes'
 
 const baseURL = 'https://app-api.pixiv.net/'
+const appVersion = '5.0.212'
 const instance = axios.create({
   baseURL,
   headers: {
-    'App-OS': 'ios',
-    'App-OS-Version': '9.3.3',
-    'App-Version': '6.0.9',
-    'User-Agent': 'PixivAndroidApp/5.0.115 (Android 6.0; PixivBot)'
+//     'App-OS': 'ios',
+//     'App-OS-Version': '9.3.3',
+//     'App-Version': '6.0.9',
+    'User-Agent': `PixivAndroidApp/${appVersion} (Android 6.0; PixivBot)`
   },
 })
 
@@ -124,7 +125,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
       'X-Client-Hash': cryptoCreateHash('md5')
         .update(Buffer.from(`${local_time}${HASH_SECRET}`, 'utf8'))
         .digest('hex'),
-      'User-Agent': 'PixivAndroidApp/5.0.115 (Android 6.0; PixivBot)'
+      'User-Agent': `PixivAndroidApp/${appVersion} (Android 6.0; PixivBot)`
     }
 
     const data: PixivRequestData = {
