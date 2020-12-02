@@ -152,6 +152,7 @@ export interface Pixiv_Illust {
   }
   caption: string
   restrict: number
+  x_restrict: number
   user: Pixiv_User
   tags: Pixiv_Tag[]
   tools: string[]
