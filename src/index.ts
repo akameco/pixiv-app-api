@@ -172,6 +172,10 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
   set authToken(accessToken: string) {
     instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
   }
+  // eslint-disable-next-line class-methods-use-this
+  set language(language: string) {
+    instance.defaults.headers.common['Accept-Language'] = language
+  }
 
   hasNext(): boolean {
     return Boolean(this.nextUrl)
@@ -525,7 +529,7 @@ export default class PixivApp<CamelcaseKeys extends boolean = true> {
     if (!word) {
       return Promise.reject(new Error('word required'))
     }
-    return this.fetch('/v1/search/autocomplete', { params: { word } })
+    return this.fetch('/v2/search/autocomplete', { params: { word } })
   }
 
   illustBookmarkDetail(

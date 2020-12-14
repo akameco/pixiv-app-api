@@ -267,7 +267,7 @@ export interface Pixiv_Trend_Tags {
 }
 
 export interface Pixiv_Auto_Complete {
-  search_auto_complete_keywords: string[]
+  tags: Pixiv_Tag[]
 }
 
 export interface Pixiv_Bookmark_Detail {
