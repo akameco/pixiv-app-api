@@ -318,7 +318,7 @@ export interface PixivTrendTags {
 }
 
 export interface PixivAutoComplete {
-  searchAutoCompleteKeywords: string[]
+  tags: PixivTag[]
 }
 
 export interface PixivBookmarkDetail {
